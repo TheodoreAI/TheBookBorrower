@@ -1,0 +1,88 @@
+
+
+
+html {
+    font-size: 100%;
+    box-sizing: border-box;
+
+}
+
+nav{
+    padding: 10px;
+    @media (min-height: 600px;){
+        padding: 20px;
+    }
+   
+}
+
+
+/* will need to add code for the mobile version */
+nav.flexbox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+}
+
+ul li {
+    margin-right: 20px;
+}
+
+
+/* The unordered and ordered lists will have different colors of font */
+ol li a {
+    color: black;
+}
+
+
+a:hover {
+    color: rgb(53, 53, 211); 
+    background: linear-gradient(to right, rgb(142, 175, 247) 40%, white 75%);
+   
+}
+
+a {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+
+a::before{
+    content: "";
+    position: absolute;
+    height: 3px;
+    right: 0px;
+    bottom: -3px;
+    left: 0px;
+    background-color: lightgoldenrodyellow;
+}
+
+
+
+
+
+body{
+    margin: 0px;
+    padding: 0px;
+    min-height: 100vh;
+
+}
+
+*, *::before, *::before {
+    box-sizing: inherit;
+}
+
+.fixed-footer{
+    bottom: 0;
+    text-align: center;
+    font: arial;
+    position: absolute;
+    width: 100%;
+}
