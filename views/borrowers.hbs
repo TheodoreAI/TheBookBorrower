@@ -1,14 +1,41 @@
 
 <!-- navigation bar with an unordered list -->
-
-
-
-<h2>
-        The following are people who have borrowed a book(s).
-</h2>
-
-<h3>The following are people that have borrowed books, for more information please click on one:</h3>
+<div>
+    <h2>Borrowers: </h2>
+    <h3>People that have ever borrowed books:</h3>
+</div>
 
 <div>
-        <button onclick="https://www.google.com">Mateo Estrada</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal6">Rhonda Smith</a></td>
+                <td>123-456-7891</td>
+                <td>rhonda@thebookborrower.com</td>
+            </tr>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal7">Mateo Estrada</a></td>
+                <td>987-654-3210</td>
+                <td>mateo@thebookborrower.com</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p class="modal-text">Some text in the Modal..</p>
+  </div>
+
 </div>
