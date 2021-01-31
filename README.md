@@ -6,7 +6,7 @@
 
 *To install node run:* 
     
-    npm install node
+    npm install node 13.12.0
     
 *To install the HTML Templating engine Express-Handlebars run:*
 
