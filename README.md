@@ -6,7 +6,7 @@
 
 *To install node run:* 
     
-    npm node
+    npm install node
     
 *To install the HTML Templating engine Express-Handlebars run:*
 
