@@ -42,6 +42,10 @@ app.get('/', function(req, res){
     res.render('home', {layout: 'main'});
 });
 
+app.get('/books', function(req, res){
+    res.render('books.hbs')
+});
+
 app.get('/borrowers', function(req, res){
     res.render('borrowers.hbs')
 });
