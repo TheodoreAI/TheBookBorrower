@@ -1,7 +1,111 @@
-<h>
-    The maintenance page!
-</h>
 
+<link href='/script.css'>
+<script type="text/javascript" src='/forms.js'>
+</script>
+
+<h1>
+    The Book Borrower
+</h1>
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
 <h3>Create, update, delete databse:</h3>
+
+{{!-- <div id='book-list'>
+    <h3>All Personal Books:</h3>
+    <ol>
+        <li>
+            <span class='Title'>The Book Thief</span>
+           
+            <span class="delete">Delete</span>
+          
+        </li><br>
+        <li>
+            <span class='Title'>Lord of The Rings</span>
+          
+            <span class='delete'>Delete</span>
+           
+        </li><br>
+        <li>
+            <span class='Title'>East of Eden</span>
+            <span class='delete'>Delete</span>
+        </li><br>
+        <li>
+            <span class='Title'>The Dark Tower</span>
+            <span class='delete'>Delete</span>
+        </li><br>
+    </ol>
+</div> --}}
+
+<div>
+    <h3>Adding Books to the Database:</h3>
+        <form id='bookForm' method="POST" action="#">
+            Title <input type='text' name='titleBook'><br>
+            Author <input type='text' name='authorID'><br>
+            Status <input type='text' name='statusBook'><br>
+            Number of Pages<input type='int' name='pageCount'><br>
+            Publisher<input type='text' name='PublisherBook'><br>
+            Language <input type='text' name='languageID'><br>
+            Genre(s) <input type='text' name='genreID'><br>
+            <br>
+            <button type='submit'>
+                Add Book
+            </button>
+        </form>
+
+</div>
+
+{{!-- <div id='book-list'>
+    <h3>All the Authors:</h3>
+    <ol>
+        <li>
+            <span class='Title'>Markus Zusak</span>
+
+            <span class="delete">Delete</span>
+
+        </li><br>
+        <li>
+            <span class='Title'>J. R.R. Tolkin</span>
+
+            <span class='delete'>Delete</span>
+
+        </li><br>
+        <li>
+            <span class='Title'>Ernest Steinbeck</span>
+            <span class='delete'>Delete</span>
+        </li><br>
+        <li>
+            <span class='Title'>Stephen King</span>
+            <span class='delete'>Delete</span>
+        </li><br>
+    </ol>
+</div> --}}
+
+
+
+<div>
+    <h3>Adding Authors to the Database:</h3>
+        <form id='authorForm' method="POST" action="#">
+            First Name <input type='text' name='authorFirst'><br>
+            Last Name <input type='text' name='authorLast'><br>
+            Nationality<input type='text' name='authorNation'><br>
+            <br>
+            <button type='submit'>
+                Add Author
+            </button>
+        </form>
+</div>
+<div>
+    <h3>Adding Borrowers to the Database:</h3>
+    <form id='authorForm' method="POST" action="#">
+        First Name <input type='text' name='authorFirst'><br>
+        Last Name <input type='text' name='authorLast'><br>
+        Email<input type='text' name='email'><br>
+        Phone<input type='phone' name='phone'><br>
+
+        <br>
+        <button type='submit'>
+            Add Borrower
+        </button>
+    </form>
+
+</div>
