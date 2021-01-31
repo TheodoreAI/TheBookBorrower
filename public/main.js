@@ -9,6 +9,12 @@ var example4 = document.getElementById("openModal4");
 var example5 = document.getElementById("openModal5");
 var example6 = document.getElementById("openModal6");
 var example7 = document.getElementById("openModal7");
+var example8 = document.getElementById("openModal8");
+var example9 = document.getElementById("status1Button");
+var example10 = document.getElementById("status2Button");
+var example11 = document.getElementById("status3Button");
+var example12 = document.getElementById("status4Button");
+var example13 = document.getElementById("status5Button");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -111,6 +117,65 @@ if (example7) {
   }
 }
 
+if (example8) {
+  example8.onclick = function() {
+    var elem = document.querySelector('.modal-text')
+    elem.innerHTML ="<table><tr><th>Name </th><td>Oscar Rascal</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Phone </th><td>123-456-7891</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Email </th><td>rascal@thebookborrower.com</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Current Borrows </th><td>None</td></tr></table>"
+    modal.style.display = "block";
+  }
+}
+
+if (example9) {
+  example9.onclick = function() {
+    var returnConfirmation = confirm("Are you sure you want to return The Answer Is... Reflections on My Life?")
+  }
+}
+
+if (example10) {
+  example10.onclick = function() {
+    var returnConfirmation = confirm("Are you sure you want to return Who is Alex Trebek?: A Biography?")
+  }
+
+}
+
+if (example11) {
+  example11.onclick = function() {
+    var elem = document.querySelector('.modal-text')
+    elem.innerHTML ="Portrait of Myself"
+    elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
+    // elem.innerHTML += "<form>"
+    // elem.innerHTML += "<label for='borrowers'>Choose a borrower:</label>"
+    // elem.innerHTML += "<select name='borrowers'>"
+    // elem.innerHTML += "<option value='Rhonda Smith'>Rhonda Smith</option>"
+    // elem.innerHTML += "<option value='Mateo Estrada'>Mateo Estrada</option>"
+    // elem.innerHTML += "</select>"
+    // elem.innerHTML += "<br><br>"
+    // elem.innerHTML += "<input type='submit' value='Submit'>"
+    // elem.innerHTML += "</form>"
+    modal.style.display = "block";
+  }
+}
+
+if (example12) {
+  example12.onclick = function() {
+    var elem = document.querySelector('.modal-text')
+    elem.innerHTML ="The Basketball Diaries"
+    elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
+    modal.style.display = "block";
+  }
+}
+
+if (example13) {
+  example13.onclick = function() {
+    var elem = document.querySelector('.modal-text')
+    elem.innerHTML ="A Choice of Weapons"
+    elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
+    modal.style.display = "block";
+  }
+}
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -121,5 +186,59 @@ span.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+  }
+}
+
+// changing status buttons
+var status1 = document.getElementById("status1").innerHTML;
+var status2 = document.getElementById("status2").innerHTML;
+var status3 = document.getElementById("status3").innerHTML;
+var status4 = document.getElementById("status4").innerHTML;
+var status5 = document.getElementById("status5").innerHTML;
+
+var status1Button = document.getElementById("status1Button");
+var status2Button = document.getElementById("status2Button");
+var status3Button = document.getElementById("status3Button");
+var status4Button = document.getElementById("status4Button");
+var status5Button = document.getElementById("status5Button");
+
+
+if (status1) {
+  if (status1 == "Yes") {
+    status1Button.textContent = "Return"
+  } else if (status1 == "No") {
+    status1Button.textContent = "Borrow"
+  }
+}
+
+if (status2) {
+  if (status2 == "Yes") {
+    status2Button.textContent = "Return"
+  } else if (status2 == "No") {
+    status2Button.textContent = "Borrow"
+  }
+}
+
+if (status3) {
+  if (status3 == "Yes") {
+    status3Button.textContent = "Return"
+  } else if (status3 == "No") {
+    status3Button.textContent = "Borrow"
+  }
+}
+
+if (status4) {
+  if (status4 == "Yes") {
+    status4Button.textContent = "Return"
+  } else if (status4 == "No") {
+    status4Button.textContent = "Borrow"
+  }
+}
+
+if (status5) {
+  if (status5 == "Yes") {
+    status5Button.textContent = "Return"
+  } else if (status5 == "No") {
+    status5Button.textContent = "Borrow"
   }
 }
