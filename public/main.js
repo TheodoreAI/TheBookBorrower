@@ -242,3 +242,6 @@ if (status5) {
     status5Button.textContent = "Borrow"
   }
 }
+
+
+
