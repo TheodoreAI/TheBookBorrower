@@ -42,18 +42,22 @@ app.get('/', function(req, res){
     res.render('home', {layout: 'main'});
 });
 
+app.get('/books', function(req, res){
+    res.render('books.hbs')
+});
+
 app.get('/borrowers', function(req, res){
     res.render('borrowers.hbs')
 });
 
+// These aren't being used
+// app.get('/genres', function(req, res){
+//     res.render('./genres/genres')
+// });
 
-app.get('/genres', function(req, res){
-    res.render('./genres/genres')
-});
-
-app.get('/authors', function (req, res) {
-    res.render('./authors/authors')
-});
+// app.get('/authors', function (req, res) {
+//     res.render('./authors/authors')
+// });
 
 
 app.get('/maintain', function(req, res){

@@ -1,0 +1,67 @@
+<!-- navigation bar with an unordered list -->
+<div>
+    <h2>The Library: </h2>
+    <h3>The following are the books that I own:</h3>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Borrowed?</th>
+                <th>Current Borrower</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal1">The Answer Is... Reflections on My Life</a></td>
+                <td>Alex Trebek</td>
+                <td id="status1">Yes</td>
+                <td>Rhonda Smith</td>
+                <td class="Action"><button id="status1Button">Return</button></td>
+            </tr>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal2">Who is Alex Trebek?: A Biography</a></td>
+                <td>Lisa Rogan</td>
+                <td id="status2">Yes</td>
+                <td>Mateo Estrada</td>
+                <td class="Action"><button id="status2Button">Return</button></td>
+            </tr>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal3">Portrait of Myself</a></td>
+                <td>Margaret Bourke-White</td>
+                <td id="status3">No</td>
+                <td></td>
+                <td class="Action"><button id="status3Button">Return</button></td>
+            </tr>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal4">The Basketball Diaries</a></td>
+                <td>Jim Carroll</td>
+                <td id="status4">No</td>
+                <td></td>
+                <td class="Action"><button id="status4Button">Return</button></td>
+            </tr>
+            <tr>
+                <td><a href="#" class="moreInfo" id="openModal5">A Choice of Weapons</a></td>
+                <td>Gordon Parks</td>
+                <td id="status5">No</td>
+                <td></td>
+                <td class="Action"><button id="status5Button">Return</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p class="modal-text">Some text in the Modal..</p>
+  </div>
+
+</div>
