@@ -1,5 +1,54 @@
 
+.menuForms {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    border-radius: 30px;
+    position: relative;
+    border: 10px;
+}
 
+.side1 {
+    margin: auto;
+    width: 100%;
+    border: 3px solid rgb(37, 101, 131);
+    padding: 10px;
+    border-radius: 30px;
+    left: 1px;
+    top: auto;
+    position: relative;
+}
+
+
+.side2 {
+    margin: auto;
+    width: 100%;
+    border: 3px solid rgb(37, 101, 131);
+    padding: 10px;
+    border-radius: 30px;
+    left: 1px;
+    top: auto;
+    position: relative;
+}
+
+.side3 {
+    margin: auto;
+    width: 100%;
+    border: 3px solid rgb(37, 101, 131);
+    padding: 10px;
+    border-radius: 30px;
+    left: 1px;
+    top: auto;
+    position: relative;
+}
+
+
+.open-button {
+    position: relative;
+    height: auto;
+    font-weight: bold;
+    align-content: center;
+}
 
 html {
     font-size: 100%;
@@ -22,7 +71,78 @@ nav.flexbox{
     justify-content: space-between;
     align-items: center;
     background-color: black;
+
 }
+
+nav.flexbox a {
+
+     position: relative;
+     text-decoration: none;
+     color: white;
+     font-size: large;
+     font-weight: bold;
+}
+nav.flexbox a:hover {
+    color: rgb(53, 53, 211);
+    background: linear-gradient(to right, rgb(142, 175, 247) 40%, grey 75%);
+
+}
+
+
+/* Borrowed code from w3schools */
+
+#myInput {
+    background-image: url('/css/searchicon.png');
+    /* Add a search icon to input */
+    background-position: 10px 12px;
+    /* Position the search icon */
+    background-repeat: no-repeat;
+    /* Do not repeat the icon image */
+    width: 100%;
+    /* Full-width */
+    font-size: 16px;
+    /* Increase font-size */
+    padding: 12px 20px 12px 40px;
+    /* Add some padding */
+    border: 1px solid #ddd;
+    /* Add a grey border */
+    margin-bottom: 12px;
+    /* Add some space below the input */
+    width: 25%;
+}
+
+#myUL {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#myUL li a {
+    border: 1px solid #ddd;
+    /* Add a border to all links */
+    margin-top: -1px;
+    /* Prevent double borders */
+    background-color: #f6f6f6;
+    /* Grey background color */
+    padding: 12px;
+    /* Add some padding */
+    text-decoration: none;
+    /* Remove default text underline */
+    font-size: 18px;
+    /* Increase the font-size */
+    color: black;
+    /* Add a black text color */
+    display: block;
+    /* Make it into a block element to fill the whole list */
+    width: 25%;
+}
+
+#myUL li a:hover:not(.header) {
+    background-color: #eee;
+    /* Add a hover effect to all links, except for headers */
+}
+
 
 ul {
     display: flex;
@@ -40,19 +160,7 @@ ol li a {
 }
 
 
-a:hover {
-    color: rgb(53, 53, 211);
-    background: linear-gradient(to right, rgb(142, 175, 247) 40%, white 75%);
 
-}
-
-a {
-    position: relative;
-    text-decoration: none;
-    color: white;
-    font-size: large;
-    font-weight: bold;
-}
 
 a::before{
     content: "";
