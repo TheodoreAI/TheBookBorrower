@@ -7,10 +7,23 @@
 </h1>
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
-<div>
-    <h3>Adding Books to the Database:</h3>
-        <form id='bookForm' method="#" action="#">
-            Title <input type='text' name='titleBook'><br>
+
+<div class="menuForms">
+<h2>
+    What would you like to add today?
+</h2>
+</div>
+
+{{!-- forms to create update and delete --}}
+{{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
+
+<div class="menuForms">
+    <div class="side1">
+        <h3>Add a Book with Publisher, Language, and Genre:</h3>
+        <button class="open-button" onclick="openForm()">Open Books Form </button><br>
+        <div id="bookFormDiv">
+            <form id="bookForm" method="#" action="#">
+                Title <input type='text' name='titleBook'><br>
             Author <input type='text' name='authorID'><br>
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
@@ -46,35 +59,58 @@
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                 Add Book
             </button>
-        </form>
-</div>
+            </form>
+        </div>
+    
+    
+    </div>
+    
+    
+    <div class="side2">
+    
+        <h3>Add Authors with their Nationality:</h3><br>
+        <button class="open-button" onclick="openAuthorForm()">Open Author Form</button>
+        <div id="authorForm" style="display: None">
+    
+            <form id='authorForm' method="#" action="#">
+                First Name <input type='text' name='authorFirst'><br>
+                Last Name <input type='text' name='authorLast'><br>
+                Nationality <input type='text' name='authorNation'><br>
+                <br>
+                <button type='submit' onclick="return confirm('Are you sure you want to add this author?');">
+                    Add Author
+                </button>
+                <button class="close-button" onclick="closeAuthorForm()">Close Author Form</button>
+            </form>
+        </div>
+    
+    </div>
+    
+    
+    
+    <div class="side3">
+        <h3>Add People with contact info:</h3>
+        
+        <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
+     
+        
+        <div id="borrowForm" style="display: none;">
+            <form id='authorForm' method="POST" action="#">
+                First Name <input type='text' name='authorFirst'><br>
+                Last Name <input type='text' name='authorLast'><br>
+                Email <input type='email' id="email" name='email'><br>
+                Phone <input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+                <br>
+                <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
+                    Add Borrower
+                </button>
+                <button class="close-button" onclick="closeBorrowForm()">Close Author Form</button>
+            </form>
+    
+        </div>
+    </div>
 
+    
 
-
-<div>
-    <h3>Adding Authors to the Database:</h3>
-        <form id='authorForm' method="#" action="/borrowers">
-            First Name <input type='text' name='authorFirst'><br>
-            Last Name <input type='text' name='authorLast'><br>
-            Nationality <input type='text' name='authorNation'><br>
-            <br>
-            <button type='submit' onclick="return confirm('Are you sure you want to add this author?');">
-                Add Author
-            </button>
-        </form>
-</div>
-<div>
-    <h3>Adding Borrowers to the Database:</h3>
-    <form id='authorForm' method="POST" action="#">
-        First Name <input type='text' name='authorFirst'><br>
-        Last Name <input type='text' name='authorLast'><br>
-        Email <input type='email' id="email" name='email'><br>
-        Phone <input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
-
-        <br>
-        <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
-            Add Borrower
-        </button>
-    </form>
-
+    
 </div>

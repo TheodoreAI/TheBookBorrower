@@ -1,9 +1,28 @@
-
+<link href='/script.css'>
 <!-- navigation bar with an unordered list -->
 <div>
     <h2>Borrowers: </h2>
-    <h3>People that have ever borrowed books:</h3>
+    <h3>People that can be found in the database:</h3>
 </div>
+
+<div>
+    <h4> You can search the borrowers below: </h4>
+
+    <div>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for borrowers">
+        <ol id="myUL">
+            <li><a href="">Mateo Estrada</a></li><br>
+            <li><a href="">Rhonda Smith</a></li><br>
+            <li><a href="">Barry Allen</a></li><br>
+            <li><a href="">Wally West</a></li><br>
+        </ol>
+    </div>
+    <p>If the borrower isn't on the list, you can add him below:</p>
+
+    <a href="/maintain"><button>Add A Borrower</button></a>
+
+
+</div><br><br>
 
 <div>
     <table>

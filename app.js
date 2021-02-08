@@ -50,18 +50,9 @@ app.get('/borrowers', function(req, res){
     res.render('borrowers.hbs')
 });
 
-// These aren't being used
-// app.get('/genres', function(req, res){
-//     res.render('./genres/genres')
-// });
-
-// app.get('/authors', function (req, res) {
-//     res.render('./authors/authors')
-// });
-
 
 app.get('/maintain', function(req, res){
-    res.render('./maintain/maintain')
+    res.render('maintain/maintain.hbs')
 });
 
 app.listen(PORT, () => console.log(`Web App running at http://${localhost}:${PORT}/`));
