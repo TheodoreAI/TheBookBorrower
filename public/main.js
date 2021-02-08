@@ -27,6 +27,7 @@ if (example1) {
     elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Publisher </th><td>Simon & Schuster</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
@@ -42,6 +43,7 @@ if (example2) {
     elem.innerHTML +="<table><tr><th>Author </th><td>Lisa Rogan</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>256</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Publisher </th><td>Thomas Dunne Books</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
@@ -57,6 +59,7 @@ if (example3) {
     elem.innerHTML +="<table><tr><th>Author </th><td>Margaret Bourke-White</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>388</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Publisher </th><td>Palala Press</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Borrowed? </th><td>No</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Check Out Date </th><td>None</td></tr></table>"
@@ -72,6 +75,7 @@ if (example4) {
     elem.innerHTML +="<table><tr><th>Author </th><td>Jim Carroll</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>224</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Publisher </th><td>Penguin Books</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Borrowed? </th><td>No</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Check Out Date </th><td>None</td></tr></table>"
@@ -87,6 +91,7 @@ if (example5) {
     elem.innerHTML +="<table><tr><th>Author </th><td>Gordon Parks</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>192</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Publisher </th><td>Minnesota Historical Society Press</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Borrowed? </th><td>No</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Check Out Date </th><td>None</td></tr></table>"
@@ -242,6 +247,3 @@ if (status5) {
     status5Button.textContent = "Borrow"
   }
 }
-
-
-
