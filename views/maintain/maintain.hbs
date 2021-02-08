@@ -24,7 +24,15 @@
         <div id="bookFormDiv">
             <form id="bookForm" method="#" action="#">
                 Title <input type='text' name='titleBook'><br>
-            Author <input type='text' name='authorID'><br>
+              <select id="existingAuthor" name="existingAuthor">
+                <option selected hidden style="display:none">Select Author</option>
+                  <option value="AlexTrebek" id="AlexTrebek">Alex Trebek</option>
+                  <option value="LisaRogan" id="LisaRogan">Lisa Rogan</option>
+                  <option value="MargaretBourkeWhite" id="MargaretBourkeWhite">Margaret Bourke-White</option>
+                  <option value="JimCarroll" id="JimCarroll">Jim Carroll</option>
+                  <option value="GordonParks" id="GordonParks">Gordon Parks</option>
+              </select><br>
+            Add new author <input type='text' name='authorID'><br>
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
                 <option value="Yes" id="Yes">Yes</option>
@@ -62,17 +70,17 @@
             <button class="close-button" onclick="closeForm()">Close Author Form</button>
             </form>
         </div>
-    
-    
+
+
     </div>
-    
-    
+
+
     <div class="side2">
-    
+
         <h3>Add Authors with their Nationality:</h3><br>
         <button class="open-button" onclick="openAuthorForm()">Open Author Form</button>
         <div id="authorForm" style="display: None">
-    
+
             <form id='authorForm' method="#" action="#">
                 First Name <input type='text' name='authorFirst'><br>
                 Last Name <input type='text' name='authorLast'><br>
@@ -84,17 +92,17 @@
                 <button class="close-button" onclick="closeAuthorForm()">Close Author Form</button>
             </form>
         </div>
-    
+
     </div>
-    
-    
-    
+
+
+
     <div class="side3">
-        <h3>Add People with Contact Info:</h3>
-        
+        <h3>Add Borrowers with Contact Info:</h3>
+
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
-     
-        
+
+
         <div id="borrowForm" style="display: none;">
             <form id='authorForm' method="POST" action="#">
                 First Name <input type='text' name='authorFirst'><br>
@@ -107,11 +115,11 @@
                 </button>
                 <button class="close-button" onclick="closeBorrowForm()">Close Author Form</button>
             </form>
-    
+
         </div>
     </div>
 
-    
 
-    
+
+
 </div>
