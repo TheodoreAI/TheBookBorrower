@@ -2,6 +2,12 @@
 <link href='/script.css'>
 {{!-- <script type="text/javascript" src='../../public/forms.js'>
 </script> --}}
+<h1>
+    The Book Borrower
+</h1>
+{{!-- forms to create update and delete --}}
+{{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
+
 <div class="menuForms">
 <h2>
     What would you like to add today?
@@ -18,21 +24,41 @@
         <div id="bookFormDiv">
             <form id="bookForm" method="#" action="#">
                 Title <input type='text' name='titleBook'><br>
-                Author <input type='text' name='authorID'><br>
-                <label for="status">Currently being Borrowed?</label>
-                <select id="status" name="status">
-                    <option value="Yes" id="Yes">Yes</option>
-                    <option value="No" id="No">No</option>
-                </select><br>
-                Number of Pages <input type='number' name='pageCount' min="0" required><br>
-                Publisher <input type='text' name='PublisherBook'><br>
-                Language(s) <input type='text' name='languageID'><br>
-                Genre(s) <input type='text' name='genreID'><br>
-                <br>
-                <button type='submit' id="submitBook">
-                    Add Book
-                </button>
-                <button class="close-button" onclick="closeForm()">Close Form</button>
+            Author <input type='text' name='authorID'><br>
+            <label for="status">Currently being Borrowed?</label>
+            <select id="status" name="status">
+                <option value="Yes" id="Yes">Yes</option>
+                <option value="No" id="No">No</option>
+            </select><br>
+            Number of Pages <input type='number' name='pageCount' min="0" required><br>
+            <select id="existingPublisher" name="existingPublisher">
+              <option selected hidden style="display:none">Select Publisher</option>
+                <option value="SimonSchuster" id="SimonSchuster">Simon & Schuster</option>
+                <option value="ThomasDunneBooks" id="ThomasDunneBooks">Thomas Dunne Books</option>
+                <option value="PalalaPress" id="PalalaPress">Palala Press</option>
+                <option value="PenguinBooks" id="PenguinBooks">Penguin Books</option>
+                <option value="MinnesotaHSP" id="MinnesotaHSP">Minnesota Historical Society Press</option>
+            </select><br>
+            Add new publisher <input type='text' name='PublisherBook'><br>
+            <select id="existingLanguage" name="existingLanguage">
+              <option selected hidden style="display:none">Select Language</option>
+                <option value="English" id="English">English</option>
+            </select><br>
+            Add new Language <input type='text' name='languageID'><br>
+            <p>
+              Select Genre(s)</br>
+              Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+            </p>
+            <select id="existingGenres" name="existingGenres" multiple>
+                <option value="NonFiction" id="NonFiction">Non-Fiction</option>
+                <option value="Biography" id="Biography">Biography</option>
+                <option value="Autobiography" id="Autobiography">Autobiography</option>
+            </select><br>
+            Add new Genre(s) <input type='text' name='genreID'><br>
+            <br>
+            <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
+                Add Book
+            </button>
             </form>
         </div>
     
