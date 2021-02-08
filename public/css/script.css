@@ -191,8 +191,11 @@ body{
     bottom: 0;
     text-align: center;
     font: arial;
-    position: absolute;
+    position: relative;
     width: 100%;
+    border: 20px;
+   
+
 }
 
 /*Title and Names that open modals*/
