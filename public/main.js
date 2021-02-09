@@ -27,6 +27,7 @@ if (example1) {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>The Answer Is... Reflections on My Life</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -42,7 +43,8 @@ if (example2) {
   example2.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Who is Alex Trebek?: A Biography</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Lisa Rogan</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Lisa Rogak</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>256</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography</td></tr></table>"
@@ -59,6 +61,7 @@ if (example3) {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Portrait of Myself</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Margaret Bourke-White</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>388</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -75,6 +78,7 @@ if (example4) {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Jim Carroll</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>224</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -91,6 +95,7 @@ if (example5) {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>A Choice of Weapons</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Gordon Parks</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>192</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
