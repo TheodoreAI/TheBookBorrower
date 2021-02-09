@@ -15,6 +15,8 @@ var example10 = document.getElementById("status2Button");
 var example11 = document.getElementById("status3Button");
 var example12 = document.getElementById("status4Button");
 var example13 = document.getElementById("status5Button");
+var example14 = document.getElementById("openModal9");
+var example15 = document.getElementById("openModal10");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -179,6 +181,27 @@ if (example13) {
     elem.innerHTML ="A Choice of Weapons"
     elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
     modal.style.display = "block";
+  }
+}
+
+if (example14) {
+  example14.onclick = function() {
+    var elem = document.querySelector('.modal-text')
+    elem.innerHTML ="<table><tr><th>Name </th><td>Barry Allen</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Phone </th><td>415-123-4567</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Email </th><td>barry@thebookborrower.com</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Current Borrows </th><td>None</td></tr></table>"
+    modal.style.display = "block";
+  }
+}
+
+if (example15) {
+  example15.onclick = function() {
+  elem.innerHTML ="<table><tr><th>Name </th><td>Wally West</td></tr></table>"
+  elem.innerHTML +="<table><tr><th>Phone </th><td>562-123-4567</td></tr></table>"
+  elem.innerHTML +="<table><tr><th>Email </th><td>Wally@thebookborrower.com</td></tr></table>"
+  elem.innerHTML +="<table><tr><th>Current Borrows </th><td>None</td></tr></table>"
+  modal.style.display = "block";
   }
 }
 

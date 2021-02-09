@@ -159,23 +159,6 @@ ol li a {
     color: black;
 }
 
-
-
-
-a::before{
-    content: "";
-    position: absolute;
-    height: 3px;
-    right: 0px;
-    bottom: -3px;
-    left: 0px;
-    background-color: lightgoldenrodyellow;
-}
-
-
-
-
-
 body{
     margin: 0px;
     padding: 0px;
@@ -194,7 +177,7 @@ body{
     position: relative;
     width: 100%;
     border: 20px;
-   
+
 
 }
 
