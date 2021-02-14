@@ -87,6 +87,25 @@
 
     </div>
 
+    <div class="side2">
+        <h3>Add a Book with Publisher, Language, and Genre:</h3>
+        <button class="open-button" onclick="#">Open Authors Form </button><br>
+        <div id="authorFormDiv">
+            <form id="authorForm" method="#" action="#">
+                <h4>Add New Author: </h4>
+                <ol style="list-style: none">
+                    <li>First Name: <input type='text' name='firstID'></li><br>
+                    <li>Last Name: <input type='text' name='lastID'></li><br>
+                    <li>Nationality: <input type='text' name='nationalityID'></li><br>
+                </ol>
+                <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
+                    Add Author
+                </button>
+                <button class="close-button" onclick="closeForm()">Close Author Form</button>
+            </form>
+        </div>
+    </div>
+
     <div class="side3">
         <h3>Add Borrowers with Contact Info:</h3>
 
