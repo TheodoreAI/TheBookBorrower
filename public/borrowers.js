@@ -8,7 +8,6 @@ function myFunction() {
  
 
     // Now I will loop throhgout all the list items, hide those who don't match the search query
-
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
         textVal = a.textContent || a.innerText;
