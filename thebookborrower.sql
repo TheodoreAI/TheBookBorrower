@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS languages;
 DROP TABLE IF EXISTS borrowers;
 
 
+
 -- The tables have all been tested and you can make them by running the following command:
 
 -- source ~/thebookborrower.sql -- make sure you have the right path to the file and that you are running the MariaDB
@@ -31,6 +32,7 @@ CREATE TABLE borrowers (
     firstName varchar(255) NOT NULL,
     phone varchar(150) NOT NULL,
     email varchar(255) NOT NULL,
+    fullName varchar(255) NOT NULL,
     CONSTRAINT fullName UNIQUE(firstName, lastName));
 
 CREATE TABLE nationalities (
@@ -43,6 +45,7 @@ CREATE TABLE authors (
     lastName varchar(255) NOT NULL,
     firstName varchar(255) NOT NULL,
     nationID int,
+    fullName varchar(255) NOT NULL,
     CONSTRAINT FOREIGN KEY (nationID) REFERENCES nationalities (id),
     CONSTRAINT fullName UNIQUE(firstName, lastName)
 );
