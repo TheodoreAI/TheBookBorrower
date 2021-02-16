@@ -1,18 +1,20 @@
 
 -- If you need to drop the tables use the following:
-DROP TABLE languages;
-DROP TABLE publishers;
-DROP TABLE borrowers;
-DROP TABLE nationalities;
-DROP TABLE authors;
-DROP TABLE genres;
-DROP TABLE books;
-DROP TABLE genrebooks;
-DROP TABLE authorsbooks;
+DROP TABLE IF EXISTS genrebooks;
+DROP TABLE IF EXISTS authorsbooks;
+DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS nationalities;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS publishers;
+DROP TABLE IF EXISTS languages;
+DROP TABLE IF EXISTS borrowers;
+
+
 
 -- The tables have all been tested and you can make them by running the following command:
 
--- source ~/thebookborrower.sql -- make sure you have the right path to the file and that you are running the MariaDB 
+-- source ~/thebookborrower.sql -- make sure you have the right path to the file and that you are running the MariaDB
 
 CREATE TABLE languages (
     id int(11) PRIMARY KEY AUTO_INCREMENT,
@@ -30,6 +32,7 @@ CREATE TABLE borrowers (
     firstName varchar(255) NOT NULL,
     phone varchar(150) NOT NULL,
     email varchar(255) NOT NULL,
+    fullName varchar(255) NOT NULL,
     CONSTRAINT fullName UNIQUE(firstName, lastName));
 
 CREATE TABLE nationalities (
@@ -42,6 +45,7 @@ CREATE TABLE authors (
     lastName varchar(255) NOT NULL,
     firstName varchar(255) NOT NULL,
     nationID int,
+    fullName varchar(255) NOT NULL,
     CONSTRAINT FOREIGN KEY (nationID) REFERENCES nationalities (id),
     CONSTRAINT fullName UNIQUE(firstName, lastName)
 );
@@ -128,12 +132,12 @@ WHERE nationalities.nation = "American"; -- "American"
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Bourke-White", "Margaret", nationalities.id
 FROM nationalities
-WHERE nationalities.nation = "American"; 
+WHERE nationalities.nation = "American";
 
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Carroll", "Jim", nationalities.id
 FROM nationalities
-WHERE nationalities.nation = "American"; 
+WHERE nationalities.nation = "American";
 
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Parks", "Gordon", nationalities.id
@@ -147,21 +151,19 @@ VALUES
 ("Autobiography");
 
 
-
-
 --This is all the books:
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
 VALUES
-("The Answer Is... Reflections on My Life", TRUE, 297, 
-(SELECT id from languages WHERE lang="English"), 
+("The Answer Is... Reflections on My Life", TRUE, 297,
+(SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Simon & Schuster"),
 (SELECT id from borrowers WHERE firstName="Rhonda" AND lastName="Smith"),
  '2020/01/30');
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
 VALUES
-("Who is Alex Trebek?: A Biography", TRUE, 256, 
-(SELECT id from languages WHERE lang="English"), 
+("Who is Alex Trebek?: A Biography", TRUE, 256,
+(SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Thomas Dunne Books"),
 (SELECT id from borrowers WHERE firstName="Mateo" AND lastName="Estrada"),
  '2020/01/30');
@@ -169,25 +171,23 @@ VALUES
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
-("Portrait of Myself", FALSE, 388, 
-(SELECT id from languages WHERE lang="English"), 
+("Portrait of Myself", FALSE, 388,
+(SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Palala Press"));
 
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
-("The Basketball Diaries", FALSE, 224, 
-(SELECT id from languages WHERE lang="English"), 
+("The Basketball Diaries", FALSE, 224,
+(SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Penguin Books"));
 
 
  INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
-("A Choice of Weapons", FALSE, 192, 
-(SELECT id from languages WHERE lang="English"), 
+("A Choice of Weapons", FALSE, 192,
+(SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Minnesota Historical Society Press"));
-
-
 
 
  -- Inserting into the joining tables:
@@ -243,13 +243,13 @@ INSERT INTO authorsbooks (bookID, authorID)
      (SELECT id FROM books WHERE title="Portrait of Myself"),
      (SELECT id FROM authors WHERE firstName="Margaret" AND lastName="Bourke-White")
  );
- 
+
 INSERT INTO authorsbooks (bookID, authorID)
  VALUES(
      (SELECT id FROM books WHERE title="The Basketball Diaries"),
      (SELECT id FROM authors WHERE firstName="Jim" AND lastName="Carroll")
  );
- 
+
 INSERT INTO authorsbooks (bookID, authorID)
  VALUES(
      (SELECT id FROM books WHERE title="A Choice of Weapons"),
@@ -265,3 +265,4 @@ INSERT INTO authorsbooks (bookID, authorID)
     ON authors.id = authorsbooks.authorID
  INNER JOIN borrowers
     ON borrowers.id = books.borrowerID;
+
