@@ -255,3 +255,14 @@ INSERT INTO authorsbooks (bookID, authorID)
      (SELECT id FROM books WHERE title="A Choice of Weapons"),
      (SELECT id FROM authors WHERE firstName="Gordon" AND lastName="Parks")
  );
+
+
+ SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+ FROM books
+ INNER JOIN authorsbooks 
+    ON books.id = authorsbooks.bookID
+ INNER JOIN authors 
+    ON authors.id = authorsbooks.authorID
+ INNER JOIN borrowers
+    ON borrowers.id = books.borrowerID;
+
