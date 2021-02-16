@@ -105,7 +105,7 @@ INNER JOIN authors
    ON authors.id = authorsbooks.authorID
 INNER JOIN borrowers
    ON borrowers.id = books.borrowerID
-   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = "Mateo Estrada";
+   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_input;
 
 -- get all Books for the Books page
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
@@ -153,8 +153,14 @@ SELECT full_name, phone, email FROM borrowers WHERE full_name = :name_in_box;
 -- how to get titles of books?
 
 -- get all borrowers for the borrowers page:
-SELECT full_name, phone, email FROM borrowers
--- how to get status of borrowing books?
+SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 -- update info for individual borrowers from the borrowers page
 
