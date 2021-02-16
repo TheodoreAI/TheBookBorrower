@@ -24,28 +24,17 @@
         <div id="bookFormDiv">
             <form id="bookForm" method="#" action="#">
                 Title <input type='text' name='titleBook'><br>
-              <select id="existingAuthor" name="existingAuthor">
-                <option selected hidden style="display:none">Select Author</option>
+              <p>
+                Select Author(s)</br>
+                Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+              </p>
+              <select id="existingAuthor" name="existingAuthor" multiple>
                   <option value="AlexTrebek" id="AlexTrebek">Alex Trebek</option>
                   <option value="LisaRogak" id="LisaRogak">Lisa Rogak</option>
                   <option value="MargaretBourkeWhite" id="MargaretBourkeWhite">Margaret Bourke-White</option>
                   <option value="JimCarroll" id="JimCarroll">Jim Carroll</option>
                   <option value="GordonParks" id="GordonParks">Gordon Parks</option>
               </select><br>
-            <h4>Add New Author: </h4>
-            <ol style="list-style: none">
-                <li>First Name: <input type='text' name='firstID'></li><br>
-                <li>Last Name: <input type='text' name='lastID'></li><br>
-                <li>
-                  <select id="existingNationality" name="existingNationality">
-                      <option selected hidden style="display:none">Select Nationality</option>
-                        <option value="American" id="American">American</option>
-                        <option value="Canadian" id="Canadian">Canadian</option>
-                  </select>
-                </li>
-                <br />
-                <li>Add New Nationality: <input type='text' name='nationalityID'></li><br>
-            </ol>
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
                 <option value="Yes" id="Yes">Yes</option>
@@ -80,7 +69,7 @@
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                 Add Book
             </button>
-            <button class="close-button" onclick="closeForm()">Close Author Form</button>
+            <button class="close-button" onclick="closeForm()">Close Book Form</button>
             </form>
         </div>
 
@@ -96,7 +85,15 @@
                 <ol style="list-style: none">
                     <li>First Name: <input type='text' name='firstID'></li><br>
                     <li>Last Name: <input type='text' name='lastID'></li><br>
-                    <li>Nationality: <input type='text' name='nationalityID'></li><br>
+                    <li>
+                      <select id="existingNationality" name="existingNationality">
+                          <option selected hidden style="display:none">Select Nationality</option>
+                            <option value="American" id="American">American</option>
+                            <option value="Canadian" id="Canadian">Canadian</option>
+                      </select>
+                    </li>
+                    <br />
+                    <li>Add New Nationality: <input type='text' name='nationalityID'></li><br>
                 </ol>
                 <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                     Add Author
@@ -122,7 +119,7 @@
                 <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
                     Add Borrower
                 </button>
-                <button class="close-button" onclick="closeBorrowForm()">Close Author Form</button>
+                <button class="close-button" onclick="closeBorrowForm()">Close Borrower Form</button>
             </form>
 
         </div>
