@@ -1,95 +1,88 @@
 -- search for books from the Books page:
 -- title:
-SELECT books.title,
-CONCAT (authors.firstName, " ", authors.lastName) AS 'author',
-books.checkoutStatus,
-CONCAT (borrowers.firstName, " ", borrowers.lastName) AS 'borrower'
-FROM books, authors, borrowers, authorsbooks
-WHERE books.title = :title_input
-AND authorsbooks.bookID = books.id
-AND books.borrowerID = borrowers.id;
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID
+WHERE books.title = :title_input;
 
 -- author:
-SELECT books.title, authors.firstName, authors.lastName FROM
-books b JOIN authorsbooks ab ON
-b.id = ab.bookID JOIN authors a ON
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID AND CONCAT(authors.firstName, " ", authors.lastName) = :author_input
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
-
-SELECT books.title,
-CONCAT (authors.firstName, " ", authors.lastName) AS 'author',
-books.checkoutStatus,
-CONCAT (borrowers.firstName, " ", borrowers.lastName) AS 'borrower'
-FROM books, authors, borrowers, authorsbooks
-WHERE CONCAT (authors.firstName, " ", authors.lastName) = "Gordon Parks"
-AND authorsbooks.bookID = books.id
-AND (borrowers.id = books.borrowerID OR books.borrowerID IS NULL)
-GROUP BY title;
 
 -- author nationality:
-SELECT books(title), authors (full_name) books(status), borrowers (full_name)
-FROM books, authors, borrowers, nationalties
-WHERE nationality = :nationality_input
-AND authors(nation_id) = nationality(id)
-AND authors_books (book_id) = books(id)
-AND books (borrower_id) = borrowers(id);
+
 
 -- language:
-SELECT books(title), authors (full_name) books(status), borrowers (full_name)
-FROM books, authors, borrowers
-WHERE
-AND authors_books (book_id) = books(id)
-AND books (borrower_id) = borrowers(id);
+
 
 -- genre:
-SELECT books(title), authors (full_name) books(status), borrowers (full_name)
-FROM books, authors, borrowers
-WHERE
-AND authors_books (book_id) = books(id)
-AND books (borrower_id) = borrowers(id);
+
 
 -- publisher:
-SELECT books(title), authors (full_name) books(status), borrowers (full_name)
-FROM books, authors, borrowers
-WHERE
-AND authors_books (book_id) = books(id)
-AND books (borrower_id) = borrowers(id);
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN publishers
+   ON books.publisherID = publishers.id AND publishers.publisher = "Thomas Dunne Books"
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
+
 
 -- borrowed status:
 -- if user chooses YES:
-SELECT title,
-CONCAT (authors.firstName, " ", authors.lastName) AS 'author',
-checkoutStatus,
-CONCAT (borrowers.firstName, " ", borrowers.lastName) AS 'borrower'
-FROM books, authors, borrowers, authorsbooks
-WHERE authorsbooks.bookID = books.id
-AND authorsbooks.authorID = authors.id
-AND books.borrowerID = borrowers.id;
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 -- if user chooses NO:
-SELECT title,
-CONCAT (authors.firstName, " ", authors.lastName) AS 'author'
-FROM books, authors, borrowers, authorsbooks
-WHERE authorsbooks.bookID = books.id
-AND authorsbooks.authorID = authors.id
-AND books.borrowerID IS NULL
-GROUP BY title;
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+WHERE books.checkoutStatus = FALSE;
 
 -- borrower:
-SELECT books(title), authors (full_name) books(status), borrowers (full_name)
-FROM books, authors, borrowers
-WHERE borrowers(full_name) = :borrower_input
-AND authors_books (book_id) = books(id)
-AND books (borrower_id) = borrowers(id);
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN borrowers
+   ON borrowers.id = books.borrowerID
+   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_input;
 
 -- get all Books for the Books page
-SELECT title,
-CONCAT (authors.firstName, " ", authors.lastName) AS 'author',
-checkoutStatus,
-CONCAT (borrowers.firstName, " ", borrowers.lastName) AS 'borrower'
-FROM books, authors, borrowers, authorsbooks
-WHERE authorsbooks.bookID = books.id
-AND authorsbooks.authorID = authors.id
-AND books.borrowerID = borrowers.id;
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 -- if book is borrowed (user clicks "borrow"):
 -- change status of book:
