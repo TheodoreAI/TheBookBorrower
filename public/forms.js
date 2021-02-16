@@ -17,6 +17,9 @@ formButton.setAttribute('onclick', "return confirm('Are you sure you want to add
 
 document.getElementById("bookFormDiv").setAttribute('style', 'display: None');
 
+document.getElementById("authorFormDiv").setAttribute('style', 'display: None');
+
+
 function openForm() {
     document.getElementById("bookFormDiv").style.display = "block";
 }
@@ -27,7 +30,7 @@ function closeForm() {
 
 
 function openAuthorForm(){
-    document.getElementById("authorForm").style.display = "block";
+    document.getElementById("authorFormDiv").style.display = "block";
 }
 
 
