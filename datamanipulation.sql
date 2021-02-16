@@ -1,5 +1,5 @@
--- search for books from the Books page:
--- title:
+-- search for books from the Books page & get filtered list:
+-- filter by title:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -10,7 +10,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID
 WHERE books.title = :title_input;
 
--- author:
+-- filter by author:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -21,7 +21,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
 
--- author nationality:
+-- filter by author nationality:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -34,7 +34,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
 
--- language:
+-- filter by language:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -47,7 +47,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
 
--- genre:
+-- filter by genre:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -63,7 +63,7 @@ INNER JOIN publishers
 LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
--- publisher:
+-- filter by publisher:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -76,7 +76,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
 
--- borrowed status:
+-- filter by borrowed status:
 -- if user chooses YES:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
@@ -96,7 +96,7 @@ INNER JOIN authors
    ON authors.id = authorsbooks.authorID
 WHERE books.checkoutStatus = FALSE;
 
--- borrower:
+-- filter by borrower name:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -107,7 +107,7 @@ INNER JOIN borrowers
    ON borrowers.id = books.borrowerID
    WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_input;
 
--- get all Books for the Books page
+-- get list of ALL Books for the Books page
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
@@ -118,7 +118,7 @@ LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
 -- if book is borrowed (user clicks "borrow"):
--- change status of book:
+-- change status of book, make checkout date today's date:
 UPDATE books
 SET status = TRUE
 WHERE status = FALSE;
@@ -148,29 +148,29 @@ WHERE books(title) = :title_user_clicked;
 -- delete individual books in pop up from the Books page
 -- this should break connection in books_borrowers, authors_books tables
 
--- search for borrowers on Borrowers page:
-SELECT full_name, phone, email FROM borrowers WHERE full_name = :name_in_box;
--- how to get titles of books?
+-- search for borrowers on Borrowers page & get filtered list:
+SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, borrowers.email, (SELECT IF (borrowers.id = books.borrowerID, 'Yes', 'No')) AS 'Currently borrowing books?'
+FROM borrowers
+LEFT JOIN books
+   ON borrowers.id = books.borrowerID
+   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_input
 
--- get all borrowers for the borrowers page:
-SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
-FROM books
-INNER JOIN authorsbooks
-   ON books.id = authorsbooks.bookID
-INNER JOIN authors
-   ON authors.id = authorsbooks.authorID
-LEFT JOIN borrowers
+
+-- get list of ALL borrowers for the borrowers page:
+SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, borrowers.email, (SELECT IF (borrowers.id = books.borrowerID, 'Yes', 'No')) AS 'Currently borrowing books?'
+FROM borrowers
+LEFT JOIN books
    ON borrowers.id = books.borrowerID;
+
 
 -- update info for individual borrowers from the borrowers page
 
 -- delete individual borrowers from the borrowers page
 -- this should break connection in books_borrowers table
 
---Add to database page (also need to fix close buttons on forms - they both say 'author')
+--Add to database page
+-- (also need to fix close buttons on forms - they both say 'author', also need individual forms for tables like author etc.)
 -- borrowers (how to concatenate name?):
-INSERT INTO borrowers (first_name, last_name, email, phone)
-VALUES (:first_name_input, :last_name_input, :email_input, :phone_input);
 
 -- books:
 INSERT INTO books ()
