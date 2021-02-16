@@ -22,13 +22,46 @@ LEFT JOIN borrowers
 
 
 -- author nationality:
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN nationalities
+   ON nationalities.id = authors.nationID AND nationalities.nationality = :nationality_input
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 
 -- language:
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN languages
+   ON languages.id = books.languageID AND languages.lang = :language_input
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 
 -- genre:
-
+SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN genrebooks
+  ON books.id = genrebooks.bookID
+INNER JOIN genres
+  ON genres.id = genrebooks.genreID AND genres.genre = :genre_input
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN publishers
+   ON books.publisherID = publishers.id
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID;
 
 -- publisher:
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
@@ -38,7 +71,7 @@ INNER JOIN authorsbooks
 INNER JOIN authors
    ON authors.id = authorsbooks.authorID
 INNER JOIN publishers
-   ON books.publisherID = publishers.id AND publishers.publisher = "Thomas Dunne Books"
+   ON books.publisherID = publishers.id AND publishers.publisher = :publisher_input;
 LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID;
 
@@ -72,7 +105,7 @@ INNER JOIN authors
    ON authors.id = authorsbooks.authorID
 INNER JOIN borrowers
    ON borrowers.id = books.borrowerID
-   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_input;
+   WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = "Mateo Estrada";
 
 -- get all Books for the Books page
 SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
