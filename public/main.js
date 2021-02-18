@@ -66,9 +66,9 @@ function setValueAsInput() {
 if (example1) {
   example1.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML = "<table><tr id= '1'><th>Title </th><td id = 'data' >The Answer Is... Reflections on My Life<button id='updateButton' onclick='setValueAsInput()'>Update Book</button></td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
+    elem.innerHTML ="<table><tr><th>Title </th><td>The Answer Is... Reflections on My Life</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Alex Trebek</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>Canadian</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -84,8 +84,8 @@ if (example2) {
   example2.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Who is Alex Trebek?: A Biography</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Lisa Rogak</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Lisa Rogak</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>256</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography</td></tr></table>"
@@ -101,8 +101,8 @@ if (example3) {
   example3.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Portrait of Myself</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Margaret Bourke-White</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Margaret Bourke-White</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>388</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -117,9 +117,9 @@ if (example3) {
 if (example4) {
   example4.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML = "<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Jim Carroll</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
+    elem.innerHTML ="<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Jim Carroll</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>224</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -135,8 +135,8 @@ if (example5) {
   example5.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>A Choice of Weapons</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author </th><td>Gordon Parks</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Gordon Parks</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>192</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
