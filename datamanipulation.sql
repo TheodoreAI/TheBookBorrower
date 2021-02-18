@@ -128,10 +128,36 @@ UPDATE books
 SET status = FALSE, borrower_id = NULL, checkout_date = NULL
 WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL;
 
--- get all popup info for individual books on the Books page
-SELECT books(title), authors(full_name), nationalities(nationality), books(pages),
+-- book info in pop ups on books page after user clicks a title:
+SELECT books.title,
+CONCAT(authors.firstName, " ", authors.lastName) AS 'Author',
+nationalities.nationality,
+books.pgCount,
+languages.lang,
+genres.genre,
+publishers.publisher,
+books.checkoutStatus,
+books.checkoutDate,
+CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+FROM books
+INNER JOIN authorsbooks
+   ON books.id = authorsbooks.bookID
+INNER JOIN authors
+   ON authors.id = authorsbooks.authorID
+INNER JOIN nationalities
+   ON nationalities.id = authors.nationID
+INNER JOIN languages
+   ON books.languageID = languages.id
+INNER JOIN publishers
+   ON books.publisherID = publishers.id
+INNER JOIN genrebooks
+   ON books.id = genrebooks.bookID
+INNER JOIN genres
+   ON genres.id = genrebooks.genreID
+LEFT JOIN borrowers
+   ON borrowers.id = books.borrowerID
+WHERE books.title = :book_title_clicked;
 
-FROM books WHERE title = :title_clicked_from_books_page
 
 -- update info for individual books in pop up from the Books page
 -- this will be a form in the popup
@@ -161,6 +187,17 @@ SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers
 FROM borrowers
 LEFT JOIN books
    ON borrowers.id = books.borrowerID;
+
+-- borrower info in pop ups on borrowers page after user clicks a name:
+SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name',
+borrowers.phone,
+borrowers.email,
+books.title
+FROM borrowers
+LEFT JOIN books
+   ON borrowers.id = books.borrowerID
+WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_clicked;
+
 
 
 -- update info for individual borrowers from the borrowers page
