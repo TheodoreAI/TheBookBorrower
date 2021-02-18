@@ -201,9 +201,51 @@ WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_clic
 
 
 -- update info for individual borrowers from the borrowers page
+-- These queries will be implemented in the books and borrowers pages.
+
+
+UPDATE books
+SET title = :input_title, 
+   checkoutStatus = :input_status, 
+   pgCount = :input_pgCount
+   checkout_date = :input_date, 
+   borrowerID = :input_borrower_id, 
+   languageID = :input_publisher, 
+   publisherID= :input_publisher
+
 
 -- delete individual borrowers from the borrowers page
 -- this should break connection in books_borrowers table
+-- These queries will be implemented in the borrowers page and in the books page
+DELETE FROM books
+WHERE title = :input_title, 
+   checkoutStatus = :input_status, 
+   pgCount = :input_pgCount
+   checkout_date = :input_date, 
+   borrowerID = :input_borrower_id, 
+   languageID = :input_publisher, 
+   publisherID= :input_publisher
+
+DELETE FROM genres
+WHERE genre = :input_genre
+
+DELETE FROM genrebooks
+
+
+DELETE FROM publishers
+WHERE publisher = :input_publisher
+
+DELETE FROM borrowers
+WHERE firstName = :input_firstName,
+
+DELETE FROM nationalities
+
+DELETE FROM authors
+
+DELETE FROM authorsbooks
+
+DELETE FROM languages
+
 
 --Add to database page
 INSERT INTO borrowers (first_name, last_name, email, phone)

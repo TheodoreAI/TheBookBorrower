@@ -1,4 +1,8 @@
 // Get the modal
+
+
+
+
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
@@ -20,6 +24,43 @@ var example15 = document.getElementById("openModal10");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
+
+
+
+function inputValues() {
+
+  // This function updates the value of the td
+  rowdata = document.createElement('td');
+  rowData.setAttribute('id', '1');
+
+  values = document.getElementById('input1');
+  rowData.innerHTML = values.value;
+
+
+
+}
+
+function setValueAsInput() {
+
+  // This function will be used to update the values of the td elements.
+  firstRow = document.getElementById("1");
+  rowData = document.getElementById("data");
+  
+
+
+  input1 = document.createElement("input");
+  stopOnClick = document.getElementById("updateButton");
+  stopOnClick.setAttribute("onclick", 'inputValues()');
+  input1.setAttribute("value", "The Answer Is... Reflections on My Life");
+  input1.setAttribute("id", "input1");
+  firstRow.append(input1);
+  firstRow.append(stopOnClick);
+
+}
+
+
+
+
 
 // When the user clicks on the button, open the modal
 if (example1) {
