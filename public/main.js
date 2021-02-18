@@ -1,4 +1,8 @@
 // Get the modal
+
+
+
+
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
@@ -21,11 +25,48 @@ var example15 = document.getElementById("openModal10");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
+
+
+function inputValues() {
+
+  // This function updates the value of the td
+  rowdata = document.createElement('td');
+  rowData.setAttribute('id', '1');
+
+  values = document.getElementById('input1');
+  rowData.innerHTML = values.value;
+
+
+
+}
+
+function setValueAsInput() {
+
+  // This function will be used to update the values of the td elements.
+  firstRow = document.getElementById("1");
+  rowData = document.getElementById("data");
+  
+
+
+  input1 = document.createElement("input");
+  stopOnClick = document.getElementById("updateButton");
+  stopOnClick.setAttribute("onclick", 'inputValues()');
+  input1.setAttribute("value", "The Answer Is... Reflections on My Life");
+  input1.setAttribute("id", "input1");
+  firstRow.append(input1);
+  firstRow.append(stopOnClick);
+
+}
+
+
+
+
+
 // When the user clicks on the button, open the modal
 if (example1) {
   example1.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML ="<table><tr><th>Title </th><td>The Answer Is... Reflections on My Life</td></tr></table>"
+    elem.innerHTML = "<table><tr id= '1'><th>Title </th><td id = 'data' >The Answer Is... Reflections on My Life<button id='updateButton' onclick='setValueAsInput()'>Update Book</button></td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
@@ -76,7 +117,7 @@ if (example3) {
 if (example4) {
   example4.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML ="<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
+    elem.innerHTML = "<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author </th><td>Jim Carroll</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>224</td></tr></table>"
