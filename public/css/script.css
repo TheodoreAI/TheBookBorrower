@@ -8,30 +8,7 @@
     border: 10px;
 }
 
-.side1 {
-    margin: auto;
-    width: 100%;
-    border: 3px solid rgb(37, 101, 131);
-    padding: 10px;
-    border-radius: 30px;
-    left: 1px;
-    top: auto;
-    position: relative;
-}
-
-
-.side2 {
-    margin: auto;
-    width: 100%;
-    border: 3px solid rgb(37, 101, 131);
-    padding: 10px;
-    border-radius: 30px;
-    left: 1px;
-    top: auto;
-    position: relative;
-}
-
-.side3 {
+.formbox {
     margin: auto;
     width: 100%;
     border: 3px solid rgb(37, 101, 131);

@@ -19,6 +19,13 @@ document.getElementById("bookFormDiv").setAttribute('style', 'display: None');
 
 document.getElementById("authorFormDiv").setAttribute('style', 'display: None');
 
+document.getElementById("publisherFormDiv").setAttribute('style', 'display: None');
+
+document.getElementById("nationalityFormDiv").setAttribute('style', 'display: None');
+
+document.getElementById("languageFormDiv").setAttribute('style', 'display: None');
+
+document.getElementById("genreFormDiv").setAttribute('style', 'display: None');
 
 function openForm() {
     document.getElementById("bookFormDiv").style.display = "block";
@@ -35,7 +42,7 @@ function openAuthorForm(){
 
 
 function closeAuthorForm(){
-    document.getElementById("authorForm").style.display = "none";
+    document.getElementById("authorFormDiv").style.display = "none";
 }
 
 
@@ -46,7 +53,37 @@ function openBorrowForm(){
 function closeBorrowForm(){
     document.getElementById("borrowForm").style.display = "none";
 }
+
+function openPublisherForm(){
+    document.getElementById("publisherFormDiv").style.display = "block";
+}
+
+function closePublisherForm(){
+    document.getElementById("publisherFormDiv").style.display = "none";
+}
+
+function openNationalityForm(){
+    document.getElementById("nationalityFormDiv").style.display = "block";
+}
+
+function closeNationalityForm(){
+    document.getElementById("nationalityFormDiv").style.display = "none";
+}
+
+function openLanguageForm(){
+    document.getElementById("languageFormDiv").style.display = "block";
+}
+
+function closeLanguageForm(){
+    document.getElementById("languageFormDiv").style.display = "none";
+}
+
+function openGenreForm(){
+    document.getElementById("genreFormDiv").style.display = "block";
+}
+
+function closeGenreForm(){
+    document.getElementById("genreFormDiv").style.display = "none";
+}
 // appearBtn.setAttribute("onclick", "closeForm()")
 // formAdd.appendChild(appearBtn);
-
-
