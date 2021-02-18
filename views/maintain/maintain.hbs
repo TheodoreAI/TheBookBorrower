@@ -18,8 +18,12 @@
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
 
 <div class="menuForms">
-    <div class="side1">
-        <h3>Add a Book with Publisher, Language, and Genre:</h3>
+    <div class="formbox">
+        <h3>Add a Book:</h3>
+        <p>
+          If any of your book's information is not found in the book form's menus,
+          add the information using the proper forms for each field before entering the book
+        </p>
         <button class="open-button" onclick="openForm()">Open Books Form </button><br>
         <div id="bookFormDiv">
             <form id="bookForm" method="#" action="#">
@@ -40,6 +44,16 @@
                 <option value="Yes" id="Yes">Yes</option>
                 <option value="No" id="No">No</option>
             </select><br>
+            <select id="existingBorrower" name="existingBorrower">
+              <li style="display: None;"><a href="">Mateo Estrada</a></li><br>
+              <option selected hidden style="display:none">Select Borrower</option>
+                <option value="MateoEstrada" id="MateoEstrada">Mateo Estrada</option>
+                <option value="RhondaSmith" id="RhondaSmith">Rhonda Smith</option>
+                <option value="OscarRascal" id="OscarRascal">Oscar Rascal</option>
+                <option value="BarryAllen" id="BarryAllen">Barry Allen</option>
+                <option value="WallyWest" id="WallyWest">Wally West</option>
+            </select><br>
+            Checkout Date (yyyy-mm-dd) <input type='number' name='checkoutDate'><br>
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
@@ -49,12 +63,10 @@
                 <option value="PenguinBooks" id="PenguinBooks">Penguin Books</option>
                 <option value="MinnesotaHSP" id="MinnesotaHSP">Minnesota Historical Society Press</option>
             </select><br>
-            Add new publisher <input type='text' name='PublisherBook'><br>
             <select id="existingLanguage" name="existingLanguage">
               <option selected hidden style="display:none">Select Language</option>
                 <option value="English" id="English">English</option>
             </select><br>
-            Add new Language <input type='text' name='languageID'><br>
             <p>
               Select Genre(s)</br>
               Ctrl+click (Windows) or Command+Click (Mac) to select more than one
@@ -64,7 +76,6 @@
                 <option value="Biography" id="Biography">Biography</option>
                 <option value="Autobiography" id="Autobiography">Autobiography</option>
             </select><br>
-            Add new Genre(s) <input type='text' name='genreID'><br>
             <br>
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                 Add Book
@@ -76,12 +87,11 @@
 
     </div>
 
-    <div class="side2">
+    <div class="formbox">
         <h3>Add an Author:</h3>
         <button class="open-button" onclick="openAuthorForm()">Open Authors Form </button><br>
         <div id="authorFormDiv">
             <form id="authorForm" method="#" action="#">
-                <h4>Add New Author: </h4>
                 <ol style="list-style: none">
                     <li>First Name: <input type='text' name='firstID'></li><br>
                     <li>Last Name: <input type='text' name='lastID'></li><br>
@@ -93,9 +103,8 @@
                       </select>
                     </li>
                     <br />
-                    <li>Add New Nationality: <input type='text' name='nationalityID'></li><br>
                 </ol>
-                <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
+                <button type='submit' id="submitAuthor" onclick="return confirm('Are you sure you want to add this author?');">
                     Add Author
                 </button>
                 <button class="close-button" onclick="closeAuthorForm()">Close Author Form</button>
@@ -103,14 +112,86 @@
         </div>
     </div>
 
-    <div class="side3">
+    <div class="formbox">
+        <h3>Add an Author Nationality:</h3>
+        <button class="open-button" onclick="openNationalityForm()">Open Nationality Form </button><br>
+        <div id="nationalityFormDiv">
+            <form id="nationalityForm" method="#" action="#">
+                <ol style="list-style: none">
+                    <li>Nationality: <input type='text' name='nationalityID'></li><br>
+                    <li>
+                    <br />
+                </ol>
+                <button type='submit' id="submitNationality" onclick="return confirm('Are you sure you want to add this nationality?');">
+                    Add Nationality
+                </button>
+                <button class="close-button" onclick="closeNationalityForm()">Close Nationality Form</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="formbox">
+        <h3>Add a Publisher:</h3>
+        <button class="open-button" onclick="openPublisherForm()">Open Publishers Form </button><br>
+        <div id="publisherFormDiv">
+            <form id="publisherForm" method="#" action="#">
+                <ol style="list-style: none">
+                    <li>Publisher Name: <input type='text' name='publisherID'></li><br>
+                    <li>
+                    <br />
+                </ol>
+                <button type='submit' id="submitPublisher" onclick="return confirm('Are you sure you want to add this publisher?');">
+                    Add Publisher
+                </button>
+                <button class="close-button" onclick="closePublisherForm()">Close Publisher Form</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="formbox">
+        <h3>Add a Language:</h3>
+        <button class="open-button" onclick="openLanguageForm()">Open Languages Form </button><br>
+        <div id="languageFormDiv">
+            <form id="languageForm" method="#" action="#">
+                <ol style="list-style: none">
+                    <li>Language Name: <input type='text' name='languageID'></li><br>
+                    <li>
+                    <br />
+                </ol>
+                <button type='submit' id="submitLanguage" onclick="return confirm('Are you sure you want to add this language?');">
+                    Add Language
+                </button>
+                <button class="close-button" onclick="closeLanguageForm()">Close Language Form</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="formbox">
+        <h3>Add a Genre:</h3>
+        <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
+        <div id="genreFormDiv">
+            <form id="genreForm" method="#" action="#">
+                <ol style="list-style: none">
+                    <li>Genre: <input type='text' name='genreID'></li><br>
+                    <li>
+                    <br />
+                </ol>
+                <button type='submit' id="submitGenre" onclick="return confirm('Are you sure you want to add this genre?');">
+                    Add Genre
+                </button>
+                <button class="close-button" onclick="closeGenreForm()">Close Genre Form</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="formbox">
         <h3>Add Borrowers with Contact Info:</h3>
 
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
 
 
         <div id="borrowForm" style="display: none;">
-            <form id='authorForm' method="POST" action="#">
+            <form id='borrowForm' method="POST" action="#">
                 First Name <input type='text' name='authorFirst'><br>
                 Last Name <input type='text' name='authorLast'><br>
                 Email <input type='email' id="email" name='email'><br>
