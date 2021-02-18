@@ -169,8 +169,26 @@ LEFT JOIN books
 -- this should break connection in books_borrowers table
 
 --Add to database page
--- (also need to fix close buttons on forms - they both say 'author', also need individual forms for tables like author etc.)
--- borrowers (how to concatenate name?):
+INSERT INTO borrowers (first_name, last_name, email, phone)
+VALUES (:first_name_input, :last_name_input, :email_input, :phone_input);
 
 -- books:
-INSERT INTO books ()
+INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
+VALUES
+(:title_input, :checkoutStatus_dropdown_choice, :pageCount_input,
+(SELECT id from languages WHERE lang=:language_dropdown_choice),
+(SELECT id from publishers WHERE publisher=:publisher_dropdown_choice),
+(SELECT id from borrowers WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName)=:borrower_input_or_null),
+ :checkoutDate_input_or_null);
+
+
+INSERT INTO `authors` (lastName, firstName, nationID)
+VALUES (:lastName_input,
+:firstName_input,
+(SELECT nationalities.id FROM nationalities WHERE nationality = :nationality_dropdown_choice));
+
+INSERT INTO `nationalities` (nationality) VALUES (:nationality_input);
+
+INSERT INTO `languages` (lang) VALUES (:langauge_input);
+
+INSERT INTO `genres` (genre) VALUES (:genre_input);
