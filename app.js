@@ -5,7 +5,7 @@ const path = require('path');
 const db = require('./config/config');
 const PORT = process.env.PORT || 3964;
 const localhost = "127.0.0.1";
-
+var mysql = require('./dbcon.js');
 
 
 
@@ -22,7 +22,6 @@ app.engine('hbs', hbs({
     extname: '.hbs',
 }));
 
-
 app.set("view engine", "hbs");
 
 
@@ -35,6 +34,7 @@ app.use(function(err, req, res, next){
     res.status(500).send('Something Broke!');
 })
 
+app.set('mysql', mysql);
 
 
 app.get('/', function(req, res){
