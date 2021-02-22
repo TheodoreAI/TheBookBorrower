@@ -74,34 +74,34 @@ function setValueAsInput() {
 if (example1) {
   example1.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    titles = ["The Answer Is...Reflections on My Life ", "Who is Alex Trebek: A Biography? ",
-         "Portrait of Myself ", "The Basketball Diaries ",
-         "A Choice of Weapons"
-    ]
-    authors = ["Alex Trebek ", "Lisa Rogak", "Margaret Bourke-White ", " Jim Carroll ", "Gordon Parks "]
-    borrowed = ["Yes", "Yes", "No", "No", "No"]
-    currentBorrower = ["Rhonda Smith", "Mateo Estrada", " ", " ", " "]
-    action = ["Return", "Return", "Borrow", "Borrow", "Borrow"]
-    language = ["English", "English", "English", "English", "English"]
-    genre = ["Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography", "Non-Fiction, Biography, Autobiography",
-              "Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography, Autobiography"]
-    publisher = ["Simon & Schuster", "Thomas Dunne Books", "Palala Press", "Penguin Books", "Minnesota Historical Society Press"]
-    checkoutdate = ["2020/01/30", "2020/01/30", "None", "None", "None"]
-    borrower = ["Rhonda Smith", "Mateo Estrada", "None", "None", "None"]
-    pages = ["297", "256", "388", "224", "192"]
-    rowData = ["The Answer Is... Reflections on My Life", "Alex Trebek", 
-    "Canadian, American", "297", "English", "Non-Fiction, Biography, Autobiography",
-    "Simon & Schuster", "Yes", "2020/01/30", "Rhonda Smith"]
-    headerData = ["Author", "Author Nationality", "Pages", "Language", "Genre(s)", "Publisher", "Borrowed?", "Checkout Date", "Borrower"]
+    // titles = ["The Answer Is...Reflections on My Life ", "Who is Alex Trebek: A Biography? ",
+    //      "Portrait of Myself ", "The Basketball Diaries ",
+    //      "A Choice of Weapons"
+    // ]
+    // authors = ["Alex Trebek ", "Lisa Rogak", "Margaret Bourke-White ", " Jim Carroll ", "Gordon Parks "]
+    // borrowed = ["Yes", "Yes", "No", "No", "No"]
+    // currentBorrower = ["Rhonda Smith", "Mateo Estrada", " ", " ", " "]
+    // action = ["Return", "Return", "Borrow", "Borrow", "Borrow"]
+    // language = ["English", "English", "English", "English", "English"]
+    // genre = ["Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography", "Non-Fiction, Biography, Autobiography",
+    //           "Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography, Autobiography"]
+    // publisher = ["Simon & Schuster", "Thomas Dunne Books", "Palala Press", "Penguin Books", "Minnesota Historical Society Press"]
+    // checkoutdate = ["2020/01/30", "2020/01/30", "None", "None", "None"]
+    // borrower = ["Rhonda Smith", "Mateo Estrada", "None", "None", "None"]
+    // pages = ["297", "256", "388", "224", "192"]
+    // rowData = ["The Answer Is... Reflections on My Life", "Alex Trebek", 
+    // "Canadian, American", "297", "English", "Non-Fiction, Biography, Autobiography",
+    // "Simon & Schuster", "Yes", "2020/01/30", "Rhonda Smith"]
+    // headerData = ["Author", "Author Nationality", "Pages", "Language", "Genre(s)", "Publisher", "Borrowed?", "Checkout Date", "Borrower"]
 
 
 
-    var rowText = ""
-    for (var i = 0; i<9; i++){
-      rowText += "<table><tr id="+i+"><th>" + headerData[i] + "</th><td id = data" + i + " >" + titles[i] + "<button id='updateButton" + i + "' onclick='setValueAsInput()'>Update Title</button></td></tr></table>";
+    // var rowText = ""
+    // for (var i = 0; i<9; i++){
+    //   rowText += "<table><tr id="+i+"><th>" + headerData[i] + "</th><td id = data" + i + " >" + titles[i] + "<button id='updateButton" + i + "' onclick='setValueAsInput()'>Update Title</button></td></tr></table>";
       
-      elem.innerHTML = rowText;
-    }
+    //   elem.innerHTML = rowText;
+    // }
 
 
   
@@ -109,16 +109,16 @@ if (example1) {
 
 
 
-    // elem.innerHTML = "<table><tr id= 1><th>Title </th><td id = 'data' >The Answer Is... Reflections on My Life<button id='updateButton' onclick='setValueAsInput()'>Update Title</button></td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Publisher </th><td>Simon & Schuster</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
-    // elem.innerHTML +="<table><tr><th>Borrower </th><td>Rhonda Smith</td></tr></table>"
+    elem.innerHTML = "<table><tr id= 1><th>Title </th><td id = 'data' >The Answer Is... Reflections on My Life<button id='updateButton' onclick='setValueAsInput()'>Update Title</button></td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Publisher </th><td>Simon & Schuster</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Borrower </th><td>Rhonda Smith</td></tr></table>"
     modal.style.display = "block";
   }
 }

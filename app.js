@@ -3,7 +3,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('./config/config');
-const PORT = process.env.PORT || 3964;
+const PORT = process.env.PORT || 3904;
 const localhost = "127.0.0.1";
 var mysql = require('./dbcon.js');
 
@@ -54,6 +54,11 @@ app.get('/borrowers', function(req, res){
 app.get('/maintain', function(req, res){
     res.render('maintain/maintain.hbs')
 });
+
+app.use('/books', require('./db/books.js'));
+
+
+
 
 app.listen(PORT, () => console.log(`Web App running at http://${localhost}:${PORT}/`));
 
