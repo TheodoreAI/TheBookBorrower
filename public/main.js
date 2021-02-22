@@ -1,5 +1,9 @@
-// Get the modal
 
+
+
+
+// Get the modal
+function modal () {
 
 
 
@@ -34,20 +38,22 @@ function inputValues() {
   rowData.setAttribute('id', '1');
 
   values = document.getElementById('input1');
-  rowData.innerHTML = values.value;
-
-
-
+  if (values.value == ""){
+      alert("You must fill this field!");
+  }
+     
+  else {
+    rowData.innerHTML = values.value;
+  }
+    
 }
+
 
 function setValueAsInput() {
 
   // This function will be used to update the values of the td elements.
   firstRow = document.getElementById("1");
   rowData = document.getElementById("data");
-  
-
-
   input1 = document.createElement("input");
   stopOnClick = document.getElementById("updateButton");
   stopOnClick.setAttribute("onclick", 'inputValues()');
@@ -62,30 +68,70 @@ function setValueAsInput() {
 
 
 
+
+
 // When the user clicks on the button, open the modal
 if (example1) {
   example1.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML ="<table><tr><th>Title </th><td>The Answer Is... Reflections on My Life</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Alex Trebek</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>Canadian</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Publisher </th><td>Simon & Schuster</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Borrower </th><td>Rhonda Smith</td></tr></table>"
+    titles = ["The Answer Is...Reflections on My Life ", "Who is Alex Trebek: A Biography? ",
+         "Portrait of Myself ", "The Basketball Diaries ",
+         "A Choice of Weapons"
+    ]
+    authors = ["Alex Trebek ", "Lisa Rogak", "Margaret Bourke-White ", " Jim Carroll ", "Gordon Parks "]
+    borrowed = ["Yes", "Yes", "No", "No", "No"]
+    currentBorrower = ["Rhonda Smith", "Mateo Estrada", " ", " ", " "]
+    action = ["Return", "Return", "Borrow", "Borrow", "Borrow"]
+    language = ["English", "English", "English", "English", "English"]
+    genre = ["Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography", "Non-Fiction, Biography, Autobiography",
+              "Non-Fiction, Biography, Autobiography", "Non-Fiction, Biography, Autobiography"]
+    publisher = ["Simon & Schuster", "Thomas Dunne Books", "Palala Press", "Penguin Books", "Minnesota Historical Society Press"]
+    checkoutdate = ["2020/01/30", "2020/01/30", "None", "None", "None"]
+    borrower = ["Rhonda Smith", "Mateo Estrada", "None", "None", "None"]
+    pages = ["297", "256", "388", "224", "192"]
+    rowData = ["The Answer Is... Reflections on My Life", "Alex Trebek", 
+    "Canadian, American", "297", "English", "Non-Fiction, Biography, Autobiography",
+    "Simon & Schuster", "Yes", "2020/01/30", "Rhonda Smith"]
+    headerData = ["Author", "Author Nationality", "Pages", "Language", "Genre(s)", "Publisher", "Borrowed?", "Checkout Date", "Borrower"]
+
+
+
+    var rowText = ""
+    for (var i = 0; i<9; i++){
+      rowText += "<table><tr id="+i+"><th>" + headerData[i] + "</th><td id = data" + i + " >" + titles[i] + "<button id='updateButton" + i + "' onclick='setValueAsInput()'>Update Title</button></td></tr></table>";
+      
+      elem.innerHTML = rowText;
+    }
+
+
+  
+
+
+
+
+    // elem.innerHTML = "<table><tr id= 1><th>Title </th><td id = 'data' >The Answer Is... Reflections on My Life<button id='updateButton' onclick='setValueAsInput()'>Update Title</button></td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Author </th><td>Alex Trebek</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Author Nationality</th><td>Canadian, American</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Pages </th><td>297</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Publisher </th><td>Simon & Schuster</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Borrowed? </th><td>Yes</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Check Out Date </th><td>2020/01/30</td></tr></table>"
+    // elem.innerHTML +="<table><tr><th>Borrower </th><td>Rhonda Smith</td></tr></table>"
     modal.style.display = "block";
   }
 }
+
+
+
 
 if (example2) {
   example2.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Who is Alex Trebek?: A Biography</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Lisa Rogak</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Lisa Rogak</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>256</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography</td></tr></table>"
@@ -101,8 +147,8 @@ if (example3) {
   example3.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>Portrait of Myself</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Margaret Bourke-White</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Margaret Bourke-White</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>388</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -117,9 +163,9 @@ if (example3) {
 if (example4) {
   example4.onclick = function() {
     var elem = document.querySelector('.modal-text')
-    elem.innerHTML ="<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Jim Carroll</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
+    elem.innerHTML = "<table><tr><th>Title </th><td>The Basketball Diaries</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Jim Carroll</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>224</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -135,8 +181,8 @@ if (example5) {
   example5.onclick = function() {
     var elem = document.querySelector('.modal-text')
     elem.innerHTML ="<table><tr><th>Title </th><td>A Choice of Weapons</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Author(s) </th><td>Gordon Parks</td></tr></table>"
-    elem.innerHTML +="<table><tr><th>Nationality of Author(s)</th><td>American</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author </th><td>Gordon Parks</td></tr></table>"
+    elem.innerHTML +="<table><tr><th>Author Nationality</th><td>American</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Pages </th><td>192</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Language </th><td>English</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Genre(s)</th><td>Non-Fiction, Biography, Autobiography</td></tr></table>"
@@ -316,3 +362,4 @@ if (status5) {
     status5Button.textContent = "Borrow"
   }
 }
+};
