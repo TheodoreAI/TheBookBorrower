@@ -42,10 +42,19 @@
 </div>
 
 
-<div class="DataTable">
-</div>
 
-<div>
+<table>
+  {{#each books}}
+    <tr>
+      <td>{{id}}</td>
+      <td>{{firstname}}</td>
+      <td>{{lastname}}</td>
+    </tr>
+  {{/each}}
+</table>
+
+
+{{!-- <div>
     <table>
         <thead>
             <tr>
@@ -94,7 +103,7 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div> --}}
 
 <!-- The Modal -->
 <div id="myModal" class="modal">

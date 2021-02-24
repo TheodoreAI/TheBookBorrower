@@ -13,7 +13,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "pg-promise": "^10.9.2"
   },
   "engines": {
     "node": "13.12.0"

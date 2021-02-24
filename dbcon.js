@@ -2,41 +2,42 @@
 // This portion was made possible thanks to this wonderful source: 
 // 2/21/2021 
 // https://reactsensei.com/heroku-deploy-for-mysql-projects/
+// Also this medium article: https://medium.com/dev-genius/getting-started-with-heroku-postgres-in-node-53f88c72429d
+// 2/22/2021
 
 
-var mysql = require('mysql');
-var host = process.env.host;
-var username = process.env.username;
-var password = process.env.password;
-var port = process.env.port;
-var database = process.env.database;
+// code taken from the tutorial
+const {Pool} = require('pg');
 
-
-
-if (process.env.JAWSDB_URL){
-    connection = mysql.createConnection(process.env.JAWSDB_URL)
-}else {
-    var connection = mysql.createConnection({
-
-        host: host,
-        port: port,
-        username: username,
-        password: password,
-        database: database
-    });
-}
-
-
-// making the connecton
-connection.connect(function(err){
-    if(err){
-        console.error("error connecting: " +err.stack);
-        return;
+var URI = process.env.URI;
+const pool = new Pool({
+    connectionString: URI,
+    ssl: {
+        rejectUnauthorized: false
     }
-    console.log("connected as id " + connection.threadId);
+
 });
 
 
-// we will use this to make the queries from the other js pages.
+pool.on('connect', () =>{
+    console.log('Connected to the DB');
+});
 
-module.exports = connection;
+
+// we can make the tables below:
+// I made the borrowers table and inserted into them the data we will use.
+
+pool.query("SELECT * FROM borrowers", (err, res) =>{
+    console.log(res.rows[0].firstname);
+    pool.end();
+});
+
+
+// this example will let us run queries on the database we made:
+// Make sure to run the server locally using: heroku local:run npm start, if you just run npm start
+// there will be issues with the SSL for the local machine.
+
+
+
+
+module.exports.pool = pool;

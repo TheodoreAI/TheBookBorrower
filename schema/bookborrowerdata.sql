@@ -1,4 +1,5 @@
 
+
 -- If you need to drop the tables use the following:
 DROP TABLE IF EXISTS genrebooks;
 DROP TABLE IF EXISTS authorsbooks;
@@ -31,6 +32,17 @@ CREATE TABLE borrowers (
     phone varchar(150) NOT NULL,
     email varchar(255) NOT NULL);
 
+
+--in postGres
+
+-- CREATE TABLE borrowers (
+--     id SERIAL PRIMARY KEY, 
+--     lastName varchar NOT NULL,
+--     firstName varchar NOT NULL,
+--     phone varchar NOT NULL,
+--     email varchar NOT NULL
+-- );
+
 CREATE TABLE nationalities (
     id int(11) PRIMARY KEY AUTO_INCREMENT,
     nationality varchar(255)
@@ -58,7 +70,7 @@ CREATE TABLE books (id int(11) PRIMARY KEY AUTO_INCREMENT,
     CONSTRAINT FOREIGN KEY (languageID) REFERENCES languages (id),
     CONSTRAINT FOREIGN KEY (publisherID) REFERENCES publishers (id),
     CONSTRAINT FOREIGN KEY (borrowerID) REFERENCES borrowers (id),
-    checkoutDate DATE NOT NULL
+    checkoutDate DATE
 );
 
 CREATE TABLE genrebooks (
@@ -94,13 +106,12 @@ VALUES
 ("Minnesota Historical Society Press");
 
 
-INSERT INTO `borrowers` (lastName, firstName, phone, email)
-VALUES
-("Smith", "Rhonda", "123-456-7891", "rhonda@thebookborrower.com"),
-("Estrada", "Mateo", "987-654-3210", "mateo@thebookborrower.com"),
-("Rascal", "Oscar", "123-456-7891", "rascal@thebookborrower.com"),
-("Allen", "Barry", "415-123-4567", "barry@thebookborrower.com"),
-("West", "Wally", "562-123-4567", "wally@thebookborrower.com");
+INSERT INTO 'borrowers' (lastName, firstName, phone, email)
+VALUES('Smith', 'Rhonda', '123-456-7891', 'rhonda@thebookborrower.com'),
+('Estrada', 'Mateo', '987-654-3210', 'mateo@thebookborrower.com'),
+('Rascal', 'Oscar', '123-456-7891', 'rascal@thebookborrower.com'),
+('Allen', 'Barry', '415-123-4567', 'barry@thebookborrower.com'),
+('West', 'Wally', '562-123-4567', 'wally@thebookborrower.com');
 
 INSERT INTO `nationalities`(nationality)
 VALUES
@@ -144,7 +155,7 @@ VALUES
 ("Autobiography");
 
 
---This is all the books:
+
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
 VALUES
 ("The Answer Is... Reflections on My Life", TRUE, 297,
