@@ -1,5 +1,3 @@
-
-
 -- If you need to drop the tables use the following:
 DROP TABLE IF EXISTS genrebooks;
 DROP TABLE IF EXISTS authorsbooks;
@@ -36,7 +34,7 @@ CREATE TABLE borrowers (
 --in postGres
 
 -- CREATE TABLE borrowers (
---     id SERIAL PRIMARY KEY, 
+--     id SERIAL PRIMARY KEY,
 --     lastName varchar NOT NULL,
 --     firstName varchar NOT NULL,
 --     phone varchar NOT NULL,
