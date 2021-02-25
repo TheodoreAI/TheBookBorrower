@@ -14,6 +14,7 @@
     "express-handlebars": "^5.2.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
+    "pg": "^8.5.1",
     "pg-promise": "^10.9.2"
   },
   "engines": {
