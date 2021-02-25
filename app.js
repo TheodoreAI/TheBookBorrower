@@ -45,8 +45,7 @@ app.get('/', function (req, res) {
 app.get('/books', function (req, res){
     books.selectAllBooks()
       .then((books) => {
-        console.log("the books???", books)
-        res.render('books.hbs')
+        res.render('books.hbs', {books})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -56,7 +55,7 @@ app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
         console.log("the borrowers???", borrowers)
-        res.render('borrowers.hbs')
+        res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
       })
