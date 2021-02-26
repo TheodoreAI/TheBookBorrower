@@ -4,9 +4,9 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 3904;
 const localhost = "127.0.0.1";
+const books = require('./db/books.js');
+const borrowers = require('./db/borrowers.js');
 
-
-var mysql = require('./dbcon.js');
 var bodyParser = require('body-parser');
 // start the express app
 var app = express();
@@ -35,9 +35,6 @@ app.use('/', express.static('public'));
 // accessing the css
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-app.set('mysql', mysql);
-
-
 app.get('/', function (req, res) {
     res.render('home', {
         layout: 'main'
@@ -45,20 +42,33 @@ app.get('/', function (req, res) {
 });
 
 // getting the files for the navbar
-app.get('/books', function(req, res){
-    res.render('books.hbs')
+app.get('/books', function (req, res){
+    books.selectAllBooks()
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
 });
-app.get('/borrowers', function(req, res){
-    res.render('borrowers.hbs')
+
+app.get('/borrowers', function (req, res){
+    borrowers.selectAllBorrowers()
+      .then((borrowers) => {
+        console.log("the borrowers???", borrowers)
+        res.render('borrowers.hbs', {borrowers})
+      }).catch(function(error) {
+        console.log("ERROR getting borrowers page: ", error.message)
+      })
 });
+
+
 app.get('/maintain', function(req, res){
     res.render('maintain/maintain.hbs')
 });
 
 
 // getting the js files
-app.use('/books', require('./db/books.js'));
-
+// app.use('/books', require('./db/books.js'));
 
 
 app.use(function (err, req, res, next) {

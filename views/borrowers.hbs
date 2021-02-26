@@ -30,38 +30,18 @@
                 <th>Currently borrowing books?</th>
             </tr>
         </thead>
-        <tbody>
+          {{#each borrowers}}
             <tr>
-                <td><a href="#" class="moreInfo" id="openModal6">Rhonda Smith</a></td>
-                <td>123-456-7891</td>
-                <td>rhonda@thebookborrower.com</td>
-                <td>Yes</td>
+              <td><a href=#>{{name}}</a></td>
+              <td>{{phone}}</td>
+              <td>{{email}}</td>
+              {{#if borrowingstatus}}
+                  <td>Yes</td>
+              {{else}}
+              <td>No</td>
+              {{/if}}
             </tr>
-            <tr>
-                <td><a href="#" class="moreInfo" id="openModal7">Mateo Estrada</a></td>
-                <td>987-654-3210</td>
-                <td>mateo@thebookborrower.com</td>
-                <td>Yes</td>
-            </tr>
-            <tr>
-                <td><a href="#" class="moreInfo" id="openModal8">Oscar Rascal</a></td>
-                <td>123-456-7891</td>
-                <td>rascal@thebookborrower.com</td>
-                <td>No</td>
-            </tr>
-            <tr>
-                <td><a href="#" class="moreInfo" id="openModal9">Barry Allen</a></td>
-                <td>415-123-4567</td>
-                <td>barry@thebookborrower.com</td>
-                <td>No</td>
-            </tr>
-            <tr>
-                <td><a href="#" class="moreInfo" id="openModal10">Wally West</a></td>
-                <td>562-123-4567</td>
-                <td>wally@thebookborrower.com</td>
-                <td>No</td>
-            </tr>
-        </tbody>
+          {{/each}}
     </table>
 </div>
 

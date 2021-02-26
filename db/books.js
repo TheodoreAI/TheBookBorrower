@@ -1,60 +1,50 @@
+const db = require('../dbcon.js')
 
-// code taken from the tutorial
-const {Pool} = require('pg');
-// const app = require('../app');
+// const selectAllBooks = () => {
+//   return db.query(`
+//     SELECT
+//       *
+//     FROM
+//       books
+//     `).then((books) => {
+//       return books
+//     }).catch(function (error) {
+//       console.log("ERROR selecting all books: ", error.message)
+//     })
+// }
 
-var URI = process.env.URI;
-const pool = new Pool({
-    connectionString: URI,
-    ssl: {
-        rejectUnauthorized: false
-    }
+const selectAllBooks = () => {
+  return db.query(`
+    SELECT
+      books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    `).then((books) => {
+      console.log(books)
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting all books: ", error.message)
+    })
+}
 
-});
+// SELECT
+//   cities.id, cities.name
+// FROM
+//   posts, cities
+// WHERE
+//   city = cities.id
+// AND
+//   posts.id = $1;
+// `
 
+;
 
-
-
-module.exports = function () {
-
-    var express = require('express');
-    var router = express.Router();
-
-    // code taken from the tutorial
-    // const {Pool} = require('pg');
-
-    // var URI = process.env.URI;
-    // const pool = new Pool({
-    //     connectionString: URI,
-    //     ssl: {
-    //         rejectUnauthorized: false
-    //     }
-
-    // });
-
-    function serveBooks(req, res){
-        console.log("You asked me for some books?")
-        var query = 'SELECT * FROM users';
-        var context = {};
-        console.log("This works");
-        function handleRenderingOfBooks(error, results, fields){
-            console.log(error);
-            console.log(results);
-            console.log(fields);
-
-            // take the results from the query and store it on the context
-            context.books = results;
-            // pass it to handlebars to put inside the HTML file
-            res.render('books', context)
-        }
-        
-        pool.query(query, handleRenderingOfBooks)
-        res.send('Here you go!')
-    
-    };
-
-    router.get('/', serveBooks);
-
-    return router;
-
-}();
+module.exports = {
+  selectAllBooks
+}

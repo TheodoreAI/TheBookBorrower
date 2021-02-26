@@ -41,11 +41,11 @@ function inputValues() {
   if (values.value == ""){
       alert("You must fill this field!");
   }
-     
+
   else {
     rowData.innerHTML = values.value;
   }
-    
+
 }
 
 
