@@ -28,7 +28,8 @@ const cn = {
     max: 20, // use up to 30 connections,
     ssl: {rejectUnauthorized: false}
     // "types" - in case you want to set custom type parsers on the pool level
-};
+} || process.env.DATABASE_URL;
+
 
 const db = pgp(cn);
 
