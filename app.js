@@ -9,6 +9,10 @@ const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
 
+
+
+var bodyParser = require('body-parser');
+
 // start the express app
 var app = express();
 
@@ -51,8 +55,7 @@ app.get('/maintain', function(req, res){
 app.get('/books', function (req, res){
     books.selectAllBooks()
       .then((books) => {
-        console.log("the books???", books)
-        res.render('books.hbs')
+        res.render('books.hbs', {books})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -61,13 +64,11 @@ app.get('/books', function (req, res){
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        console.log("the borrowers???", borrowers);
-        res.render('borrowers.hbs')
+        res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
       })
 });
-
 
 
 app.get('/maintain', function (req, res) {
@@ -86,10 +87,6 @@ app.get('/maintain', function (req, res) {
 
 });
 
-
-
-
-
 app.post('/borrowers', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
     .then((maintain) => {
@@ -99,8 +96,6 @@ app.post('/borrowers', function (req, res) {
         console.log("Error posting to the borrowers table:", error.message)
     });
 });
-
-
 
 
 app.post('/genres', function (req, res) {
