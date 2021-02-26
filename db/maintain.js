@@ -63,8 +63,9 @@ const postNationality = (nationality) => {
 
 
 const selectAllNationalities = () => {
-    return db.query(`SELECT * FROM nationalities`).then((nationality) => {
-            console.log("Does this work?");
+    return db.query(`SELECT * FROM nationalities`
+    ).then((nationality) => {
+        console.log("Does this work?", nationality);
         return nationality;
     }).catch(function (error){
         console.log("Error selecting all the nationalities:", error.message)
@@ -78,6 +79,7 @@ const postAuthors = (lastName, firstName, nationText) => {
     return db.query(`INSERT INTO authors (lastname, firstname, nationid)             
                             VALUES($1, $2, (SELECT id FROM nationalities WHERE nationality = $3));`,
                     [lastName, firstName, nationText]).then((authors) => {
+                        return authors;
     }).catch(function (error) {
         console.log("Error posting the author into the authors table: ", error.message);
     });

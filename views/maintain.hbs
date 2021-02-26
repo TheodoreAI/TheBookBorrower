@@ -18,9 +18,7 @@
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
 <div>
 
-{{#each context}}
-    {{this.nationality}}
-{{/each}}
+
 </div>
 
 <div class="menuForms">
@@ -106,8 +104,9 @@
                       <select id="existingNationality" name="nationText">
                           <option selected hidden style="display:none" required>Select Nationality</option>
                           {{#each context}}
-                            <option  name={{this.nationality}} value={{this.nationality}} id={{this.id}}>{{this.nationality}}</option>
+                            <option  name={{this.nationality}} value={{this.nationality}} id="nationID">{{this.nationality}}</option>
                           {{/each}}
+                    
 
                       </select>
                     </li>
@@ -193,7 +192,7 @@
         <h3>Add Borrowers with Contact Info:</h3>
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
         <div id="borrowFormDiv" style="display: none;">
-            <form id='borrowForm' method="POST" action="/borrowers">
+            <form id='borrowForm' method="POST" action="/borrowerForm">
                 First Name <input type='text' name='borrowerFirst' required><br>
                 Last Name <input type='text' name='borrowerLast' required><br>
                 Email <input type='email' id="email" name='email' required><br>

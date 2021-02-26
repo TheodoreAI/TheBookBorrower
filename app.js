@@ -9,8 +9,6 @@ const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
 
-
-
 var bodyParser = require('body-parser');
 
 // start the express app
@@ -40,6 +38,13 @@ app.use('/', express.static('public'));
 // accessing the css
 app.use('/', express.static(path.join(__dirname, '/public')));
 
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+
+
 app.get('/', function (req, res) {
     res.render('home', {
         layout: 'main'
@@ -47,9 +52,6 @@ app.get('/', function (req, res) {
 });
 
 
-app.get('/maintain', function(req, res){
-    res.render('maintain.hbs')
-});
 
 // getting the files for the navbar
 app.get('/books', function (req, res){
@@ -73,25 +75,25 @@ app.get('/borrowers', function (req, res){
 
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
-        .then((maintain) => {
-            const context = {};
-            for (let i = 0; i < maintain.length; i++) {
-                    context['key' + i] = maintain[i];
+        .then((nationality) => {
+                console.log(req.body, "this is the nations");
+                const context = {};
+                for (let i = 0; i < nationality.length; i++) {
+                        context['key' + i] = nationality[i];
                 }
-                console.log(context, "this is the nations");
+                
                 res.render("maintain.hbs", {context})
         }).catch(function (error) {
-            console.log("Error in the GET request for the table authors: ", error.message);
-
+                console.log("Error in the GET request for the table authors: ", error.message);
         });
 
 });
 
-app.post('/borrowers', function (req, res) {
+app.post('/borrowerForm', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
     .then((maintain) => {
         console.log(req.body);
-        res.render('maintain.hbs')
+        res.render('maintain')
     }).catch(function (error) {
         console.log("Error posting to the borrowers table:", error.message)
     });
@@ -99,8 +101,9 @@ app.post('/borrowers', function (req, res) {
 
 
 app.post('/genres', function (req, res) {
-
-    maintain.postGenre(req.body.genre)
+    const {genre} = req.body;
+    console.log(req.body);
+    maintain.postGenre(genre)
     .then((maintain) => {
         console.log("The genres?", maintain);
         res.render('maintain.hbs')
@@ -144,9 +147,9 @@ app.post('/nationalities', function (req, res) {
 
 
 app.post('/authors', function (req, res) {
-    console.log("what is happening?", req.body.nationText);
+    console.log("what is happening?", req.body.lastName);
     maintain.postAuthors(req.body.lastName, req.body.firstName,req.body.nationText)
-        .then((maintain) =>{
+        .then((authors) =>{
             res.render('maintain.hbs')
         }).catch(function(error) {
             console.log("Error posting the authors table:", error.message)
