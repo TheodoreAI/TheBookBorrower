@@ -16,12 +16,12 @@
 
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
- <div>
-            {{#each maintain.id}}
-            <td>{{this}} </td>
-            {{/each}}
- </div>
+<div>
 
+{{#each context}}
+    {{this.nationality}}
+{{/each}}
+</div>
 
 <div class="menuForms">
     <div class="formbox">
@@ -100,19 +100,18 @@
         <div id="authorFormDiv">
             <form id="authorForm" method="POST" action="/authors">
                 <ol style="list-style: none">
-                    <li>First Name: <input type='text' name='firstName'></li><br>
-                    <li>Last Name: <input type='text' name='lastName'></li><br>
+                    <li>First Name: <input type='text' name='firstName' required></li><br>
+                    <li>Last Name: <input type='text' name='lastName' required></li><br>
                     <li>
-                      <select id="existingNationality" name="existingNationality">
-
-                          <option selected hidden style="display:none">Select Nationality</option>
-                          {{#each maintain}}
-                          <option value="American" id="American">{{this}}</option>
-                            {{/each}}
+                      <select id="existingNationality" name="nationText">
+                          <option selected hidden style="display:none" required>Select Nationality</option>
+                          {{#each context}}
+                            <option  name={{this.nationality}} value={{this.nationality}} id={{this.id}}>{{this.nationality}}</option>
+                          {{/each}}
 
                       </select>
                     </li>
-                    <br />
+                    <br/>
                 </ol>
                 <button type='submit' id="submitAuthor" onclick="return confirm('Are you sure you want to add this author?');">
                     Add Author
@@ -128,7 +127,7 @@
         <div id="nationalityFormDiv">
             <form id="nationalityForm" method="POST" action="/nationalities">
                 <ol style="list-style: none">
-                    <li>Nationality: <input type='text' name='nationality'></li><br>
+                    <li>Nationality: <input type='text' name='nationality' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -146,7 +145,7 @@
         <div id="publisherFormDiv">
             <form id="publisherForm" method="POST" action="/publishers">
                 <ol style="list-style: none">
-                    <li>Publisher Name: <input type='text' name='publisher'></li><br>
+                    <li>Publisher Name: <input type='text' name='publisher' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -164,7 +163,7 @@
         <div id="languageFormDiv">
             <form id="languageForm" method="POST" action="/languages">
                 <ol style="list-style: none">
-                    <li>Language Name: <input type='text' name='lang'></li><br>
+                    <li>Language Name: <input type='text' name='lang' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -181,7 +180,7 @@
         <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
         <div id="genreFormDiv">
             <form id="genreForm" method="POST" action="/genres"><br>
-                    Genre: <input type='text' name='genre'>
+                    Genre: <input type='text' name='genre' required>
                     <br>
                 <button type='submit' onclick="return confirm('Are you sure you want to add this genre?');">
                     Add Genre
@@ -193,12 +192,12 @@
     <div class="formbox">
         <h3>Add Borrowers with Contact Info:</h3>
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
-        <div id="borrowForm" style="display: none;">
+        <div id="borrowFormDiv" style="display: none;">
             <form id='borrowForm' method="POST" action="/borrowers">
-                First Name <input type='text' name='borrowerFirst'><br>
-                Last Name <input type='text' name='borrowerLast'><br>
-                Email <input type='email' id="email" name='email'><br>
-                Phone <input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+                First Name <input type='text' name='borrowerFirst' required><br>
+                Last Name <input type='text' name='borrowerLast' required><br>
+                Email <input type='email' id="email" name='email' required><br>
+                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
                 <br>
                 <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
                     Add Borrower
@@ -214,4 +213,3 @@
 
 </div>
 
- <script src="app.js" type="text/javascript"></script>

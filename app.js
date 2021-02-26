@@ -8,7 +8,7 @@ const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
-var bodyParser = require('body-parser');
+
 // start the express app
 var app = express();
 
@@ -20,7 +20,7 @@ var hbs = require('express-handlebars').create({
 // set the engine and the file extension name and the files that will be used
 
 app.engine('hbs', hbs.engine);
-app.use(bodyParser.urlencoded({extended:true}));
+
 app.set("view engine", "hbs");
 app.use('/static', express.static('public'));
 app.use('/', express.static('public'));
@@ -42,6 +42,11 @@ app.get('/', function (req, res) {
     });
 });
 
+
+app.get('/maintain', function(req, res){
+    res.render('maintain.hbs')
+});
+
 // getting the files for the navbar
 app.get('/books', function (req, res){
     books.selectAllBooks()
@@ -56,7 +61,7 @@ app.get('/books', function (req, res){
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        console.log("the borrowers???", borrowers)
+        console.log("the borrowers???", borrowers);
         res.render('borrowers.hbs')
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -65,24 +70,24 @@ app.get('/borrowers', function (req, res){
 
 
 
-app.get('/maintain', function (req, res){
-    console.log("These are the parameters:", req.params);
+app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
         .then((maintain) => {
-          console.log("The nations", maintain);
-          res.render("maintain", maintain);
-        }).catch(function (error){
+            const context = {};
+            for (let i = 0; i < maintain.length; i++) {
+                    context['key' + i] = maintain[i];
+                }
+                console.log(context, "this is the nations");
+                res.render("maintain.hbs", {context})
+        }).catch(function (error) {
             console.log("Error in the GET request for the table authors: ", error.message);
 
-    })
-
+        });
 
 });
 
 
-app.get('/maintain', function(req, res){
-    res.render('maintain.hbs')
-});
+
 
 
 app.post('/borrowers', function (req, res) {
@@ -144,7 +149,8 @@ app.post('/nationalities', function (req, res) {
 
 
 app.post('/authors', function (req, res) {
-    maintain.postAuthors(req.body.firstName, req.body.lastName,req.body.nationality)
+    console.log("what is happening?", req.body.nationText);
+    maintain.postAuthors(req.body.lastName, req.body.firstName,req.body.nationText)
         .then((maintain) =>{
             res.render('maintain.hbs')
         }).catch(function(error) {

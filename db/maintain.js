@@ -11,7 +11,7 @@ const postBorrower = (firstName, lastName, email, phone) =>{
 
         return post[0]
     })
-}
+};
 
 
 
@@ -23,7 +23,7 @@ const postGenre = (genre) => {
         .then((post) => {
             return post
         })
-}
+};
 
 
 const postLanguage = (lang) => {
@@ -34,7 +34,7 @@ const postLanguage = (lang) => {
         .then((post) => {
             return post
         })
-}
+};
 
 
 
@@ -45,7 +45,7 @@ const postPublisher = (publisher) => {
         .then((post) => {
         return post
     })
-}
+};
 
 
 const postNationality = (nationality) => {
@@ -55,22 +55,45 @@ const postNationality = (nationality) => {
         .then((post) =>{
             return post
         })
-}
+};
 
 
-// const postAuthors = (firstName, lastName, nationality) = >
-//     return db.query(`INSERT INTO authors (lastname, firstname, nationid);
-//                    `)
+
 
 
 
 const selectAllNationalities = () => {
-    return db.query(`SELECT * FROM nationalities;`).then((nationality) => {
-        return nationality
+    return db.query(`SELECT * FROM nationalities`).then((nationality) => {
+            console.log("Does this work?");
+        return nationality;
     }).catch(function (error){
         console.log("Error selecting all the nationalities:", error.message)
-    })
-}
+    });
+};
+
+
+
+const postAuthors = (lastName, firstName, nationText) => {
+    console.log("what is happening?", firstName, lastName, nationText);
+    return db.query(`INSERT INTO authors (lastname, firstname, nationid)             
+                            VALUES($1, $2, (SELECT id FROM nationalities WHERE nationality = $3));`,
+                    [lastName, firstName, nationText]).then((authors) => {
+    }).catch(function (error) {
+        console.log("Error posting the author into the authors table: ", error.message);
+    });
+
+};
+
+
+
+// const selectAllGenres = () => {
+//     return db.query(`SELECT * FROM genres;`).then((genre) => {
+//         return genre
+//     }).catch(function (error){
+//         console.log("Error selecting all the genres:", error.message)
+//     })
+// };
+
 
 
 module.exports = {
@@ -79,6 +102,8 @@ module.exports = {
     postLanguage,
     postPublisher,
     postNationality,
-    selectAllNationalities
+    selectAllNationalities,
+    postAuthors
 
-}
+
+};
