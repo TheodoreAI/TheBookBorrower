@@ -32,7 +32,7 @@ var pgp = require('pg-promise')()
 
 
 const cn = {
-  connectionString: process.env.URI,
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
