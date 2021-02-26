@@ -6,8 +6,13 @@ const PORT = process.env.PORT || 3904;
 const localhost = "127.0.0.1";
 const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
+const maintain = require('./db/maintain.js');
+
+
+
 
 var bodyParser = require('body-parser');
+
 // start the express app
 var app = express();
 
@@ -19,7 +24,7 @@ var hbs = require('express-handlebars').create({
 // set the engine and the file extension name and the files that will be used
 
 app.engine('hbs', hbs.engine);
-app.use(bodyParser.urlencoded({extended:true}));
+
 app.set("view engine", "hbs");
 app.use('/static', express.static('public'));
 app.use('/', express.static('public'));
@@ -41,6 +46,11 @@ app.get('/', function (req, res) {
     });
 });
 
+
+app.get('/maintain', function(req, res){
+    res.render('maintain.hbs')
+});
+
 // getting the files for the navbar
 app.get('/books', function (req, res){
     books.selectAllBooks()
@@ -54,7 +64,6 @@ app.get('/books', function (req, res){
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        console.log("the borrowers???", borrowers)
         res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -62,13 +71,88 @@ app.get('/borrowers', function (req, res){
 });
 
 
-app.get('/maintain', function(req, res){
-    res.render('maintain/maintain.hbs')
+app.get('/maintain', function (req, res) {
+    maintain.selectAllNationalities()
+        .then((maintain) => {
+            const context = {};
+            for (let i = 0; i < maintain.length; i++) {
+                    context['key' + i] = maintain[i];
+                }
+                console.log(context, "this is the nations");
+                res.render("maintain.hbs", {context})
+        }).catch(function (error) {
+            console.log("Error in the GET request for the table authors: ", error.message);
+
+        });
+
+});
+
+app.post('/borrowers', function (req, res) {
+    maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
+    .then((maintain) => {
+        console.log(req.body);
+        res.render('maintain.hbs')
+    }).catch(function (error) {
+        console.log("Error posting to the borrowers table:", error.message)
+    });
 });
 
 
-// getting the js files
-// app.use('/books', require('./db/books.js'));
+app.post('/genres', function (req, res) {
+
+    maintain.postGenre(req.body.genre)
+    .then((maintain) => {
+        console.log("The genres?", maintain);
+        res.render('maintain.hbs')
+    }).catch(function (error) {
+        console.log("Error posting to the borrowers table:", error.message)
+    });
+});
+
+
+app.post('/languages', function (req, res) {
+    maintain.postLanguage(req.body.lang)
+    .then((maintain) => {
+        console.log('The lanuage', maintain);
+        res.render("maintain.hbs")
+    }).catch(function (error){
+        console.log("Error posting to the languages table:", error.message)
+    });
+});
+
+
+app.post('/publishers', function (req, res) {
+    maintain.postPublisher(req.body.publisher)
+        .then((maintain) => {
+            console.log("The publisher is:", maintain);
+            res.render('maintain.hbs')
+
+        }).catch(function(error){
+            console.log("Error posting to the publishers table:", error.message)
+    });
+});
+
+app.post('/nationalities', function (req, res) {
+    maintain.postNationality(req.body.nationality)
+        .then((maintain) =>{
+            console.log("The nationality is:", maintain);
+            res.render('maintain.hbs')
+        }).catch(function(error) {
+            console.log("Error posting the nationality table:", error.message)
+    });
+});
+
+
+app.post('/authors', function (req, res) {
+    console.log("what is happening?", req.body.nationText);
+    maintain.postAuthors(req.body.lastName, req.body.firstName,req.body.nationText)
+        .then((maintain) =>{
+            res.render('maintain.hbs')
+        }).catch(function(error) {
+            console.log("Error posting the authors table:", error.message)
+    });
+
+});
 
 
 app.use(function (err, req, res, next) {

@@ -6,7 +6,7 @@ var formButton = document.getElementById("submitBook")
 var borrowBook = document.getElementById("status");
 if (borrowBook){
     if (borrowBook.nodeValue == "Yes"){
-        console.log("WHo is renting it?")
+        console.log("Who is renting it?")
     }
 }
 
@@ -47,11 +47,11 @@ function closeAuthorForm(){
 
 
 function openBorrowForm(){
-    document.getElementById("borrowForm").style.display = "block";
+    document.getElementById("borrowFormDiv").style.display = "block";
 }
 
 function closeBorrowForm(){
-    document.getElementById("borrowForm").style.display = "none";
+    document.getElementById("borrowFormDiv").style.display = "none";
 }
 
 function openPublisherForm(){
@@ -87,3 +87,15 @@ function closeGenreForm(){
 }
 // appearBtn.setAttribute("onclick", "closeForm()")
 // formAdd.appendChild(appearBtn);
+
+
+// Event handlers for submitting the forms:
+
+// function displaySuccessMsg(event){
+//     window.alert("The Author was successfully Added!");
+//     location.reload();
+// }
+// const form = document.getElementById('authorForm');
+// form.addEventListener('submit', displaySuccessMsg);
+//
+//

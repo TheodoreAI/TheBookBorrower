@@ -16,6 +16,12 @@
 
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
+<div>
+
+{{#each context}}
+    {{this.nationality}}
+{{/each}}
+</div>
 
 <div class="menuForms">
     <div class="formbox">
@@ -88,21 +94,24 @@
     </div>
 
     <div class="formbox">
+
         <h3>Add an Author:</h3>
         <button class="open-button" onclick="openAuthorForm()">Open Authors Form </button><br>
         <div id="authorFormDiv">
-            <form id="authorForm" method="#" action="#">
+            <form id="authorForm" method="POST" action="/authors">
                 <ol style="list-style: none">
-                    <li>First Name: <input type='text' name='firstID'></li><br>
-                    <li>Last Name: <input type='text' name='lastID'></li><br>
+                    <li>First Name: <input type='text' name='firstName' required></li><br>
+                    <li>Last Name: <input type='text' name='lastName' required></li><br>
                     <li>
-                      <select id="existingNationality" name="existingNationality">
-                          <option selected hidden style="display:none">Select Nationality</option>
-                            <option value="American" id="American">American</option>
-                            <option value="Canadian" id="Canadian">Canadian</option>
+                      <select id="existingNationality" name="nationText">
+                          <option selected hidden style="display:none" required>Select Nationality</option>
+                          {{#each context}}
+                            <option  name={{this.nationality}} value={{this.nationality}} id={{this.id}}>{{this.nationality}}</option>
+                          {{/each}}
+
                       </select>
                     </li>
-                    <br />
+                    <br/>
                 </ol>
                 <button type='submit' id="submitAuthor" onclick="return confirm('Are you sure you want to add this author?');">
                     Add Author
@@ -116,9 +125,9 @@
         <h3>Add an Author Nationality:</h3>
         <button class="open-button" onclick="openNationalityForm()">Open Nationality Form </button><br>
         <div id="nationalityFormDiv">
-            <form id="nationalityForm" method="#" action="#">
+            <form id="nationalityForm" method="POST" action="/nationalities">
                 <ol style="list-style: none">
-                    <li>Nationality: <input type='text' name='nationalityID'></li><br>
+                    <li>Nationality: <input type='text' name='nationality' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -134,9 +143,9 @@
         <h3>Add a Publisher:</h3>
         <button class="open-button" onclick="openPublisherForm()">Open Publishers Form </button><br>
         <div id="publisherFormDiv">
-            <form id="publisherForm" method="#" action="#">
+            <form id="publisherForm" method="POST" action="/publishers">
                 <ol style="list-style: none">
-                    <li>Publisher Name: <input type='text' name='publisherID'></li><br>
+                    <li>Publisher Name: <input type='text' name='publisher' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -152,9 +161,9 @@
         <h3>Add a Language:</h3>
         <button class="open-button" onclick="openLanguageForm()">Open Languages Form </button><br>
         <div id="languageFormDiv">
-            <form id="languageForm" method="#" action="#">
+            <form id="languageForm" method="POST" action="/languages">
                 <ol style="list-style: none">
-                    <li>Language Name: <input type='text' name='languageID'></li><br>
+                    <li>Language Name: <input type='text' name='lang' required></li><br>
                     <li>
                     <br />
                 </ol>
@@ -170,32 +179,25 @@
         <h3>Add a Genre:</h3>
         <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
         <div id="genreFormDiv">
-            <form id="genreForm" method="#" action="#">
-                <ol style="list-style: none">
-                    <li>Genre: <input type='text' name='genreID'></li><br>
-                    <li>
-                    <br />
-                </ol>
-                <button type='submit' id="submitGenre" onclick="return confirm('Are you sure you want to add this genre?');">
+            <form id="genreForm" method="POST" action="/genres"><br>
+                    Genre: <input type='text' name='genre' required>
+                    <br>
+                <button type='submit' onclick="return confirm('Are you sure you want to add this genre?');">
                     Add Genre
                 </button>
                 <button class="close-button" onclick="closeGenreForm()">Close Genre Form</button>
             </form>
         </div>
     </div>
-
     <div class="formbox">
         <h3>Add Borrowers with Contact Info:</h3>
-
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
-
-
-        <div id="borrowForm" style="display: none;">
-            <form id='borrowForm' method="POST" action="#">
-                First Name <input type='text' name='authorFirst'><br>
-                Last Name <input type='text' name='authorLast'><br>
-                Email <input type='email' id="email" name='email'><br>
-                Phone <input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+        <div id="borrowFormDiv" style="display: none;">
+            <form id='borrowForm' method="POST" action="/borrowers">
+                First Name <input type='text' name='borrowerFirst' required><br>
+                Last Name <input type='text' name='borrowerLast' required><br>
+                Email <input type='email' id="email" name='email' required><br>
+                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
                 <br>
                 <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
                     Add Borrower
@@ -210,3 +212,4 @@
 
 
 </div>
+

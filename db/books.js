@@ -1,17 +1,5 @@
 const db = require('../dbcon.js')
 
-// const selectAllBooks = () => {
-//   return db.query(`
-//     SELECT
-//       *
-//     FROM
-//       books
-//     `).then((books) => {
-//       return books
-//     }).catch(function (error) {
-//       console.log("ERROR selecting all books: ", error.message)
-//     })
-// }
 
 const selectAllBooks = () => {
   return db.query(`
@@ -32,18 +20,6 @@ const selectAllBooks = () => {
       console.log("ERROR selecting all books: ", error.message)
     })
 }
-
-// SELECT
-//   cities.id, cities.name
-// FROM
-//   posts, cities
-// WHERE
-//   city = cities.id
-// AND
-//   posts.id = $1;
-// `
-
-;
 
 module.exports = {
   selectAllBooks
