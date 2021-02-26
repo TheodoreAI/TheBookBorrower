@@ -19,15 +19,24 @@
 
 var pgp = require('pg-promise')()
 
+// const cn = {
+//     host: process.env.Host,
+//     port: process.env.Port,
+//     database: process.env.Database,
+//     user: process.env.User,
+//     password: process.env.Password,
+//     max: 20, // use up to 30 connections,
+//     ssl: {rejectUnauthorized: false}
+//     // "types" - in case you want to set custom type parsers on the pool level
+// };
+
+
 const cn = {
-    host: process.env.Host,
-    port: process.env.Port,
-    database: process.env.Database,
-    user: process.env.User,
-    password: process.env.Password,
-    max: 20, // use up to 30 connections,
-    ssl: {rejectUnauthorized: false}
-    // "types" - in case you want to set custom type parsers on the pool level
+  connectionString: process.env.URI,
+  ssl: {
+    rejectUnauthorized: false
+  }
+  // "types" - in case you want to set custom type parsers on the pool level
 };
 
 const db = pgp(cn);
