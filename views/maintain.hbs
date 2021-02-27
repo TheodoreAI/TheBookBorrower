@@ -37,11 +37,9 @@
                 Ctrl+click (Windows) or Command+Click (Mac) to select more than one
               </p>
               <select id="existingAuthor" name="existingAuthor" multiple>
-                  <option value="AlexTrebek" id="AlexTrebek">Alex Trebek</option>
-                  <option value="LisaRogak" id="LisaRogak">Lisa Rogak</option>
-                  <option value="MargaretBourkeWhite" id="MargaretBourkeWhite">Margaret Bourke-White</option>
-                  <option value="JimCarroll" id="JimCarroll">Jim Carroll</option>
-                  <option value="GordonParks" id="GordonParks">Gordon Parks</option>
+                  {{#each author}}
+                  <option value="AlexTrebek" id="AlexTrebek">{{this.fullName}}</option>
+                  {{/each}}
               </select><br>
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
@@ -51,34 +49,32 @@
             <select id="existingBorrower" name="existingBorrower">
               <li style="display: None;"><a href="">Mateo Estrada</a></li><br>
               <option selected hidden style="display:none">Select Borrower</option>
-                <option value="MateoEstrada" id="MateoEstrada">Mateo Estrada</option>
-                <option value="RhondaSmith" id="RhondaSmith">Rhonda Smith</option>
-                <option value="OscarRascal" id="OscarRascal">Oscar Rascal</option>
-                <option value="BarryAllen" id="BarryAllen">Barry Allen</option>
-                <option value="WallyWest" id="WallyWest">Wally West</option>
+                {{#each borrower}}
+                    <option value={{this.fullName}} id="fullName">{{this.fullName}}</option>
+                {{/each}}
             </select><br>
             Checkout Date (yyyy-mm-dd) <input type='number' name='checkoutDate'><br>
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
-                <option value="SimonSchuster" id="SimonSchuster">Simon & Schuster</option>
-                <option value="ThomasDunneBooks" id="ThomasDunneBooks">Thomas Dunne Books</option>
-                <option value="PalalaPress" id="PalalaPress">Palala Press</option>
-                <option value="PenguinBooks" id="PenguinBooks">Penguin Books</option>
-                <option value="MinnesotaHSP" id="MinnesotaHSP">Minnesota Historical Society Press</option>
+                {{#each publisher}}    
+                <option value="MinnesotaHSP" id="MinnesotaHSP">{{this.publisher}}</option>
+                {{/each}}
             </select><br>
             <select id="existingLanguage" name="existingLanguage">
               <option selected hidden style="display:none">Select Language</option>
-                <option value="English" id="English">English</option>
+                {{#each lang}}
+                <option value="English" id="English">{{this.lang}}</option>
+                {{/each}}
             </select><br>
             <p>
               Select Genre(s)</br>
               Ctrl+click (Windows) or Command+Click (Mac) to select more than one
             </p>
             <select id="existingGenres" name="existingGenres" multiple>
-                <option value="NonFiction" id="NonFiction">Non-Fiction</option>
-                <option value="Biography" id="Biography">Biography</option>
-                <option value="Autobiography" id="Autobiography">Autobiography</option>
+                {{#each genre}}
+                    <option value="Autobiography" id="Autobiography">{{this.genre}}</option>
+                {{/each}}
             </select><br>
             <br>
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
@@ -103,7 +99,7 @@
                     <li>
                       <select id="existingNationality" name="nationText">
                           <option selected hidden style="display:none" required>Select Nationality</option>
-                          {{#each context}}
+                          {{#each nationality}}
                             <option  name={{this.nationality}} value={{this.nationality}} id="nationID">{{this.nationality}}</option>
                           {{/each}}
                     
