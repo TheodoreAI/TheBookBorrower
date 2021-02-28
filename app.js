@@ -82,25 +82,26 @@ const id = req.params.id;
       }
       singleBook = {
         title: result[0].title,
+        authors: [],
+        authornationalities: [],
         pgcount: result[0].pgcount,
         lang: result[0].lang,
+        genres: [],
         publisher: result[0].publisher,
         checkoutstatus: result[0].checkoutstatus,
         checkoutdate: result[0].checkoutdate,
         borrower: result[0].borrower
       }
+
       result.forEach(item => {
         if (result[0].author == result[1].author) {
-          singleBook.author = result[0].author
+          singleBook.authors = result[0].author
+          singleBook.authornationalities = result[0].nationality
         } else if (result[0].author != result[0].author) {
-          console.log("will have multiple authors!")
+          singleBook.authors.push(item.author)
+          singleBook.authornationalities.push(item.nationality)
         }
-
-        if (result[0].genre == result[1].genre) {
-          singleBook.genre = result[0].genre
-        } else if (result[0].genre != result[1].genre) {
-          console.log("will have multiple genres!")
-        }
+        singleBook.genres.push(item.genre)
       })
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
@@ -128,12 +129,15 @@ const id = req.params.id;
       singleBorrower = {
         name: result[0].name,
         phone: result[0].phone,
-        email: result[0].email
+        email: result[0].email,
+        titles: []
       }
       if (result[1]) {
-        console.log("will have multiple titles!")
+        result.forEach(item => {
+          singleBorrower.titles.push(item.title)
+        })
       } else {
-        singleBorrower.title = result[0].title
+        singleBorrower.titles = result[0].title
       }
       res.render('singleborrower.hbs', {singleBorrower})
       console.log(singleBorrower)

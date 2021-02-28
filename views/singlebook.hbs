@@ -1,9 +1,10 @@
 <table><tr><th>Title: </th><td>{{singleBook.title}}</td></tr></table>
-<table><tr><th>Author(s):</th><td>{{singleBook.author}}</td></tr></table>
-<table><tr><th>Author Nationality: </th><td>{{singleBook.nationality}}</td></tr></table>
+<table><tr><th>Author(s):</th><td>{{singleBook.authors}}</td></tr></table>
+<table><tr><th>Author Nationality: </th><td>{{singleBook.authornationalities}}</td></tr></table>
 <table><tr><th>Pages: </th><td>{{singleBook.pgcount}}</td></tr></table>
 <table><tr><th>Language: </th><td>{{singleBook.lang}}</td></tr></table>
-<table><tr><th>Genre(s):</th><td>{{#each singleBook}}{{genre}}, {{/each}}</td></tr></table>
+<table><tr><th>Genre(s):</th><td>{{singleBook.genres}}</td></tr></table>
+<!-- <table><tr><th>Genre(s):</th><td>{{#each singleBook.genres}}, {{/each}}</td></tr></table> -->
 <table><tr><th>Publisher: </th><td>{{singleBook.publisher}}</td></tr></table>
 {{#if singleBook.checkoutstatus}}
   <table><tr><th>Borrowed? </th><td>Yes</td></tr></table>
