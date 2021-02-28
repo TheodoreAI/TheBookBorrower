@@ -121,12 +121,12 @@ LEFT JOIN borrowers
 -- change status of book, make checkout date today's date:
 UPDATE books
 SET status = TRUE
-WHERE status = FALSE;
+WHERE status = FALSE AND id = :id_of_chosen_book;
 
 -- if book is returned (user clicks "return"):
 UPDATE books
 SET status = FALSE, borrower_id = NULL, checkout_date = NULL
-WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL;
+WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL AND AND id = :id_of_chosen_book;
 
 -- book info in pop ups on books page after user clicks a title:
 SELECT books.title,
@@ -205,12 +205,12 @@ WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_clic
 
 
 UPDATE books
-SET title = :input_title, 
-   checkoutStatus = :input_status, 
+SET title = :input_title,
+   checkoutStatus = :input_status,
    pgCount = :input_pgCount
-   checkout_date = :input_date, 
-   borrowerID = :input_borrower_id, 
-   languageID = :input_publisher, 
+   checkout_date = :input_date,
+   borrowerID = :input_borrower_id,
+   languageID = :input_publisher,
    publisherID= :input_publisher
 
 
@@ -218,12 +218,12 @@ SET title = :input_title,
 -- this should break connection in books_borrowers table
 -- These queries will be implemented in the borrowers page and in the books page
 DELETE FROM books
-WHERE title = :input_title, 
-   checkoutStatus = :input_status, 
+WHERE title = :input_title,
+   checkoutStatus = :input_status,
    pgCount = :input_pgCount
-   checkout_date = :input_date, 
-   borrowerID = :input_borrower_id, 
-   languageID = :input_publisher, 
+   checkout_date = :input_date,
+   borrowerID = :input_borrower_id,
+   languageID = :input_publisher,
    publisherID= :input_publisher
 
 DELETE FROM genres
@@ -268,6 +268,6 @@ VALUES (:lastName_input,
 
 INSERT INTO `nationalities` (nationality) VALUES (:nationality_input);
 
-INSERT INTO `languages` (lang) VALUES (:langauge_input);
+INSERT INTO `languages` (lang) VALUES (:language_input);
 
 INSERT INTO `genres` (genre) VALUES (:genre_input);

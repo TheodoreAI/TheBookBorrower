@@ -17,10 +17,13 @@ var app = express();
 
 var hbs = require('express-handlebars').create({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+    displayBorrowers: function(thing) {console.log(thing)}
+    }
 });
-// set the engine and the file extension name and the files that will be used
 
+// set the engine and the file extension name and the files that will be used
 app.engine('hbs', hbs.engine);
 
 app.set("view engine", "hbs");
@@ -50,10 +53,6 @@ app.get('/', function (req, res) {
         layout: 'main'
     });
 });
-// renders the maintain.hbs page:
-// app.get('/maintain', function (req, res) {
-//     res.render('maintain.hbs')
-// });
 
 
 
@@ -76,71 +75,22 @@ app.get('/borrowers', function (req, res){
       })
 });
 
-// app.get('/maintain', function (req, res) {
-//     maintain.selectAllGenres()
-//         .then((genre) => {
-//             res.render("maintain.hbs", {genre})
-//         }).catch(function (error) {
-//             console.log("Eroor in the GET request for the table genres: ", error.message);
-//         });
-// });
 
-// attempting this with a multiple then:
+app.get('/maintain', function (req, res) {
+    maintain.selectAllNationalities()
+        .then((nationality) => {
+                console.log(req.body, "this is the nations");
+                const context = {};
+                for (let i = 0; i < nationality.length; i++) {
+                        context['key' + i] = nationality[i];
+                }
 
-app.get('/maintain', (req, res) => {
-    maintain.selectAllGenres()
-        .then((genre) => {
-            maintain.selectAllNationalities()
-            .then((nationality) => {
-                maintain.selectAllLanguages()
-                .then((lang) => {
-                    maintain.selectAllPublishers()
-                        .then((publisher) =>{
-                            maintain.selectAllBorrowers()
-                                .then((borrower) =>{
-                                    maintain.selectAllAuthors()
-                                        .then((author) => {
-                                            console.log({
-                                                nationality,
-                                                genre
-                                            })
-                                            res.render("maintain.hbs", {
-                                                nationality,
-                                                genre,
-                                                lang,
-                                                publisher,
-                                                borrower,
-                                                author
-                                            })
+                res.render("maintain.hbs", {context})
+        }).catch(function (error) {
+                console.log("Error in the GET request for the table authors: ", error.message);
+        });
 
-                                        })
-                                    
-                                })
-                            
-                        })     
-                })
-            })
-            }).catch(function (error) {
-                console.log("Eroor in the GET request for the table genres: ", error.message);
-            })
 });
-
-
-// app.get('/maintain', function (req, res) {
-
-//     maintain.selectAllNationalities()
-//         .then((resolveNations) => {
-//             console.log(resolveNations)
-            
-//         }).catch(function (error) {
-//                 console.log("Error in the GET request for the table authors: ", error.message);
-//         });
-// });
-
-
-
-
-
 
 app.post('/borrowerForm', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
