@@ -17,10 +17,7 @@ var app = express();
 
 var hbs = require('express-handlebars').create({
     defaultLayout: 'main',
-    extname: '.hbs',
-    helpers: {
-    displayBorrowers: function(thing) {console.log(thing)}
-    }
+    extname: '.hbs'
 });
 
 // set the engine and the file extension name and the files that will be used

@@ -32,7 +32,7 @@
         </thead>
           {{#each borrowers}}
             <tr>
-              <td onclick="{{displayBorrowers name}}"><a href=#>{{name}}</a></td>
+              <td><a href=# class="openBorrowerModal">{{name}}</a></td>
               <td>{{phone}}</td>
               <td>{{email}}</td>
               {{#if borrowingstatus}}
