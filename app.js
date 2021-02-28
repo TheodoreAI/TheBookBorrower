@@ -18,7 +18,17 @@ var app = express();
 var hbs = require('express-handlebars').create({
     defaultLayout: 'main',
     extname: '.hbs'
+    // helpers: {
+    //   ifEquals: function(arg1, arg2) {
+    //     if (arg1 == arg2) {
+    //       return True
+    //     } else {
+    //       return False
+    //     }
+    //   }
+    // }
 });
+
 
 // set the engine and the file extension name and the files that will be used
 app.engine('hbs', hbs.engine);
@@ -44,14 +54,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-
 app.get('/', function (req, res) {
     res.render('home', {
         layout: 'main'
     });
 });
-
-
 
 // getting the files for the navbar
 app.get('/books', function (req, res){
@@ -63,6 +70,44 @@ app.get('/books', function (req, res){
       })
 });
 
+app.get('/books/:id', function (req, res) {
+const id = req.params.id;
+  books.selectIndividualBook(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of multiple authors or genres still works:
+      if (!result.length) {
+        result = [result]
+      }
+      singleBook = {
+        title: result[0].title,
+        pgcount: result[0].pgcount,
+        lang: result[0].lang,
+        publisher: result[0].publisher,
+        checkoutstatus: result[0].checkoutstatus,
+        checkoutdate: result[0].checkoutdate,
+        borrower: result[0].borrower
+      }
+      result.forEach(item => {
+        if (result[0].author == result[1].author) {
+          singleBook.author = result[0].author
+        } else if (result[0].author != result[0].author) {
+          console.log("will have multiple authors!")
+        }
+
+        if (result[0].genre == result[1].genre) {
+          singleBook.genre = result[0].genre
+        } else if (result[0].genre != result[1].genre) {
+          console.log("will have multiple genres!")
+        }
+      })
+      res.render('singlebook.hbs', {singleBook})
+  }).catch(function(error){
+    console.log("ERROR getting individual borrower: ", error.message)
+  })
+});
+
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
@@ -71,6 +116,32 @@ app.get('/borrowers', function (req, res){
         console.log("ERROR getting borrowers page: ", error.message)
       })
 });
+
+app.get('/borrowers/:id', function (req, res) {
+const id = req.params.id;
+  borrowers.selectIndividualBorrower(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of borrower having multiple books still works:
+      result = [result]
+      singleBorrower = {
+        name: result[0].name,
+        phone: result[0].phone,
+        email: result[0].email
+      }
+      if (result[1]) {
+        console.log("will have multiple titles!")
+      } else {
+        singleBorrower.title = result[0].title
+      }
+      res.render('singleborrower.hbs', {singleBorrower})
+      console.log(singleBorrower)
+  }).catch(function(error){
+    console.log("ERROR getting individual borrower: ", error.message)
+  })
+});
+
 
 
 app.get('/maintain', function (req, res) {

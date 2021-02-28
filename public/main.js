@@ -3,10 +3,12 @@
 // These tutorials:
 // Modal:
 // Events: https://flaviocopes.com/how-to-add-event-listener-multiple-elements-javascript/
+// Modal with express: https://stackoverflow.com/questions/44061508/how-to-do-a-route-with-a-modal-with-expressjs
 
 document.querySelectorAll('.openBorrowerModal').forEach(item => {
   item.addEventListener('click', event => {
     var elem = document.querySelector('.modal-text')
+    console.log(borrowerQueries.getIndividualBorrower(item.innerHTML))
     elem.innerHTML ="<table><tr><th>Name </th><td>Wally West</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Phone </th><td>562-123-4567</td></tr></table>"
     elem.innerHTML +="<table><tr><th>Email </th><td>Wally@thebookborrower.com</td></tr></table>"
@@ -85,81 +87,81 @@ function setValueAsInput() {
 }
 
 
-if (example9) {
-  example9.onclick = function() {
-    var returnConfirmation = confirm("Are you sure you want to return The Answer Is... Reflections on My Life?")
-  }
-}
-
-if (example10) {
-  example10.onclick = function() {
-    var returnConfirmation = confirm("Are you sure you want to return Who is Alex Trebek?: A Biography?")
-  }
-
-}
-
-
-if (example12) {
-  example12.onclick = function() {
-    var elem = document.querySelector('.modal-text')
-    elem.innerHTML ="The Basketball Diaries"
-    elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
-    modal.style.display = "block";
-  }
-}
+// if (example9) {
+//   example9.onclick = function() {
+//     var returnConfirmation = confirm("Are you sure you want to return The Answer Is... Reflections on My Life?")
+//   }
+// }
+//
+// if (example10) {
+//   example10.onclick = function() {
+//     var returnConfirmation = confirm("Are you sure you want to return Who is Alex Trebek?: A Biography?")
+//   }
+//
+// }
+//
+//
+// if (example12) {
+//   example12.onclick = function() {
+//     var elem = document.querySelector('.modal-text')
+//     elem.innerHTML ="The Basketball Diaries"
+//     elem.innerHTML = "<form><label for='borrowers'>Choose a borrower:</label><select name='borrowers'><option value='Rhonda Smith'>Rhonda Smith</option><option value='Mateo Estrada'>Mateo Estrada</option></select><input type='submit' value='Submit'></form>"
+//     modal.style.display = "block";
+//   }
+// }
 
 
 
 // changing status buttons
-var status1 = document.getElementById("status1").innerHTML;
-var status2 = document.getElementById("status2").innerHTML;
-var status3 = document.getElementById("status3").innerHTML;
-var status4 = document.getElementById("status4").innerHTML;
-var status5 = document.getElementById("status5").innerHTML;
-
-var status1Button = document.getElementById("status1Button");
-var status2Button = document.getElementById("status2Button");
-var status3Button = document.getElementById("status3Button");
-var status4Button = document.getElementById("status4Button");
-var status5Button = document.getElementById("status5Button");
-
-
-if (status1) {
-  if (status1 == "Yes") {
-    status1Button.textContent = "Return"
-  } else if (status1 == "No") {
-    status1Button.textContent = "Borrow"
-  }
-}
-
-if (status2) {
-  if (status2 == "Yes") {
-    status2Button.textContent = "Return"
-  } else if (status2 == "No") {
-    status2Button.textContent = "Borrow"
-  }
-}
-
-if (status3) {
-  if (status3 == "Yes") {
-    status3Button.textContent = "Return"
-  } else if (status3 == "No") {
-    status3Button.textContent = "Borrow"
-  }
-}
-
-if (status4) {
-  if (status4 == "Yes") {
-    status4Button.textContent = "Return"
-  } else if (status4 == "No") {
-    status4Button.textContent = "Borrow"
-  }
-}
-
-if (status5) {
-  if (status5 == "Yes") {
-    status5Button.textContent = "Return"
-  } else if (status5 == "No") {
-    status5Button.textContent = "Borrow"
-  }
-}
+// var status1 = document.getElementById("status1").innerHTML;
+// var status2 = document.getElementById("status2").innerHTML;
+// var status3 = document.getElementById("status3").innerHTML;
+// var status4 = document.getElementById("status4").innerHTML;
+// var status5 = document.getElementById("status5").innerHTML;
+//
+// var status1Button = document.getElementById("status1Button");
+// var status2Button = document.getElementById("status2Button");
+// var status3Button = document.getElementById("status3Button");
+// var status4Button = document.getElementById("status4Button");
+// var status5Button = document.getElementById("status5Button");
+//
+//
+// if (status1) {
+//   if (status1 == "Yes") {
+//     status1Button.textContent = "Return"
+//   } else if (status1 == "No") {
+//     status1Button.textContent = "Borrow"
+//   }
+// }
+//
+// if (status2) {
+//   if (status2 == "Yes") {
+//     status2Button.textContent = "Return"
+//   } else if (status2 == "No") {
+//     status2Button.textContent = "Borrow"
+//   }
+// }
+//
+// if (status3) {
+//   if (status3 == "Yes") {
+//     status3Button.textContent = "Return"
+//   } else if (status3 == "No") {
+//     status3Button.textContent = "Borrow"
+//   }
+// }
+//
+// if (status4) {
+//   if (status4 == "Yes") {
+//     status4Button.textContent = "Return"
+//   } else if (status4 == "No") {
+//     status4Button.textContent = "Borrow"
+//   }
+// }
+//
+// if (status5) {
+//   if (status5 == "Yes") {
+//     status5Button.textContent = "Return"
+//   } else if (status5 == "No") {
+//     status5Button.textContent = "Borrow"
+//   }
+// }
