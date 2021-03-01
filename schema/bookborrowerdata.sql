@@ -152,8 +152,6 @@ VALUES
 ("Non-Fiction"),
 ("Autobiography");
 
-
-
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
 VALUES
 ("The Answer Is... Reflections on My Life", TRUE, 297,

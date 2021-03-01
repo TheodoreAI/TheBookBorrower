@@ -18,9 +18,19 @@ var app = express();
 var hbs = require('express-handlebars').create({
     defaultLayout: 'main',
     extname: '.hbs'
+    // helpers: {
+    //   ifEquals: function(arg1, arg2) {
+    //     if (arg1 == arg2) {
+    //       return True
+    //     } else {
+    //       return False
+    //     }
+    //   }
+    // }
 });
-// set the engine and the file extension name and the files that will be used
 
+
+// set the engine and the file extension name and the files that will be used
 app.engine('hbs', hbs.engine);
 
 app.set("view engine", "hbs");
@@ -44,18 +54,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-
 app.get('/', function (req, res) {
     res.render('home', {
         layout: 'main'
     });
 });
-// renders the maintain.hbs page:
-// app.get('/maintain', function (req, res) {
-//     res.render('maintain.hbs')
-// });
-
-
 
 // getting the files for the navbar
 app.get('/books', function (req, res){
@@ -67,6 +70,50 @@ app.get('/books', function (req, res){
       })
 });
 
+app.get('/books/:id', function (req, res) {
+const id = req.params.id;
+  books.selectIndividualBook(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of multiple authors or genres still works:
+      if (!result.length) {
+        result = [result]
+      }
+      singleBook = {
+        title: result[0].title,
+        authors: [],
+        authornationalities: [],
+        pgcount: result[0].pgcount,
+        lang: result[0].lang,
+        genres: [],
+        publisher: result[0].publisher,
+        checkoutstatus: result[0].checkoutstatus,
+        checkoutdate: result[0].checkoutdate,
+        borrower: result[0].borrower
+      }
+
+      result.forEach(item => {
+        if (result[0].author == result[1].author) {
+          singleBook.authors = result[0].author
+          singleBook.authornationalities = result[0].nationality
+        } else if (result[0].author != result[1].author) {
+          singleBook.authors.push(" " + item.author)
+          singleBook.authornationalities.push(" " + item.nationality)
+        }
+        
+        if (result[0].genre == result[1].genre) {
+          singleBook.genres = result[0].genre
+        } else if (result[0].genre != result[1].genre) {
+          singleBook.genres.push(" " + item.genre)
+        }
+      })
+      res.render('singlebook.hbs', {singleBook})
+  }).catch(function(error){
+    console.log("ERROR getting individual borrower: ", error.message)
+  })
+});
+
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
@@ -75,6 +122,7 @@ app.get('/borrowers', function (req, res){
         console.log("ERROR getting borrowers page: ", error.message)
       })
 });
+
 
 // app.get('/maintain', function (req, res) {
 //     maintain.selectAllGenres()
@@ -121,24 +169,53 @@ app.get('/maintain', (req, res) => {
         }).catch(function (error) {
                 console.log("Eroor in the GET request for the table genres: ", error.message);
         })
+
+app.get('/borrowers/:id', function (req, res) {
+const id = req.params.id;
+  borrowers.selectIndividualBorrower(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of borrower having multiple books still works:
+      result = [result]
+      singleBorrower = {
+        name: result[0].name,
+        phone: result[0].phone,
+        email: result[0].email,
+        titles: []
+      }
+      if (result[1]) {
+        result.forEach(item => {
+          singleBorrower.titles.push(" " + item.title)
+        })
+      } else {
+        singleBorrower.titles = result[0].title
+      }
+      res.render('singleborrower.hbs', {singleBorrower})
+      console.log(singleBorrower)
+  }).catch(function(error){
+    console.log("ERROR getting individual borrower: ", error.message)
+  })
+
 });
 
 
-// app.get('/maintain', function (req, res) {
 
-//     maintain.selectAllNationalities()
-//         .then((resolveNations) => {
-//             console.log(resolveNations)
-            
-//         }).catch(function (error) {
-//                 console.log("Error in the GET request for the table authors: ", error.message);
-//         });
-// });
+app.get('/maintain', function (req, res) {
+    maintain.selectAllNationalities()
+        .then((nationality) => {
+                console.log(req.body, "this is the nations");
+                const context = {};
+                for (let i = 0; i < nationality.length; i++) {
+                        context['key' + i] = nationality[i];
+                }
 
+                res.render("maintain.hbs", {context})
+        }).catch(function (error) {
+                console.log("Error in the GET request for the table authors: ", error.message);
+        });
 
-
-
-
+});
 
 
 
