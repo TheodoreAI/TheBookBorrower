@@ -133,6 +133,15 @@ const postAuthors = (lastName, firstName, nationText) => {
 };
 
 
+const postBooks = (titleBook, existingAuthor, 
+                    status, existingBorrower,
+                    checkoutDate, pageCount,
+                    existingPublisher, existingLanguage,
+                    existingGenre) => {
+                        console.log("What is happening with the post form for books?:", titleBook);
+                    }
+    return db.query(`INSERT INTO books ()`)
+
 
 
 module.exports = {

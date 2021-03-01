@@ -30,7 +30,7 @@
         </p>
         <button class="open-button" onclick="openForm()">Open Books Form </button><br>
         <div id="bookFormDiv">
-            <form id="bookForm" method="#" action="#">
+            <form id="bookForm" method="POST" action="/booksForm">
                 Title <input type='text' name='titleBook'><br>
               <p>
                 Select Author(s)</br>
@@ -47,7 +47,7 @@
                 <option value="No" id="No">No</option>
             </select><br>
             <select id="existingBorrower" name="existingBorrower">
-              <li style="display: None;"><a href="">Mateo Estrada</a></li><br>
+              
               <option selected hidden style="display:none">Select Borrower</option>
                 {{#each borrower}}
                     <option value={{this.fullName}} id="fullName">{{this.fullName}}</option>
@@ -71,7 +71,7 @@
               Select Genre(s)</br>
               Ctrl+click (Windows) or Command+Click (Mac) to select more than one
             </p>
-            <select id="existingGenres" name="existingGenres" multiple>
+            <select id="existingGenres" name="existingGenre" multiple>
                 {{#each genre}}
                     <option value="Autobiography" id="Autobiography">{{this.genre}}</option>
                 {{/each}}

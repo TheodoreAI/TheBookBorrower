@@ -91,38 +91,36 @@ app.get('/maintain', (req, res) => {
     maintain.selectAllGenres()
         .then((genre) => {
             maintain.selectAllNationalities()
-            .then((nationality) => {
-                maintain.selectAllLanguages()
-                .then((lang) => {
-                    maintain.selectAllPublishers()
-                        .then((publisher) =>{
-                            maintain.selectAllBorrowers()
-                                .then((borrower) =>{
-                                    maintain.selectAllAuthors()
-                                        .then((author) => {
-                                            console.log({
-                                                nationality,
-                                                genre
-                                            })
-                                            res.render("maintain.hbs", {
-                                                nationality,
-                                                genre,
-                                                lang,
-                                                publisher,
-                                                borrower,
-                                                author
-                                            })
+        .then((nationality) => {
+            maintain.selectAllLanguages()
+        .then((lang) => {
+            maintain.selectAllPublishers()
+        .then((publisher) =>{
+            maintain.selectAllBorrowers()
+        .then((borrower) =>{
+            maintain.selectAllAuthors()
+        .then((author) => {
+             console.log({
+                nationality,
+                genre
+            })
+            res.render("maintain.hbs", {
+                nationality,
+                genre,
+                lang,
+                publisher,
+                borrower,
+                author
+             })
 
-                                        })
-                                    
-                                })
-                            
-                        })     
-                })
-            })
-            }).catch(function (error) {
+        })                         
+        })                   
+        })     
+        })
+        })
+        }).catch(function (error) {
                 console.log("Eroor in the GET request for the table genres: ", error.message);
-            })
+        })
 });
 
 
@@ -136,6 +134,8 @@ app.get('/maintain', (req, res) => {
 //                 console.log("Error in the GET request for the table authors: ", error.message);
 //         });
 // });
+
+
 
 
 
@@ -208,6 +208,18 @@ app.post('/authors', function (req, res) {
             console.log("Error posting the authors table:", error.message)
     });
 
+});
+
+
+app.post('/booksForm', function (req, res){
+    console.log("This is the post form for books:", req.body);
+    maintain.postBooks(req.body.titleBook)
+    .then((books) =>{
+        res.render('maintain.hbs')
+
+    }).catch(function(error){
+        console.log("Error posting the books table:", error.message)
+    });
 });
 
 app.use(function (err, req, res, next) {
