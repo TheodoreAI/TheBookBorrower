@@ -108,7 +108,7 @@ INNER JOIN borrowers
    WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_input;
 
 -- get list of ALL Books for the Books page
-SELECT books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
+SELECT books.id, books.title, CONCAT(authors.firstName, " ", authors.lastName) AS 'Author', books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Borrower Name:'
 FROM books
 INNER JOIN authorsbooks
    ON books.id = authorsbooks.bookID
@@ -121,15 +121,17 @@ LEFT JOIN borrowers
 -- change status of book, make checkout date today's date:
 UPDATE books
 SET status = TRUE
-WHERE status = FALSE;
+WHERE status = FALSE AND id = :id_of_chosen_book;
 
 -- if book is returned (user clicks "return"):
 UPDATE books
 SET status = FALSE, borrower_id = NULL, checkout_date = NULL
-WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL;
+WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL AND AND id = :id_of_chosen_book;
 
 -- book info in pop ups on books page after user clicks a title:
-SELECT books.title,
+SELECT
+books.id,
+books.title,
 CONCAT(authors.firstName, " ", authors.lastName) AS 'Author',
 nationalities.nationality,
 books.pgCount,
@@ -156,7 +158,7 @@ INNER JOIN genres
    ON genres.id = genrebooks.genreID
 LEFT JOIN borrowers
    ON borrowers.id = books.borrowerID
-WHERE books.title = :book_title_clicked;
+WHERE books.id = :id_of_book_title_clicked;
 
 
 -- update info for individual books in pop up from the Books page
@@ -183,7 +185,7 @@ LEFT JOIN books
 
 
 -- get list of ALL borrowers for the borrowers page:
-SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, borrowers.email, (SELECT IF (borrowers.id = books.borrowerID, 'Yes', 'No')) AS 'Currently borrowing books?'
+SELECT borrowers.id, CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name', borrowers.phone, borrowers.email, (SELECT IF (borrowers.id = books.borrowerID, 'Yes', 'No')) AS 'Currently borrowing books?'
 FROM borrowers
 LEFT JOIN books
    ON borrowers.id = books.borrowerID;
@@ -196,7 +198,7 @@ books.title
 FROM borrowers
 LEFT JOIN books
    ON borrowers.id = books.borrowerID
-WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_clicked;
+WHERE borrowers.id = :id_of_borrower_name_clicked;
 
 
 
@@ -205,12 +207,12 @@ WHERE CONCAT(borrowers.firstName, " ", borrowers.lastName) = :borrower_name_clic
 
 
 UPDATE books
-SET title = :input_title, 
-   checkoutStatus = :input_status, 
+SET title = :input_title,
+   checkoutStatus = :input_status,
    pgCount = :input_pgCount
-   checkout_date = :input_date, 
-   borrowerID = :input_borrower_id, 
-   languageID = :input_publisher, 
+   checkout_date = :input_date,
+   borrowerID = :input_borrower_id,
+   languageID = :input_publisher,
    publisherID= :input_publisher
 
 
@@ -218,12 +220,12 @@ SET title = :input_title,
 -- this should break connection in books_borrowers table
 -- These queries will be implemented in the borrowers page and in the books page
 DELETE FROM books
-WHERE title = :input_title, 
-   checkoutStatus = :input_status, 
+WHERE title = :input_title,
+   checkoutStatus = :input_status,
    pgCount = :input_pgCount
-   checkout_date = :input_date, 
-   borrowerID = :input_borrower_id, 
-   languageID = :input_publisher, 
+   checkout_date = :input_date,
+   borrowerID = :input_borrower_id,
+   languageID = :input_publisher,
    publisherID= :input_publisher
 
 DELETE FROM genres
@@ -268,6 +270,6 @@ VALUES (:lastName_input,
 
 INSERT INTO `nationalities` (nationality) VALUES (:nationality_input);
 
-INSERT INTO `languages` (lang) VALUES (:langauge_input);
+INSERT INTO `languages` (lang) VALUES (:language_input);
 
 INSERT INTO `genres` (genre) VALUES (:genre_input);

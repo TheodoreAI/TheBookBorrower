@@ -55,7 +55,7 @@
   </thead>
   {{#each books}}
     <tr>
-      <td><a href=#>{{title}}</a></td>
+      <td><a href="/books/{{id}}" class="openBookModal">{{title}}</a></td>
       <td>{{author}}</td>
       </td>
       {{#if checkoutstatus}}
@@ -76,16 +76,3 @@
     </tr>
   {{/each}}
 </table>
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p class="modal-text">Some text in the Modal..</p>
-    <button id="updateButton">Update Book</button>
-    <button id="deleteButton">Delete Book</button>
-  </div>
-
-</div>
