@@ -18,15 +18,15 @@ const mysql = require('mysql');
 // });
 
 // Local server
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Library',
-    multipleStatements: true
-});
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'Library',
+//     multipleStatements: true
+// });
 
-module.exports = db;
+// module.exports = db;
 
 //  This code was taken from the How to Run Multiple SQL 
 //  queries Directly from an SQL File in NODEJS.

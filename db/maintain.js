@@ -6,8 +6,8 @@ const postBorrower = (firstName, lastName, email, phone) =>{
     return db.query(`INSERT INTO borrowers
                             (firstName, lastName, email, phone) 
                             VALUES($1, $2, $3, $4);`
-                            ,[firstName, lastName, email, phone])
-        .then((post) => {
+                            ,[firstName, lastName, email, phone]
+                            ).then((post) => {
 
         return post[0]
     })
@@ -133,14 +133,14 @@ const postAuthors = (lastName, firstName, nationText) => {
 };
 
 
-const postBooks = (titleBook, existingAuthor, 
-                    status, existingBorrower,
-                    checkoutDate, pageCount,
-                    existingPublisher, existingLanguage,
-                    existingGenre) => {
-                        console.log("What is happening with the post form for books?:", titleBook);
-                    }
-    return db.query(`INSERT INTO books ()`)
+// const postBooks = (titleBook, existingAuthor, 
+//                     status, existingBorrower,
+//                     checkoutDate, pageCount,
+//                     existingPublisher, existingLanguage,
+//                     existingGenre) => {
+//                         console.log("What is happening with the post form for books?:", titleBook);
+//                     }
+//     return db.query(`INSERT INTO books ()`)
 
 
 

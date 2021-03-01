@@ -136,39 +136,37 @@ app.get('/borrowers', function (req, res){
 // attempting this with a multiple then:
 
 app.get('/maintain', (req, res) => {
-    maintain.selectAllGenres()
-        .then((genre) => {
-            maintain.selectAllNationalities()
-        .then((nationality) => {
-            maintain.selectAllLanguages()
-        .then((lang) => {
-            maintain.selectAllPublishers()
-        .then((publisher) =>{
-            maintain.selectAllBorrowers()
-        .then((borrower) =>{
-            maintain.selectAllAuthors()
-        .then((author) => {
-             console.log({
-                nationality,
-                genre
-            })
-            res.render("maintain.hbs", {
-                nationality,
-                genre,
-                lang,
-                publisher,
-                borrower,
-                author
-             })
+        maintain.selectAllGenres()
+    .then((genre) => {
+        maintain.selectAllNationalities()
+    .then((nationality) => {
+        maintain.selectAllLanguages()
+    .then((lang) => {
+        maintain.selectAllPublishers()
+    .then((publisher) =>{
+        maintain.selectAllBorrowers()
+    .then((borrower) =>{
+        maintain.selectAllAuthors()
+    .then((author) => {
+        res.render("maintain.hbs", {
+            nationality,
+            genre,
+            lang,
+            publisher,
+            borrower,
+            author
+        })
 
-        })                         
-        })                   
-        })     
-        })
-        })
-        }).catch(function (error) {
-                console.log("Eroor in the GET request for the table genres: ", error.message);
-        })
+    });                         
+    });                   
+    });     
+    });
+    });
+    }).catch(function (error) {
+        console.log("Eroor in the GET request for the table genres: ", error.message);
+    })
+});
+
 
 app.get('/borrowers/:id', function (req, res) {
 const id = req.params.id;
