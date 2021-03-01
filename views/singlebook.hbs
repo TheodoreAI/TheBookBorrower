@@ -4,7 +4,6 @@
 <table><tr><th>Pages: </th><td>{{singleBook.pgcount}}</td></tr></table>
 <table><tr><th>Language: </th><td>{{singleBook.lang}}</td></tr></table>
 <table><tr><th>Genre(s):</th><td>{{singleBook.genres}}</td></tr></table>
-<!-- <table><tr><th>Genre(s):</th><td>{{#each singleBook.genres}}, {{/each}}</td></tr></table> -->
 <table><tr><th>Publisher: </th><td>{{singleBook.publisher}}</td></tr></table>
 {{#if singleBook.checkoutstatus}}
   <table><tr><th>Borrowed? </th><td>Yes</td></tr></table>
@@ -13,3 +12,5 @@
 {{/if}}
 <table><tr><th>Check Out Date: </th><td>{{singleBook.checkoutdate}}</td></tr></table>
 <table><tr><th>Borrower: </th><td>{{singleBook.borrower}}</td></tr></table>
+<button id="updateButton">Update Book</button>
+<button id="deleteButton">Delete Book</button>

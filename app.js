@@ -97,11 +97,16 @@ const id = req.params.id;
         if (result[0].author == result[1].author) {
           singleBook.authors = result[0].author
           singleBook.authornationalities = result[0].nationality
-        } else if (result[0].author != result[0].author) {
-          singleBook.authors.push(item.author)
-          singleBook.authornationalities.push(item.nationality)
+        } else if (result[0].author != result[1].author) {
+          singleBook.authors.push(" " + item.author)
+          singleBook.authornationalities.push(" " + item.nationality)
         }
-        singleBook.genres.push(item.genre)
+        
+        if (result[0].genre == result[1].genre) {
+          singleBook.genres = result[0].genre
+        } else if (result[0].genre != result[1].genre) {
+          singleBook.genres.push(" " + item.genre)
+        }
       })
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
@@ -134,7 +139,7 @@ const id = req.params.id;
       }
       if (result[1]) {
         result.forEach(item => {
-          singleBorrower.titles.push(item.title)
+          singleBorrower.titles.push(" " + item.title)
         })
       } else {
         singleBorrower.titles = result[0].title
