@@ -50,7 +50,7 @@
               
               <option selected hidden style="display:none">Select Borrower</option>
                 {{#each borrower}}
-                    <option value={{this.fullName}} id="fullName">{{this.fullName}}</option>
+                    <option value="{{this.fullName}}" id="borrowerID">{{this.fullName}}</option>
                 {{/each}}
             </select><br>
             Checkout Date (yyyy-mm-dd) <input type='number' name='checkoutDate'><br>
@@ -58,13 +58,13 @@
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
                 {{#each publisher}}    
-                <option value={{this.publisher}} id={{this.publisher}}>{{this.publisher}}</option>
+                <option value="{{this.publisher}}" id="publisherID">{{this.publisher}}</option>
                 {{/each}}
             </select><br>
             <select id="existingLanguage" name="existingLanguage">
               <option selected hidden style="display:none">Select Language</option>
                 {{#each lang}}
-                <option value="English" id="English">{{this.lang}}</option>
+                <option value="{{this.lang}}" id="langID">{{this.lang}}</option>
                 {{/each}}
             </select><br>
             {{!-- <p>
