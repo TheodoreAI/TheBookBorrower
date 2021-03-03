@@ -32,7 +32,7 @@
         <div id="bookFormDiv">
             <form id="bookForm" method="POST" action="/booksForm">
                 Title <input type='text' name='titleBook'><br>
-              <p>
+              {{!-- <p>
                 Select Author(s)</br>
                 Ctrl+click (Windows) or Command+Click (Mac) to select more than one
               </p>
@@ -40,7 +40,7 @@
                   {{#each author}}
                   <option value="AlexTrebek" id="AlexTrebek">{{this.fullName}}</option>
                   {{/each}}
-              </select><br>
+              </select><br> --}}
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
                 <option value="Yes" id="Yes">Yes</option>
@@ -58,7 +58,7 @@
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
                 {{#each publisher}}    
-                <option value="MinnesotaHSP" id="MinnesotaHSP">{{this.publisher}}</option>
+                <option value={{this.publisher}} id={{this.publisher}}>{{this.publisher}}</option>
                 {{/each}}
             </select><br>
             <select id="existingLanguage" name="existingLanguage">
@@ -67,7 +67,7 @@
                 <option value="English" id="English">{{this.lang}}</option>
                 {{/each}}
             </select><br>
-            <p>
+            {{!-- <p>
               Select Genre(s)</br>
               Ctrl+click (Windows) or Command+Click (Mac) to select more than one
             </p>
@@ -75,7 +75,7 @@
                 {{#each genre}}
                     <option value="Autobiography" id="Autobiography">{{this.genre}}</option>
                 {{/each}}
-            </select><br>
+            </select><br> --}}
             <br>
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                 Add Book

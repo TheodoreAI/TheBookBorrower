@@ -133,16 +133,33 @@ const postAuthors = (lastName, firstName, nationText) => {
 };
 
 
-// const postBooks = (titleBook, existingAuthor, 
-//                     status, existingBorrower,
-//                     checkoutDate, pageCount,
-//                     existingPublisher, existingLanguage,
-//                     existingGenre) => {
-//                         console.log("What is happening with the post form for books?:", titleBook);
-//                     }
-//     return db.query(`INSERT INTO books ()`)
+const postBooks = (titleBook, 
+                    status, existingBorrower,
+                    checkoutDate, pageCount,
+                    existingPublisher, existingLanguage) => {
+                        console.log("What is happening with the post form for books?:");
+                  
+                    
+                    
+    return db.query(`INSERT INTO books 
+    (title, checkoutstatus, pgcount, languageid, 
+        publisherid, borrowerid, checkoutdate) 
+    
+    VALUES($1, $2, $6, 
+    (SELECT id FROM languages WHERE lang =$7), 
+    (SELECT id FROM publishers WHERE publisher = $6),
+    (SELECT id FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $3),
+    $4);`, 
+    [titleBook, status, existingBorrower, 
+    checkoutDate, pageCount, existingPublisher,
+    existingLanguage]).then((books) => {
+        return books;
+        
+    }).catch(function (error) {
+        console.log("Error posting the book into the book table", error.message);
+    });
 
-
+  }
 
 module.exports = {
     postBorrower,
@@ -156,7 +173,8 @@ module.exports = {
     selectAllLanguages,
     selectAllPublishers, 
     selectAllBorrowers,
-    selectAllAuthors
+    selectAllAuthors,
+    postBooks
 
 
 };

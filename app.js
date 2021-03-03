@@ -288,8 +288,10 @@ app.post('/authors', function (req, res) {
 
 app.post('/booksForm', function (req, res){
     console.log("This is the post form for books:", req.body);
-    maintain.postBooks(req.body.titleBook)
+    maintain.postBooks(req.body.titleBook, req.body.status, req.body.existingBorrower,
+      req.body.checkoutdate, req.body.pageCount, req.body.existingPublisher, req.body.existingLanguage)
     .then((books) =>{
+        console.log("The books,", req.body)
         res.render('maintain.hbs')
 
     }).catch(function(error){
