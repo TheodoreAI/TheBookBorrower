@@ -47,7 +47,7 @@
                 <option value="No" id="No">No</option>
             </select><br>
             <select id="existingBorrower" name="existingBorrower">
-              
+
               <option selected hidden style="display:none">Select Borrower</option>
                 {{#each borrower}}
                     <option value={{this.fullName}} id="fullName">{{this.fullName}}</option>
@@ -57,7 +57,7 @@
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
-                {{#each publisher}}    
+                {{#each publisher}}
                 <option value="MinnesotaHSP" id="MinnesotaHSP">{{this.publisher}}</option>
                 {{/each}}
             </select><br>
@@ -102,7 +102,7 @@
                           {{#each nationality}}
                             <option  name={{this.nationality}} value={{this.nationality}} id="nationID">{{this.nationality}}</option>
                           {{/each}}
-                    
+
 
                       </select>
                     </li>
@@ -207,4 +207,3 @@
 
 
 </div>
-

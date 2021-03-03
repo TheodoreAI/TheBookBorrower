@@ -5,7 +5,7 @@ function myFunction() {
     filter = input.value.toUpperCase();
     ul = document.getElementById('myUL');
     li = ul.getElementsByTagName('li');
- 
+
 
     // Now I will loop throhgout all the list items, hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
@@ -13,11 +13,11 @@ function myFunction() {
         textVal = a.textContent || a.innerText;
 
         if (textVal.toUpperCase().indexOf(filter) > -1){
-          
+
             li[i].style.display = "";
         }
         else{
             li[i].style.display = "none";
         }
-    } 
+    }
 }

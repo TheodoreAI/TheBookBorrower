@@ -85,6 +85,8 @@ function openGenreForm(){
 function closeGenreForm(){
     document.getElementById("genreFormDiv").style.display = "none";
 }
+
+
 // appearBtn.setAttribute("onclick", "closeForm()")
 // formAdd.appendChild(appearBtn);
 
