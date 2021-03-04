@@ -157,6 +157,14 @@ body{
   display: none;
 }
 
-#borrowerUpdateCloser {
+#singleBookUpdate {
   display: none;
+}
+
+#updateCloser {
+  display: none;
+}
+
+#updateForm {
+  list-style-type: none;
 }

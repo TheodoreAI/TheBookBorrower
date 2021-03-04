@@ -174,14 +174,23 @@ const id = req.params.id;
       } else {
         singleBorrower.titles = result[0].title
       }
-      res.render('singleborrower.hbs', {singleBorrower, scripts: './public/singleborrower.js'})
+      res.render('singleborrower.hbs', {singleBorrower})
   }).catch(function(error){
     console.log("ERROR getting individual borrower: ", error.message)
   })
-
 });
 
-
+app.post('/borrowers/:id', (req, res) => {
+  const id = req.params.id;
+  const {borrowerName, borrowerPhone, borrowerEmail} = req.body
+  // borrowers.updateBorrower(borrowerName, borrowerPhone, borrowerEmail)
+  console.log("borrower to update: ", borrowerName, borrowerPhone, borrowerEmail)
+  .then(() => {
+    res.redirect(`/borrowers/${id}`)
+  }).catch(function (error) {
+    console.log("Error updating borrower ", id)
+  })
+})
 
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
