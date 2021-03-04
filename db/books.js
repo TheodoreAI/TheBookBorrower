@@ -53,6 +53,7 @@ const selectIndividualBook = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE books.id = $1
     `, [id]).then((book) => {
+      console.log("here is the book: ", book)
       return book
     }).catch(function (error) {
       console.log("ERROR selecting one book: ", error.message)

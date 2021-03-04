@@ -29,7 +29,8 @@ const selectIndividualBorrower = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE borrowers.id = $1
     `, [id]).then((borrower) => {
-      return borrower[0]
+      console.log("the borrower: ", borrower)
+      return borrower
     }).catch(function (error) {
       console.log("ERROR selecting one borrower: ", error.message)
     })

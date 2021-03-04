@@ -18,17 +18,7 @@ var app = express();
 var hbs = require('express-handlebars').create({
     defaultLayout: 'main',
     extname: '.hbs'
-    // helpers: {
-    //   ifEquals: function(arg1, arg2) {
-    //     if (arg1 == arg2) {
-    //       return True
-    //     } else {
-    //       return False
-    //     }
-    //   }
-    // }
 });
-
 
 // set the engine and the file extension name and the files that will be used
 app.engine('hbs', hbs.engine);
@@ -37,16 +27,11 @@ app.set("view engine", "hbs");
 app.use('/static', express.static('public'));
 app.use('/', express.static('public'));
 
-
-
-// app.engine('hbs', hbs({
-//     layoutsDir: __dirname + '/views/layouts',
-//     partialsDir: [path.join(__dirname + '/views/partials/')],
-//     extname: '.hbs',
-// }));
-
-// accessing the css
+// accessing the css and js scripts
 app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/borrowers/', express.static(path.join(__dirname, '/public')));
+app.use('/books/', express.static(path.join(__dirname, '/public')));
+
 
 
 app.use(bodyParser.urlencoded({
@@ -101,7 +86,7 @@ const id = req.params.id;
           singleBook.authors.push(" " + item.author)
           singleBook.authornationalities.push(" " + item.nationality)
         }
-        
+
         if (result[0].genre == result[1].genre) {
           singleBook.genres = result[0].genre
         } else if (result[0].genre != result[1].genre) {
@@ -110,7 +95,7 @@ const id = req.params.id;
       })
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
-    console.log("ERROR getting individual borrower: ", error.message)
+    console.log("ERROR getting individual book: ", error.message)
   })
 });
 
@@ -157,13 +142,13 @@ app.get('/maintain', (req, res) => {
             author
         })
 
-    });                         
-    });                   
-    });     
+    });
+    });
+    });
     });
     });
     }).catch(function (error) {
-        console.log("Eroor in the GET request for the table genres: ", error.message);
+        console.log("Error in the GET request for the table genres: ", error.message);
     })
 });
 
@@ -175,7 +160,7 @@ const id = req.params.id;
       //change result into an array if there is only one result
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
-      result = [result]
+      result = result
       singleBorrower = {
         name: result[0].name,
         phone: result[0].phone,
@@ -189,8 +174,7 @@ const id = req.params.id;
       } else {
         singleBorrower.titles = result[0].title
       }
-      res.render('singleborrower.hbs', {singleBorrower})
-      console.log(singleBorrower)
+      res.render('singleborrower.hbs', {singleBorrower, scripts: './public/singleborrower.js'})
   }).catch(function(error){
     console.log("ERROR getting individual borrower: ", error.message)
   })

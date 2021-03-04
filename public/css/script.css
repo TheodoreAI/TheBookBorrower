@@ -151,3 +151,12 @@ body{
     width: 100%;
     border: 20px;
 }
+
+/*For update/delete book or borrower forms*/
+#singleBorrowerUpdate {
+  display: none;
+}
+
+#borrowerUpdateCloser {
+  display: none;
+}
