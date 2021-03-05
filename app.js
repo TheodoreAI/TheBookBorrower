@@ -148,15 +148,20 @@ app.get('/maintain', (req, res) => {
     .then((borrower) =>{
         maintain.selectAllAuthors()
     .then((author) => {
+        maintain.selectAllBooks()
+    .then((books) => {
+        
         res.render("maintain.hbs", {
-            nationality,
-            genre,
-            lang,
-            publisher,
-            borrower,
-            author
-        })
-
+          nationality,
+          genre,
+          lang,
+          publisher,
+          borrower,
+          author,
+          books
+        });
+    });
+      
     });                         
     });                   
     });     
@@ -164,7 +169,7 @@ app.get('/maintain', (req, res) => {
     });
     }).catch(function (error) {
         console.log("Eroor in the GET request for the table genres: ", error.message);
-    })
+    });
 });
 
 
@@ -202,7 +207,7 @@ const id = req.params.id;
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
         .then((nationality) => {
-                console.log(req.body, "this is the nations");
+                
                 const context = {};
                 for (let i = 0; i < nationality.length; i++) {
                         context['key' + i] = nationality[i];
@@ -220,8 +225,8 @@ app.get('/maintain', function (req, res) {
 app.post('/borrowerForm', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
     .then((maintain) => {
-        console.log(req.body);
-        res.render('maintain')
+       
+        res.redirect('/maintain')
     }).catch(function (error) {
         console.log("Error posting to the borrowers table:", error.message)
     });
@@ -233,8 +238,8 @@ app.post('/genres', function (req, res) {
     console.log(req.body);
     maintain.postGenre(genre)
     .then((maintain) => {
-        console.log("The genres?", maintain);
-        res.render('maintain.hbs')
+      
+        res.redirect('/maintain')
     }).catch(function (error) {
         console.log("Error posting to the borrowers table:", error.message)
     });
@@ -244,8 +249,8 @@ app.post('/genres', function (req, res) {
 app.post('/languages', function (req, res) {
     maintain.postLanguage(req.body.lang)
     .then((maintain) => {
-        console.log('The lanuage', maintain);
-        res.render("maintain.hbs")
+      
+        res.redirect("/maintain")
     }).catch(function (error){
         console.log("Error posting to the languages table:", error.message)
     });
@@ -255,8 +260,8 @@ app.post('/languages', function (req, res) {
 app.post('/publishers', function (req, res) {
     maintain.postPublisher(req.body.publisher)
         .then((maintain) => {
-            console.log("The publisher is:", maintain);
-            res.render('maintain.hbs')
+   
+            res.redirect('/maintain')
 
         }).catch(function(error){
             console.log("Error posting to the publishers table:", error.message)
@@ -266,8 +271,8 @@ app.post('/publishers', function (req, res) {
 app.post('/nationalities', function (req, res) {
     maintain.postNationality(req.body.nationality)
         .then((maintain) =>{
-            console.log("The nationality is:", maintain);
-            res.render('maintain.hbs')
+         
+            res.redirect('/maintain')
         }).catch(function(error) {
             console.log("Error posting the nationality table:", error.message)
     });
@@ -275,10 +280,10 @@ app.post('/nationalities', function (req, res) {
 
 
 app.post('/authors', function (req, res) {
-    console.log("what is happening?", req.body.lastName);
+ 
     maintain.postAuthors(req.body.lastName, req.body.firstName,req.body.nationText)
         .then((authors) =>{
-            res.render('maintain.hbs')
+            res.redirect('/maintain')
         }).catch(function(error) {
             console.log("Error posting the authors table:", error.message)
     });
@@ -287,15 +292,57 @@ app.post('/authors', function (req, res) {
 
 
 app.post('/booksForm', function (req, res){
-    console.log("This is the post form for books:", req.body);
-    maintain.postBooks(req.body.titleBook)
+    
+    maintain.postBooks(req.body.titleBook, req.body.status, req.body.existingBorrower,
+      req.body.checkoutDate, req.body.pageCount, req.body.existingPublisher, req.body.existingLanguage)
     .then((books) =>{
-        res.render('maintain.hbs')
+      
+        res.redirect('/maintain')
 
     }).catch(function(error){
         console.log("Error posting the books table:", error.message)
     });
 });
+
+app.post('/booksAuthorsForm', function (req, res){
+  // if there are multiple authors and multiple books selected I will get an array:
+    var authors = req.body.existingAuthor;
+    var books = req.body.existingBook;
+    
+    if (!books.length){
+      books.push(books);
+    }
+  console.log("The single book add", books);
+  maintain.postAuthorsBooks(authors, books).then((authorsbooks) => {
+
+      res.redirect('/maintain')
+    }).catch(function (error) {
+      console.log("The Authors to the books:", error.message);
+
+    });
+
+});
+
+
+app.post('/genreBooksForm', function (req, res){
+
+  var genres = req.body.existingGenre;
+  var book = req.body.existingBook;
+ 
+  if (!genres.length){
+
+    genres = [genres]
+  }
+  console.log(genres);
+  maintain.postGenreBooks(genres, book).then((genreBooks) => {
+
+    res.redirect('/maintain')
+  }).catch(function (error){
+    console.log("The Post Form for the genrebooks isn't working:", error.message);
+  });
+});
+
+
 
 app.use(function (err, req, res, next) {
     console.error(err.stack);
