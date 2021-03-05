@@ -10,13 +10,20 @@ if (borrowBook){
 }
 
 formButton.setAttribute('onclick', "return confirm('Are you sure you want to add this book?');");
+// this will change the form to add the author and the genre of the book:
+
+
 
 
 // making the form appear/disappear
 
 document.getElementById("bookFormDiv").setAttribute('style', 'display: None');
 
+document.getElementById("bookAuthorFormDiv").setAttribute('Style', 'display: None');
+
 document.getElementById("authorFormDiv").setAttribute('style', 'display: None');
+
+document.getElementById("genreBookFormDiv").setAttribute('style', 'display: None');
 
 document.getElementById("publisherFormDiv").setAttribute('style', 'display: None');
 
@@ -26,6 +33,9 @@ document.getElementById("languageFormDiv").setAttribute('style', 'display: None'
 
 document.getElementById("genreFormDiv").setAttribute('style', 'display: None');
 
+
+
+
 function openForm() {
     document.getElementById("bookFormDiv").style.display = "block";
 }
@@ -33,6 +43,26 @@ function openForm() {
 function closeForm() {
     document.getElementById("bookFormDiv").style.display = "none";
 }
+
+function openBookAuthorForm() {
+    document.getElementById("bookAuthorFormDiv").style.display = "block";
+}
+
+
+function closeBookAuthorForm() {
+    document.getElementById("bookAuthorFormDiv").style.display = "none";
+}
+
+function openGenreBookForm() {
+    document.getElementById("genreBookFormDiv").style.display = "block";
+
+}
+
+function closeGenreBookForm() {
+    document.getElementById("genreBookFormDiv").style.display = "none";
+}
+
+
 
 
 function openAuthorForm(){
@@ -85,18 +115,22 @@ function closeGenreForm(){
     document.getElementById("genreFormDiv").style.display = "none";
 }
 
-
-// appearBtn.setAttribute("onclick", "closeForm()")
-// formAdd.appendChild(appearBtn);
+appearBtn.setAttribute("onclick", "closeForm()")
+formAdd.appendChild(appearBtn);
 
 
 // Event handlers for submitting the forms:
 
-// function displaySuccessMsg(event){
-//     window.alert("The Author was successfully Added!");
-//     location.reload();
-// }
-// const form = document.getElementById('authorForm');
-// form.addEventListener('submit', displaySuccessMsg);
-//
-//
+function displaySuccessMsg(event){
+    window.alert("The Author was successfully Added!");
+    location.reload();
+}
+const form = document.getElementById('authorForm');
+form.addEventListener('submit', displaySuccessMsg);
+
+
+function changeForm() {
+    formAdd.setAttribute('style', 'display: None');
+}
+
+formAdd.addEventListener("submit", changeForm);

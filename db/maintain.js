@@ -59,9 +59,6 @@ const postNationality = (nationality) => {
 
 
 
-
-
-
 const selectAllNationalities = () => {
     return db.query(`SELECT * FROM nationalities`
     ).then((resolveNations, rejectNations) => {
@@ -110,7 +107,7 @@ const selectAllBorrowers = () => {
 
 
 const selectAllAuthors = () => {
-    return db.query(`SELECT CONCAT(authors.firstName, ' ', authors.lastName) AS "fullName" FROM authors;`
+    return db.query(`SELECT CONCAT(authors.firstname, ' ', authors.lastname) AS "fullName" FROM authors;`
     ).then((author) => {
         return author;
     }).catch(function (error){
@@ -118,6 +115,13 @@ const selectAllAuthors = () => {
     });
 }
 
+const selectAllBooks = () => {
+    return db.query(`SELECT title FROM books;`).then((books) =>{
+        return books;
+    }).catch(function (error){
+        console.log("Error selecting all the books from the books table:", error.message);
+    });
+}
 
 
 const postAuthors = (lastName, firstName, nationText) => {
@@ -133,16 +137,96 @@ const postAuthors = (lastName, firstName, nationText) => {
 };
 
 
-// const postBooks = (titleBook, existingAuthor, 
-//                     status, existingBorrower,
-//                     checkoutDate, pageCount,
-//                     existingPublisher, existingLanguage,
-//                     existingGenre) => {
-//                         console.log("What is happening with the post form for books?:", titleBook);
-//                     }
-//     return db.query(`INSERT INTO books ()`)
+// This is a promise function that passes the new books to the books table.
+
+const postBooks = (titleBook, 
+                    status, existingBorrower,
+                    checkoutDate, pageCount,
+                    existingPublisher, existingLanguage) => {
+                                        
+    return db.query(`
+        BEGIN;  
+            INSERT INTO books (title, checkoutstatus, pgcount, languageid, publisherid, borrowerid, checkoutdate)
+            VALUES($1, $2, $5,
+            (SELECT id FROM languages WHERE lang = $7),
+            (SELECT id FROM publishers WHERE publisher = $6),
+            (SELECT id FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $3),
+            $4);
+                
+        COMMIT;`, 
+
+[titleBook, status, existingBorrower, 
+    checkoutDate, pageCount, existingPublisher,
+    existingLanguage]).then((books) => {
+        return books;
+        
+    }).catch(function (error) {
+        console.log("Error posting the book into the book table", error.message);
+    });
+
+  }
 
 
+const postAuthorsBooks = (authors, books) => {
+          
+        // authors is an array []
+        // books is an array []
+            console.log(authors, books);
+            // console.log("Are they still arrays of strings?", inserts);
+            return db.query(`
+
+            do $$ 
+
+            DECLARE 
+                book varchar;
+            BEGIN 
+
+            
+                        FOREACH book IN ARRAY $2 
+                        LOOP
+
+                            INSERT INTO authorsbooks (bookid, authorid)
+                            VALUES( (SELECT id FROM books WHERE title = book),
+                                    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = $1));
+                        END LOOP;   
+            END; $$ LANGUAGE plpgsql;`, [authors, books]
+                
+        ).then((authorsBooks) => {
+            return authorsBooks;
+        
+        }).catch(function (error) {
+            console.log("Error posting the authors and books to the authorsbooks table:", error.message);
+        });
+}
+
+
+const postGenreBooks = (genres, book) => {
+
+    // array of genres 
+    // string for books
+    // The following for loop comes from: https://www.postgresql.org/docs/11/plpgsql-control-structures.html#PLPGSQL-FOREACH-ARRAY.
+
+
+    return db.query(`
+        do $$
+
+        DECLARE 
+            g varchar;
+        BEGIN 
+                    FOREACH g IN ARRAY $1
+                    LOOP
+                        INSERT INTO genrebooks (genreid, bookid)
+                        VALUES((SELECT id FROM genres WHERE genre = g),
+                                (SELECT id FROM books WHERE title = $2));
+                    END LOOP;
+        END; $$ LANGUAGE plpgsql;`, [genres, book]).then((genrebooks) => {
+            return genrebooks;
+        }).catch(function (error){
+            console.log("Error while inserting into the genrebooks table:", error.message);
+        });
+
+
+}
 
 module.exports = {
     postBorrower,
@@ -156,7 +240,11 @@ module.exports = {
     selectAllLanguages,
     selectAllPublishers, 
     selectAllBorrowers,
-    selectAllAuthors
+    selectAllAuthors,
+    postBooks,
+    selectAllBooks,
+    postAuthorsBooks,
+    postGenreBooks
 
 
 };

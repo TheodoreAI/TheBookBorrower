@@ -22,8 +22,8 @@
 </div>
 
 <div class="menuForms">
-    <div class="formbox">
-        <h3>Add a Book:</h3>
+    <div class="formbox" style="background-color: lightblue;">
+        <h3>Add a Book:     --------</h3>
         <p>
           If any of your book's information is not found in the book form's menus,
           add the information using the proper forms for each field before entering the book
@@ -32,15 +32,6 @@
         <div id="bookFormDiv">
             <form id="bookForm" method="POST" action="/booksForm">
                 Title <input type='text' name='titleBook'><br>
-              <p>
-                Select Author(s)</br>
-                Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-              </p>
-              <select id="existingAuthor" name="existingAuthor" multiple>
-                  {{#each author}}
-                  <option value="AlexTrebek" id="AlexTrebek">{{this.fullName}}</option>
-                  {{/each}}
-              </select><br>
             <label for="status">Currently being Borrowed?</label>
             <select id="status" name="status">
                 <option value="Yes" id="Yes">Yes</option>
@@ -50,42 +41,104 @@
 
               <option selected hidden style="display:none">Select Borrower</option>
                 {{#each borrower}}
-                    <option value={{this.fullName}} id="fullName">{{this.fullName}}</option>
+                    <option value="{{this.fullName}}" id="borrowerID">{{this.fullName}}</option>
                 {{/each}}
             </select><br>
-            Checkout Date (yyyy-mm-dd) <input type='number' name='checkoutDate'><br>
+            Checkout Date (yyyy-mm-dd) <input type="date" name='checkoutDate'><br>
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
             <select id="existingPublisher" name="existingPublisher">
               <option selected hidden style="display:none">Select Publisher</option>
-                {{#each publisher}}
-                <option value="MinnesotaHSP" id="MinnesotaHSP">{{this.publisher}}</option>
+                {{#each publisher}}    
+                <option value="{{this.publisher}}" id="publisherID">{{this.publisher}}</option>
                 {{/each}}
             </select><br>
             <select id="existingLanguage" name="existingLanguage">
               <option selected hidden style="display:none">Select Language</option>
                 {{#each lang}}
-                <option value="English" id="English">{{this.lang}}</option>
+                <option value="{{this.lang}}" id="langID">{{this.lang}}</option>
                 {{/each}}
             </select><br>
-            <p>
-              Select Genre(s)</br>
-              Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-            </p>
-            <select id="existingGenres" name="existingGenre" multiple>
-                {{#each genre}}
-                    <option value="Autobiography" id="Autobiography">{{this.genre}}</option>
-                {{/each}}
-            </select><br>
-            <br>
             <button type='submit' id="submitBook" onclick="return confirm('Are you sure you want to add this book?');">
                 Add Book
             </button>
             <button class="close-button" onclick="closeForm()">Close Book Form</button>
             </form>
         </div>
-
-
     </div>
+
+    <div class="formbox" style="background-color: lightblue;">
+    
+        <h3>Add Author to Book:     --------</h3>
+        <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
+        <div id="bookAuthorFormDiv">
+            <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
+                <p>
+                    Select Author(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingAuthor" name="existingAuthor">
+                    {{#each author}}
+                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
+                    {{/each}}
+                </select><br>
+                <p>
+                    Select Book(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingBook" name="existingBook" multiple>
+                    {{#each books}}
+                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <button type='submit' id="submitBookAuthor"
+                    onclick="return confirm('Are you sure you want to add this this author to this Book?');">
+                    Add Author(s) to Book(s)
+                </button>
+                <button class="close-button" onclick="closeBookAuthorForm()">Close Author Form</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="formbox" style="background-color: lightblue;">
+    
+        <h3>Add Genre to Book:      --------></h3>
+        <button class="open-button" onclick="openGenreBookForm()">Open Genres Form </button><br>
+        <div id="genreBookFormDiv">
+            <form id="genreForm" method="POST" action="/genreBooksForm">
+                <p>
+                    Select Book(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingBook" name="existingBook">
+                    {{#each books}}
+                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <br>
+                <p>
+                    Select Genre(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingGenres" name="existingGenre" multiple>
+                    {{#each genre}}
+                    <option value="{{this.genre}}" id="Autobiography">{{this.genre}}</option>
+                    {{/each}}
+                </select><br>
+                <br>
+               
+
+                <button type='submit' id="submitAuthor"
+                    onclick="return confirm('Are you sure you want to add this author?');">
+                    Add Genre(s) to Book(s)
+                </button>
+                <button class="close-button" onclick="closeGenreBookForm()">Close Genre Form</button>
+            </form>
+        </div>
+    </div>
+
+
+
 
     <div class="formbox">
 
@@ -102,12 +155,21 @@
                           {{#each nationality}}
                             <option  name={{this.nationality}} value={{this.nationality}} id="nationID">{{this.nationality}}</option>
                           {{/each}}
-
-
                       </select>
                     </li>
                     <br/>
                 </ol>
+
+                <h4>
+                    The Available Authors:
+                </h4>
+                <select>
+                    {{#each author}}
+                    <option>{{this.fullName}}</option>
+                    {{/each}}
+                </select>
+                </br>
+                <br>
                 <button type='submit' id="submitAuthor" onclick="return confirm('Are you sure you want to add this author?');">
                     Add Author
                 </button>

@@ -55,11 +55,14 @@ nav.flexbox a {
      color: white;
      font-size: large;
      font-weight: bold;
+     margin: auto;
+   
+    
 }
 nav.flexbox a:hover {
-    color: rgb(53, 53, 211);
-    background: linear-gradient(to right, rgb(142, 175, 247) 40%, grey 75%);
-
+    color: black;
+    background: linear-gradient(to right, white 40%, lightblue);
+    border-radius: 5px;
 }
 
 
