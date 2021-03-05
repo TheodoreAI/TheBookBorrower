@@ -302,9 +302,6 @@ app.post('/booksAuthorsForm', function (req, res){
     var authors = req.body.existingAuthor;
     var books = req.body.existingBook;
     
-    if (!books.length){
-      books.push(books);
-    }
   console.log("The single book add", books);
   maintain.postAuthorsBooks(authors, books).then((authorsbooks) => {
 
@@ -322,10 +319,6 @@ app.post('/genreBooksForm', function (req, res){
   var genres = req.body.existingGenre;
   var book = req.body.existingBook;
  
-  if (!genres.length){
-
-    genres = [genres]
-  }
   console.log(genres);
   maintain.postGenreBooks(genres, book).then((genreBooks) => {
 
