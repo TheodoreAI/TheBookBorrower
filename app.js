@@ -183,7 +183,7 @@ const id = req.params.id;
 app.post('/borrowers/:id', (req, res) => {
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
-  // borrowers.updateBorrower(borrowerName, borrowerPhone, borrowerEmail)
+  console.log("from the form: ", req.body)
   console.log("borrower to update: ", borrowerName, borrowerPhone, borrowerEmail)
   .then(() => {
     res.redirect(`/borrowers/${id}`)

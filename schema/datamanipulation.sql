@@ -162,16 +162,15 @@ WHERE books.id = :id_of_book_title_clicked;
 
 
 -- update info for individual books in pop up from the Books page
--- this will be a form in the popup
 UPDATE books
 SET books(title) = :title_input_or_current_value,
-books(authorID) = :author_dropdown_or_current_value, -- should also delete from AuthorBooks?
-... author nationality?
+books(authorID) = :author_input_or_current_value,
+-- how to select all authors if more than one?
 books(pageCount) = :pageCount_input_or_current_value,
-books(languageID) = :language_dropdown_or_current_value,
-... genres? -- some kind of delete from GenreBooks here?
+books(languageID) = :language_input_or_current_value,
+-- how to select all genres if more than one? 
 books(publisherID) = :publisher_dropdown_or_current_value,
-WHERE books(title) = :title_user_clicked;
+WHERE books(id) = :id_of_chosen_book;
 
 -- delete individual books in pop up from the Books page
 -- this should break connection in books_borrowers, authors_books tables
