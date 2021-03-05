@@ -19,7 +19,6 @@
     position: relative;
 }
 
-
 .open-button {
     position: relative;
     height: auto;
@@ -30,15 +29,13 @@
 html {
     font-size: 100%;
     box-sizing: border-box;
-
 }
 
-nav{
+nav {
     padding: 10px;
     @media (min-height: 600px;){
         padding: 20px;
     }
-
 }
 
 
@@ -123,7 +120,6 @@ nav.flexbox a:hover {
     /* Add a hover effect to all links, except for headers */
 }
 
-
 ul {
     display: flex;
     align-items: center;
@@ -157,6 +153,21 @@ body{
     position: relative;
     width: 100%;
     border: 20px;
+}
 
+/*For update/delete book or borrower forms*/
+#singleBorrowerUpdate {
+  display: none;
+}
 
+#singleBookUpdate {
+  display: none;
+}
+
+#updateCloser {
+  display: none;
+}
+
+#updateForm {
+  list-style-type: none;
 }

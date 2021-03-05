@@ -1,5 +1,4 @@
 // This is where the dynamic elements of the forms will be located.
-
 var formAdd = document.getElementById("bookForm");
 var formButton = document.getElementById("submitBook")
 
@@ -115,6 +114,7 @@ function openGenreForm(){
 function closeGenreForm(){
     document.getElementById("genreFormDiv").style.display = "none";
 }
+
 appearBtn.setAttribute("onclick", "closeForm()")
 formAdd.appendChild(appearBtn);
 
