@@ -18,7 +18,9 @@
       <input type="submit" value="Submit"/>
     </form>
   </div>
-  <button id="updateButton" onclick="showBorrowerUpdateForm()">Update Borrower</button>
+  <form action="/borrowers/edit/{{id}}" method="GET">
+    <button id="updateButton" onclick="showBorrowerUpdateForm()">Update Borrower</button>
+  </form>
   <button id="updateCloser" onclick="closeBorrowerUpdateForm()">Close Update Form</button>
   <button id="deleteButton">Delete Borrower</button>
 </div>
