@@ -128,7 +128,7 @@ UPDATE books
 SET status = FALSE, borrower_id = NULL, checkout_date = NULL
 WHERE status = TRUE, borrower_id IS NOT NULL, checkout_date IS NOT NULL AND AND id = :id_of_chosen_book;
 
--- book info in pop ups on books page after user clicks a title:
+-- book info in individual pages after user clicks a title:
 SELECT
 books.id,
 books.title,
@@ -168,11 +168,11 @@ books(authorID) = :author_input_or_current_value,
 -- how to select all authors if more than one?
 books(pageCount) = :pageCount_input_or_current_value,
 books(languageID) = :language_input_or_current_value,
--- how to select all genres if more than one? 
+-- how to select all genres if more than one?
 books(publisherID) = :publisher_dropdown_or_current_value,
 WHERE books(id) = :id_of_chosen_book;
 
--- delete individual books in pop up from the Books page
+-- delete individual books in individual book pages
 -- this should break connection in books_borrowers, authors_books tables
 
 -- search for borrowers on Borrowers page & get filtered list:
@@ -189,7 +189,7 @@ FROM borrowers
 LEFT JOIN books
    ON borrowers.id = books.borrowerID;
 
--- borrower info in pop ups on borrowers page after user clicks a name:
+-- borrower info in individual borrower pages after user clicks a name:
 SELECT CONCAT(borrowers.firstName, " ", borrowers.lastName) AS 'Name',
 borrowers.phone,
 borrowers.email,
