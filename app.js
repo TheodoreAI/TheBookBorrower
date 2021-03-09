@@ -166,7 +166,9 @@ const id = req.params.id;
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
       result = result
+      console.log("here is your result: ", result)
       singleBorrower = {
+        id: id,
         name: result[0].name,
         phone: result[0].phone,
         email: result[0].email,
@@ -185,13 +187,41 @@ const id = req.params.id;
   })
 });
 
-// GET request first?
-app.post('/borrowers/:id', (req, res) => {
+app.get('/borrowers/edit/:id', function (req, res) {
+const id = req.params.id;
+console.log("req.params: ", id)
+  borrowers.selectIndividualBorrower(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of borrower having multiple books still works:
+      result = result
+      singleBorrower = {
+        id: id,
+        name: result[0].name,
+        phone: result[0].phone,
+        email: result[0].email,
+        titles: []
+      }
+      if (result[1]) {
+        result.forEach(item => {
+          singleBorrower.titles.push(" " + item.title)
+        })
+      } else {
+        singleBorrower.titles = result[0].title
+      }
+      res.render('editsingleborrower.hbs', {singleBorrower})
+  }).catch(function(error){
+    console.log("ERROR getting individual borrower: ", error.message)
+  })
+});
+
+app.post('/borrowers/edit/:id', (req, res) => {
   console.log('hhiiiiii')
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
   console.log("from the form: ", req.body)
-  console.log("borrower to update: ", borrowerName, borrowerPhone, borrowerEmail)
+  
   .then(() => {
     console.log("something???")
     res.redirect(`/borrowers/${id}`)
