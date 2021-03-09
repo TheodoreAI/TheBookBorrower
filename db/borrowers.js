@@ -31,12 +31,12 @@ const selectIndividualBorrower = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE borrowers.id = $1
     `, [id]).then((borrower) => {
-      console.log("the borrower: ", borrower)
       return borrower
     }).catch(function (error) {
       console.log("ERROR selecting one borrower: ", error.message)
     })
 }
+
 
 
 // this function takes the return fullName from the imported function and uses it
@@ -51,8 +51,46 @@ const deleteIndividualBorrower = () => {
 }
 
 
+const updateBorrowerByPhone = (lastName, firstName, phone, email) => {
+  return db.query(`
+    UPDATE
+      borrowers
+    SET
+      lastName = lastName,
+      firstName = firstName,
+      email = email,
+      phone = $1
+    WHERE phone = phone;`, [phone]).then((borrower) => {
+      return borrower
+    }).catch(function (error) {
+      console.log("ERROR updating borrower's phone number: ", error.message)
+    })
+}
+
+const updateBorrowerByEmail = (lastName, firstName, phone, email) => {
+  return db.query(`
+    UPDATE
+      borrowers
+    SET
+      lastName = lastName,
+      firstName = firstName,
+      email = $1,
+      phone = phone
+    WHERE email = email;`, [email]).then((borrower) => {
+      return borrower
+    }).catch(function (error) {
+      console.log("ERROR updating borrower's email address: ", error.message)
+    })
+}
+
+
 module.exports = {
   selectAllBorrowers,
   selectIndividualBorrower,
+
   
+
+  updateBorrowerByPhone,
+  updateBorrowerByEmail
+
 }
