@@ -1,0 +1,10 @@
+<form class="update-form" id="updateForm" method="POST" action="/borrowers/edit/{{singleBorrower.id}}">
+  <li>Name: <input type='text' name='borrowerName' value="{{singleBorrower.name}}"></li><br>
+  <li>Phone: <input type='text' name='borrowerPhone' value="{{singleBorrower.phone}}"></li><br>
+  <li>Email: <input type='text' name='borrowerEmail' value="{{singleBorrower.email}}"></li><br>
+  <input type="submit" value="Submit"/>
+  <button id="deleteButton">Delete Borrower</button>
+</form>
+<form action="/borrowers/{{singleBorrower.id}}">
+  <button onclick="closeBorrowerUpdateForm()">Close Update Form</button>
+</form>
