@@ -121,16 +121,16 @@ formAdd.appendChild(appearBtn);
 
 // Event handlers for submitting the forms:
 
-function displaySuccessMsg(event){
-    window.alert("The Author was successfully Added!");
-    location.reload();
-}
-const form = document.getElementById('authorForm');
-form.addEventListener('submit', displaySuccessMsg);
+// function displaySuccessMsg(event){
+//     window.alert("The Author was successfully Added!");
+//     location.reload();
+// }
+// const form = document.getElementById('authorForm');
+// form.addEventListener('submit', displaySuccessMsg);
 
 
-function changeForm() {
-    formAdd.setAttribute('style', 'display: None');
-}
+// function changeForm() {
+//     formAdd.setAttribute('style', 'display: None');
+// }
 
-formAdd.addEventListener("submit", changeForm);
+// formAdd.addEventListener("submit", changeForm);

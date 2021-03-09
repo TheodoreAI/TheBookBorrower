@@ -213,6 +213,13 @@ const postGenreBooks = (genres, book) => {
         DECLARE 
             g varchar;
         BEGIN 
+                    IF $1 == text THEN 
+
+                        INSERT INTO genrebooks (genreid, bookid)
+                        VALUES((SELECT id FROM genres WHERE genre = $1),
+                        (SELECT id FROM books WHERE title = $2))
+
+                    END IF;
                     FOREACH g IN ARRAY $1
                     LOOP
                         INSERT INTO genrebooks (genreid, bookid)
