@@ -39,20 +39,20 @@
             </select><br>
             <select id="existingBorrower" name="existingBorrower">
 
-              <option selected hidden style="display:none">Select Borrower</option>
+              <option selected hidden style="display:none" required>Select Borrower</option>
                 {{#each borrower}}
                     <option value="{{this.fullName}}" id="borrowerID">{{this.fullName}}</option>
                 {{/each}}
             </select><br>
-            Checkout Date (yyyy-mm-dd) <input type="date" name='checkoutDate'><br>
+            Checkout Date (yyyy-mm-dd) <input type="date" name='checkoutDate' required><br>
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
-            <select id="existingPublisher" name="existingPublisher">
+            <select id="existingPublisher" name="existingPublisher" required>
               <option selected hidden style="display:none">Select Publisher</option>
                 {{#each publisher}}    
                 <option value="{{this.publisher}}" id="publisherID">{{this.publisher}}</option>
                 {{/each}}
             </select><br>
-            <select id="existingLanguage" name="existingLanguage">
+            <select id="existingLanguage" name="existingLanguage" required>
               <option selected hidden style="display:none">Select Language</option>
                 {{#each lang}}
                 <option value="{{this.lang}}" id="langID">{{this.lang}}</option>
@@ -72,22 +72,23 @@
         <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
         <div id="bookAuthorFormDiv">
             <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
-                <p>
-                    Select Author(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingAuthor" name="existingAuthor">
-                    {{#each author}}
-                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
-                    {{/each}}
-                </select><br>
+                
                 <p>
                     Select Book(s)</br>
                     Ctrl+click (Windows) or Command+Click (Mac) to select more than one
                 </p>
-                <select id="existingBook" name="existingBook" multiple>
+                <select id="existingBook" name="existingBook" required>
                     {{#each books}}
                     <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <p>
+                    Select Author(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingAuthor" name="existingAuthor" multiple required>
+                    {{#each author}}
+                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
                     {{/each}}
                 </select><br>
                 <button type='submit' id="submitBookAuthor"
@@ -110,7 +111,7 @@
                     Select Book(s)</br>
                     Ctrl+click (Windows) or Command+Click (Mac) to select more than one
                 </p>
-                <select id="existingBook" name="existingBook">
+                <select id="existingBook" name="existingBook" required>
                     {{#each books}}
                     <option value="{{this.title}}" id="bookID">{{this.title}}</option>
                     {{/each}}
@@ -120,7 +121,7 @@
                     Select Genre(s)</br>
                     Ctrl+click (Windows) or Command+Click (Mac) to select more than one
                 </p>
-                <select id="existingGenres" name="existingGenre" multiple>
+                <select id="existingGenres" name="existingGenre" multiple required>
                     {{#each genre}}
                     <option value="{{this.genre}}" id="Autobiography">{{this.genre}}</option>
                     {{/each}}
@@ -150,8 +151,8 @@
                     <li>First Name: <input type='text' name='firstName' required></li><br>
                     <li>Last Name: <input type='text' name='lastName' required></li><br>
                     <li>
-                      <select id="existingNationality" name="nationText">
-                          <option selected hidden style="display:none" required>Select Nationality</option>
+                      <select id="existingNationality" name="nationText" required>
+                          <option selected hidden style="display:none" >Select Nationality</option>
                           {{#each nationality}}
                             <option  name={{this.nationality}} value={{this.nationality}} id="nationID">{{this.nationality}}</option>
                           {{/each}}

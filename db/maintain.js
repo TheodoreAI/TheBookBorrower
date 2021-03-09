@@ -167,29 +167,37 @@ const postBooks = (titleBook,
   }
 
 
-const postAuthorsBooks = (authors, books) => {
+const postAuthorsBooks = (authors, book) => {
           
         // authors is an array []
         // books is an array []
-            console.log(authors, books);
+
+
+        if (typeof authors == 'string'){
+            var authorArr = [];
+
+            authorArr.push(authors);
+
+            var inserts = [authorArr, book];
+        }else {
+            var inserts = [authors, book];
+        }
             // console.log("Are they still arrays of strings?", inserts);
             return db.query(`
 
             do $$ 
 
             DECLARE 
-                book varchar;
+                author varchar;
             BEGIN 
-
-            
-                        FOREACH book IN ARRAY $2 
+                        FOREACH author IN ARRAY $1 
                         LOOP
 
                             INSERT INTO authorsbooks (bookid, authorid)
-                            VALUES( (SELECT id FROM books WHERE title = book),
-                                    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = $1));
+                            VALUES( (SELECT id FROM books WHERE title=$2),
+                                    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
                         END LOOP;   
-            END; $$ LANGUAGE plpgsql;`, [authors, books]
+            END; $$ LANGUAGE plpgsql;`, inserts
                 
         ).then((authorsBooks) => {
             return authorsBooks;
@@ -205,7 +213,18 @@ const postGenreBooks = (genres, book) => {
     // array of genres 
     // string for books
     // The following for loop comes from: https://www.postgresql.org/docs/11/plpgsql-control-structures.html#PLPGSQL-FOREACH-ARRAY.
+    
+    
+    if (typeof genres == 'string'){
+        console.log(genres);
+        var genreArr = []
+        genreArr.push(genres)
+        console.log(genreArr);
 
+        var inserts = [genreArr, book]
+    }else{
+        var inserts = [genres, book];
+    }
 
     return db.query(`
         do $$
@@ -213,20 +232,13 @@ const postGenreBooks = (genres, book) => {
         DECLARE 
             g varchar;
         BEGIN 
-                    IF $1 == text THEN 
-
-                        INSERT INTO genrebooks (genreid, bookid)
-                        VALUES((SELECT id FROM genres WHERE genre = $1),
-                        (SELECT id FROM books WHERE title = $2))
-
-                    END IF;
                     FOREACH g IN ARRAY $1
                     LOOP
                         INSERT INTO genrebooks (genreid, bookid)
                         VALUES((SELECT id FROM genres WHERE genre = g),
                                 (SELECT id FROM books WHERE title = $2));
                     END LOOP;
-        END; $$ LANGUAGE plpgsql;`, [genres, book]).then((genrebooks) => {
+        END; $$ LANGUAGE plpgsql;`, inserts).then((genrebooks) => {
             return genrebooks;
         }).catch(function (error){
             console.log("Error while inserting into the genrebooks table:", error.message);
