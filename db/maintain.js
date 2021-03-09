@@ -167,20 +167,20 @@ const postBooks = (titleBook,
   }
 
 
-const postAuthorsBooks = (authors, books) => {
+const postAuthorsBooks = (authors, book) => {
           
         // authors is an array []
         // books is an array []
 
 
-        if (typeof books == 'string'){
-            var bookArr = [];
+        if (typeof authors == 'string'){
+            var authorArr = [];
 
-            bookArr.push(books);
+            authorArr.push(authors);
 
-            var inserts = [authors, bookArr];
+            var inserts = [authorArr, book];
         }else {
-            var inserts = [authors, books];
+            var inserts = [authors, book];
         }
             // console.log("Are they still arrays of strings?", inserts);
             return db.query(`
@@ -188,14 +188,14 @@ const postAuthorsBooks = (authors, books) => {
             do $$ 
 
             DECLARE 
-                book varchar;
+                author varchar;
             BEGIN 
-                        FOREACH book IN ARRAY $2 
+                        FOREACH author IN ARRAY $1 
                         LOOP
 
                             INSERT INTO authorsbooks (bookid, authorid)
-                            VALUES( (SELECT id FROM books WHERE title = book),
-                                    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = $1));
+                            VALUES( (SELECT id FROM books WHERE title=$2),
+                                    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
                         END LOOP;   
             END; $$ LANGUAGE plpgsql;`, inserts
                 

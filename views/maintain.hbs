@@ -72,22 +72,23 @@
         <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
         <div id="bookAuthorFormDiv">
             <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
-                <p>
-                    Select Author(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingAuthor" name="existingAuthor" required>
-                    {{#each author}}
-                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
-                    {{/each}}
-                </select><br>
+                
                 <p>
                     Select Book(s)</br>
                     Ctrl+click (Windows) or Command+Click (Mac) to select more than one
                 </p>
-                <select id="existingBook" name="existingBook" multiple required>
+                <select id="existingBook" name="existingBook" required>
                     {{#each books}}
                     <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <p>
+                    Select Author(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingAuthor" name="existingAuthor" multiple required>
+                    {{#each author}}
+                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
                     {{/each}}
                 </select><br>
                 <button type='submit' id="submitBookAuthor"

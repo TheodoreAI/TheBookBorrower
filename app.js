@@ -300,10 +300,10 @@ app.post('/booksForm', function (req, res){
 app.post('/booksAuthorsForm', function (req, res){
   // if there are multiple authors and multiple books selected I will get an array:
     var authors = req.body.existingAuthor;
-    var books = req.body.existingBook;
+    var book = req.body.existingBook;
     
-  console.log("The single book add", books);
-  maintain.postAuthorsBooks(authors, books).then((authorsbooks) => {
+  console.log("The single book add", book);
+  maintain.postAuthorsBooks(authors, book).then((authorsbooks) => {
 
       res.redirect('/maintain')
     }).catch(function (error) {
