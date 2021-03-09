@@ -7,6 +7,7 @@ const localhost = "127.0.0.1";
 const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
+const deleteforms = require('./public/deleteforms.js');
 
 
 var bodyParser = require('body-parser');

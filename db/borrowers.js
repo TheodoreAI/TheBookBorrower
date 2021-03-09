@@ -1,4 +1,6 @@
 const db = require('../dbcon.js')
+const deleteBorrowerModule = require('../public/deleteforms.js');
+
 
 const selectAllBorrowers = () => {
   return db.query(`
@@ -36,7 +38,21 @@ const selectIndividualBorrower = (id) => {
     })
 }
 
+
+// this function takes the return fullName from the imported function and uses it
+
+const deleteIndividualBorrower = () => {
+  console.log("DOes it reach the query to delete?")
+  return db.query(`DELETE FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $1`, [deleteBorrowerModule]).then((borrower) =>{
+    return borrower
+  }).catch(function (error) {
+    console.log("Error Deleting one borrower: ", error.message)
+  })
+}
+
+
 module.exports = {
   selectAllBorrowers,
-  selectIndividualBorrower
+  selectIndividualBorrower,
+  
 }
