@@ -7,7 +7,7 @@ const localhost = "127.0.0.1";
 const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
-const deleteforms = require('./public/deleteforms.js');
+
 
 
 var bodyParser = require('body-parser');
@@ -167,7 +167,7 @@ const id = req.params.id;
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
       result = result
-      console.log("here is your result: ", result)
+      // console.log("here is your result: ", result)
       singleBorrower = {
         id: id,
         name: result[0].name,
@@ -228,6 +228,65 @@ app.post('/borrowers/edit/:id', (req, res) => {
     res.redirect(`/borrowers/${id}`)
   }).catch(function (error) {
     console.log("Error updating borrower ", id)
+  })
+})
+
+app.get('/borrowers/delete/:id', function (req, res) {
+  
+  var identity = parseInt(req.params.id, 10);
+  if (Number.isInteger(identity)){
+    var identity = identity;
+  } else{
+    res.redirect('/')
+  }
+  console.log("req.params: ", req.params)
+  borrowers.selectIndividualBorrower(identity)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of borrower having multiple books still works:
+      result = result
+      console.log("WHat is this?", identity);
+      singleBorrower = {
+        id: identity,
+        name: result[0].name,
+        phone: result[0].phone,
+        email: result[0].email,
+        titles: []
+      } 
+      
+      if (result[1]) {
+        result.forEach(item => {
+          console.log("what is result[1]",result[1])
+          singleBorrower.titles.push(" " + item.title)
+        })
+      } else {
+        singleBorrower.titles = result[0].title
+      }
+      res.render('deletesingleborrower.hbs', {
+        singleBorrower
+      })
+    }).catch(function (error) {
+      console.log("ERROR getting individual borrower: ", error.message)
+    })
+});
+
+
+app.post('/borrowers/:id', (req, res)=>{
+  
+  const id = req.params.id;
+  const {borrowerName, borrowerPhone, borrowerEmail} = req.body;
+
+  console.log("From DELETE form:", id);
+  // let msg = window.confirm("are you sure you want to delete");
+  // if (msg == true){
+  //   alert("You are going to delete!")
+  // }
+  borrowers.deleteBorrower(id).then((borrower)=>{
+   
+    res.redirect('/borrowers')
+  }).catch(function(error){
+    console.log("Error on the delete request server side:", error.message);
   })
 })
 

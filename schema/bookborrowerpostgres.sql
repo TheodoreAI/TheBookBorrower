@@ -52,20 +52,20 @@ CREATE TABLE books (id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     checkoutStatus BOOLEAN NOT NULL,
     pgCount INTEGER NOT NULL,
-    languageID INTEGER REFERENCES languages(id),
-    publisherID INTEGER REFERENCES publishers(id),
-    borrowerID INTEGER REFERENCES borrowers(id),
+    languageID INTEGER REFERENCES languages(id) ON DELETE SET DEFAULT,
+    publisherID INTEGER REFERENCES publishers(id) ON DELETE SET DEFAULT,
+    borrowerID INTEGER REFERENCES borrowers(id) ON DELETE SET DEFAULT,
     checkoutDate DATE
 );
 
 CREATE TABLE genrebooks (
-    genreID INTEGER REFERENCES genres(id),
-    bookID INTEGER REFERENCES books(id)
+    genreID INTEGER REFERENCES genres(id) ON DELETE SET DEFAULT,
+    bookID INTEGER REFERENCES books(id) ON DELETE SET DEFAULT
 );
 
 CREATE TABLE authorsbooks (
-    bookID INTEGER REFERENCES books(id),
-    authorID INTEGER REFERENCES authors(id)
+    bookID INTEGER REFERENCES books(id) ON DELETE SET DEFAULT,
+    authorID INTEGER REFERENCES authors(id) ON DELETE SET DEFAULT
 );
 
 -- To insert data into the base tables:

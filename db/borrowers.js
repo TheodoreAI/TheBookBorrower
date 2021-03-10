@@ -31,23 +31,12 @@ const selectIndividualBorrower = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE borrowers.id = $1
     `, [id]).then((borrower) => {
+     
+      
       return borrower
     }).catch(function (error) {
       console.log("ERROR selecting one borrower: ", error.message)
     })
-}
-
-
-
-// this function takes the return fullName from the imported function and uses it
-
-const deleteIndividualBorrower = () => {
-  console.log("DOes it reach the query to delete?")
-  return db.query(`DELETE FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $1`, [deleteBorrowerModule]).then((borrower) =>{
-    return borrower
-  }).catch(function (error) {
-    console.log("Error Deleting one borrower: ", error.message)
-  })
 }
 
 
@@ -83,14 +72,39 @@ const updateBorrowerByEmail = (lastName, firstName, phone, email) => {
     })
 }
 
+const deleteBorrower = (id) => {
+  
+  return db.query(
+    `
+    BEGIN;
+        UPDATE
+          books 
+        SET
+          checkoutStatus = FALSE,
+          checkoutDate = NULL
+        WHERE borrowerID = $1;
+
+        DELETE
+        FROM
+          borrowers 
+        WHERE id = $1;
+
+      
+    COMMIT;`,[id]).then((borrower) =>{
+      return borrower
+    }).catch(function(error){
+      console.log("Error deleting borrower by their id", error.message);
+    });
+  
+}
+
+
 
 module.exports = {
   selectAllBorrowers,
   selectIndividualBorrower,
-
-  
-
   updateBorrowerByPhone,
-  updateBorrowerByEmail
+  updateBorrowerByEmail,
+  deleteBorrower
 
 }
