@@ -218,13 +218,14 @@ console.log("req.params: ", id)
 });
 
 app.post('/borrowers/edit/:id', (req, res) => {
-  console.log('hhiiiiii')
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
-  console.log("from the form: ", req.body)
-  
+  console.log("is the name now an array? ", req.body.borrowerName)
+  splitName = borrowerName.split(" ")
+  firstName = splitName[0]
+  lastName = splitName[1]
+  borrowers.updateBorrower(id, firstName, lastName, borrowerPhone, borrowerEmail)
   .then(() => {
-    console.log("something???")
     res.redirect(`/borrowers/${id}`)
   }).catch(function (error) {
     console.log("Error updating borrower ", id)
@@ -394,7 +395,7 @@ app.post('/booksAuthorsForm', function (req, res){
   // if there are multiple authors and multiple books selected I will get an array:
     var authors = req.body.existingAuthor;
     var book = req.body.existingBook;
-    
+
 
   console.log("The single book add", book);
   maintain.postAuthorsBooks(authors, book).then((authorsbooks) => {
@@ -413,7 +414,7 @@ app.post('/genreBooksForm', function (req, res){
 
   var genres = req.body.existingGenre;
   var book = req.body.existingBook;
- 
+
   console.log(genres);
   maintain.postGenreBooks(genres, book).then((genreBooks) => {
 

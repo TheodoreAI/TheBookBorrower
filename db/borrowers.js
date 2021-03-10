@@ -40,37 +40,25 @@ const selectIndividualBorrower = (id) => {
 }
 
 
-const updateBorrowerByPhone = (lastName, firstName, phone, email) => {
+const updateBorrower = (id, firstName, lastName, phone, email) => {
+
   return db.query(`
     UPDATE
       borrowers
     SET
-      lastName = lastName,
-      firstName = firstName,
-      email = email,
-      phone = $1
-    WHERE phone = phone;`, [phone]).then((borrower) => {
+      lastName = $2,
+      firstName = $3,
+      email = $4,
+      phone = $5
+    WHERE
+      id = $1;`, [id, lastName, firstName, email, phone]).then((borrower) => {
       return borrower
     }).catch(function (error) {
       console.log("ERROR updating borrower's phone number: ", error.message)
     })
 }
 
-const updateBorrowerByEmail = (lastName, firstName, phone, email) => {
-  return db.query(`
-    UPDATE
-      borrowers
-    SET
-      lastName = lastName,
-      firstName = firstName,
-      email = $1,
-      phone = phone
-    WHERE email = email;`, [email]).then((borrower) => {
-      return borrower
-    }).catch(function (error) {
-      console.log("ERROR updating borrower's email address: ", error.message)
-    })
-}
+
 
 const deleteBorrower = (id) => {
   
@@ -99,12 +87,10 @@ const deleteBorrower = (id) => {
 }
 
 
-
 module.exports = {
   selectAllBorrowers,
   selectIndividualBorrower,
-  updateBorrowerByPhone,
-  updateBorrowerByEmail,
+  updateBorrower,
   deleteBorrower
 
 }
