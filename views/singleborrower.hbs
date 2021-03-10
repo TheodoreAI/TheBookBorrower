@@ -1,4 +1,4 @@
-<div>
+  <h2>Profile: {{singleBorrower.name}}</h2>
   <div class="individual-info-table" id="individualBorrowerInfo">
     <table><tr><th>Name: </th><td>{{singleBorrower.name}}</td></tr></table>
     <table><tr><th>Phone: </th><td>{{singleBorrower.phone}}</td></tr></table>
@@ -12,6 +12,10 @@
       <button id="updateButton">Update Borrower</button>
     </form>
   </div>
+  <form id="deleteBorrowerForm" action="/borrowers/delete/{{singleBorrower.id}}" method="GET">
+     <button id="deleteButton">Delete Borrower</button>
+  </form>
+ 
 
-<script src="updateforms.js" type="text/javascript"></script>
+<script src="updateforms.js" type="text/javascript"></script> 
 <script src="deleteforms.js" type="text/javascript"></script>

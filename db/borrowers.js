@@ -1,4 +1,6 @@
 const db = require('../dbcon.js')
+const deleteBorrowerModule = require('../public/deleteforms.js');
+
 
 const selectAllBorrowers = () => {
   return db.query(`
@@ -29,13 +31,17 @@ const selectIndividualBorrower = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE borrowers.id = $1
     `, [id]).then((borrower) => {
+     
+      
       return borrower
     }).catch(function (error) {
       console.log("ERROR selecting one borrower: ", error.message)
     })
 }
 
+
 const updateBorrower = (id, firstName, lastName, phone, email) => {
+
   return db.query(`
     UPDATE
       borrowers
@@ -52,8 +58,39 @@ const updateBorrower = (id, firstName, lastName, phone, email) => {
     })
 }
 
+
+
+const deleteBorrower = (id) => {
+  
+  return db.query(
+    `
+    BEGIN;
+        UPDATE
+          books 
+        SET
+          checkoutStatus = FALSE,
+          checkoutDate = NULL
+        WHERE borrowerID = $1;
+
+        DELETE
+        FROM
+          borrowers 
+        WHERE id = $1;
+
+      
+    COMMIT;`,[id]).then((borrower) =>{
+      return borrower
+    }).catch(function(error){
+      console.log("Error deleting borrower by their id", error.message);
+    });
+  
+}
+
+
 module.exports = {
   selectAllBorrowers,
   selectIndividualBorrower,
-  updateBorrower
+  updateBorrower,
+  deleteBorrower
+
 }
