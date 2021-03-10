@@ -177,10 +177,17 @@ const id = req.params.id;
       }
       if (result[1]) {
         result.forEach(item => {
-          singleBorrower.titles.push(" " + item.title)
+          // trying to get a link to each borrowed book stuff:
+          borrowedBook = { }
+          borrowedBook.bookid = item.bookid
+          borrowedBook.title = item.title
+          singleBorrower.titles.push(borrowedBook)
         })
       } else {
-        singleBorrower.titles = result[0].title
+        borrowedBook = { }
+        borrowedBook.bookid = result[0].bookid
+        borrowedBook.title = result[0].title
+        singleBorrower.titles = borrowedBook
       }
       res.render('singleborrower.hbs', {singleBorrower})
   }).catch(function(error){
@@ -211,6 +218,7 @@ console.log("req.params: ", id)
       } else {
         singleBorrower.titles = result[0].title
       }
+      console.log("the titles? ", singleBorrower)
       res.render('editsingleborrower.hbs', {singleBorrower})
   }).catch(function(error){
     console.log("ERROR getting individual borrower: ", error.message)

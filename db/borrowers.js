@@ -25,7 +25,8 @@ const selectIndividualBorrower = (id) => {
       CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "name",
       borrowers.phone,
       borrowers.email,
-      books.title
+      books.title,
+      books.id AS "bookid"
     FROM borrowers
     LEFT JOIN books
        ON borrowers.id = books.borrowerID
