@@ -4,7 +4,10 @@
     <table><tr><th>Phone: </th><td>{{singleBorrower.phone}}</td></tr></table>
     <table><tr><th>Email: </th><td>{{singleBorrower.email}}</td></tr></table>
     {{#if singleBorrower.titles}}
-      <table><tr><th>Current Borrows: </th><td>{{singleBorrower.titles}}</td></tr></table>
+      <table><tr><th>Current Borrows:
+      {{#each singleBorrower.titles}}
+        </th><td><a href="/books/{{this.bookid}}">{{this.title}}</a></td></tr></table>
+      {{/each}}
     {{else}}
       <table><tr><th>Current Borrows: </th><td>None</td></tr></table>
     {{/if}}
