@@ -87,8 +87,6 @@ const selectBooksByAuthorNationality = (authorNationality) => {
     })
 }
 
-
-// Query seems fine in SQL interface but here returns no results???
 const selectBooksByLanguage = (language) => {
   return db.query(`
     SELECT
@@ -99,7 +97,7 @@ const selectBooksByLanguage = (language) => {
        ON books.id = authorsbooks.bookID
     INNER JOIN authors
        ON authors.id = authorsbooks.authorID
-    INNER JOIN languages
+    LEFT JOIN languages
        ON languages.id = books.languageID
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
@@ -134,6 +132,29 @@ const selectBooksByGenre = (genre) => {
       return books
     }).catch(function (error) {
       console.log("ERROR selecting books by genre: ", error.message)
+    })
+}
+
+const selectBooksByPublisher = (publisher) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN publishers
+       ON books.publisherID = publishers.id
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      publishers.publisher LIKE $1
+    `, ['%' + publisher + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by publisher: ", error.message)
     })
 }
 
@@ -219,6 +240,7 @@ module.exports = {
   selectBooksByAuthorNationality,
   selectBooksByLanguage,
   selectBooksByGenre,
+  selectBooksByPublisher,
   selectIndividualBook,
   deleteBook
 }
