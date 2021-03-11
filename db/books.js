@@ -11,6 +11,8 @@ const selectAllBooks = () => {
        ON books.id = authorsbooks.bookID
     INNER JOIN authors
        ON authors.id = authorsbooks.authorID
+    INNER JOIN nationalities
+       ON authors.nationID = nationalities.id
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     `).then((books) => {
@@ -38,6 +40,50 @@ const selectBooksByTitle = (title) => {
       return books
     }).catch(function (error) {
       console.log("ERROR selecting all books: ", error.message)
+    })
+}
+
+const selectBooksByAuthor = (author) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      CONCAT(authors.firstName, ' ', authors.lastName) LIKE $1
+    `, ['%' + author + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting all books: ", error.message)
+    })
+}
+
+const selectBooksByAuthorNationality = (authorNationality) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN nationalities
+       ON authors.nationID = nationalities.id
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      nationalities.nationality LIKE $1
+    `, ['%' + authorNationality + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by author's nationality: ", error.message)
     })
 }
 
@@ -119,6 +165,8 @@ const deleteBook = (id) => {
 module.exports = {
   selectAllBooks,
   selectBooksByTitle,
+  selectBooksByAuthor,
+  selectBooksByAuthorNationality,
   selectIndividualBook,
   deleteBook
 }

@@ -54,14 +54,30 @@ app.get('/books', function (req, res){
       })
 });
 
-// filtering book list
+// filtering book list by title
 app.post('/books', function (req, res){
-  books.selectBooksByTitle(req.body.Title)
-    .then((books) => {
-      res.render('books.hbs', {books})
-    }).catch(function(error) {
-      console.log("ERROR getting books page: ", error.message)
-    })
+  if (req.body.Title) {
+    books.selectBooksByTitle(req.body.Title)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Author) {
+    books.selectBooksByAuthor(req.body.Author)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.AuthorNationality) {
+    books.selectBooksByAuthorNationality(req.body.AuthorNationality)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  }
 })
 
 app.get('/books/:id', function (req, res) {
