@@ -44,11 +44,11 @@
                     <option value="{{this.fullName}}" id="borrowerID">{{this.fullName}}</option>
                 {{/each}}
             </select><br>
-            Checkout Date (yyyy-mm-dd) <input type="date" name='checkoutDate' required><br>
+            Checkout Date (yyyy-mm-dd) <input type="date" name='checkoutDate'><br>
             Number of Pages <input type='number' name='pageCount' min="0" required><br>
             <select id="existingPublisher" name="existingPublisher" required>
               <option selected hidden style="display:none">Select Publisher</option>
-                {{#each publisher}}    
+                {{#each publisher}}
                 <option value="{{this.publisher}}" id="publisherID">{{this.publisher}}</option>
                 {{/each}}
             </select><br>
@@ -67,12 +67,12 @@
     </div>
 
     <div class="formbox" style="background-color: lightblue;">
-    
+
         <h3>Add Author to Book:     --------</h3>
         <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
         <div id="bookAuthorFormDiv">
             <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
-                
+
                 <p>
                     Select Book(s)</br>
                     Ctrl+click (Windows) or Command+Click (Mac) to select more than one
@@ -102,7 +102,7 @@
 
 
     <div class="formbox" style="background-color: lightblue;">
-    
+
         <h3>Add Genre to Book:      --------></h3>
         <button class="open-button" onclick="openGenreBookForm()">Open Genres Form </button><br>
         <div id="genreBookFormDiv">
@@ -127,7 +127,7 @@
                     {{/each}}
                 </select><br>
                 <br>
-               
+
 
                 <button type='submit' id="submitAuthor"
                     onclick="return confirm('Are you sure you want to add this author?');">
