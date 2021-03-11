@@ -105,6 +105,55 @@ const id = req.params.id;
   })
 });
 
+app.get('/books/edit/:id', function (req, res) {
+const id = req.params.id;
+
+  books.selectIndividualBook(id)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of multiple authors or genres still works:
+      if (!result.length) {
+        result = [result]
+      }
+
+      singleBook = {
+        id: id,
+        title: result[0].title,
+        authors: [],
+        authornationalities: [],
+        pgcount: result[0].pgcount,
+        lang: result[0].lang,
+        genres: [],
+        publisher: result[0].publisher,
+        checkoutstatus: result[0].checkoutstatus,
+        checkoutdate: result[0].checkoutdate,
+        borrowerid: result[0].borrowerid,
+        borrower: result[0].borrower
+      }
+
+      result.forEach(item => {
+        if (result[0].author == result[0].author) {
+          singleBook.authors = result[0].author
+          singleBook.authornationalities = result[0].nationality
+        } else if (result[0].author != result[1].author) {
+          singleBook.authors.push(" " + item.author)
+          singleBook.authornationalities.push(" " + item.nationality)
+        }
+
+        if (result[0].genre == result[0].genre) {
+          singleBook.genres = result[0].genre
+        } else if (result[0].genre != result[1].genre) {
+          singleBook.genres.push(" " + item.genre)
+        }
+      })
+
+      res.render('editsinglebook.hbs', {singleBook})
+  }).catch(function(error){
+    console.log("ERROR getting individual book GET method: ", error.message)
+  })
+});
+
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {

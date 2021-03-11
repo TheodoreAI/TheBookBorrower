@@ -17,26 +17,14 @@
 </div>
 
 
-<div id="singleBookUpdate">
-  <form class="update-form" id="updateForm" method="POST" action="/books/{{singleBook.id}}">
-    <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li><br>
-    <li>Author(s): <input type='text' name='bookAuthors' value="{{singleBook.authors}}"></li><br>
-    <li>Author Nationality: <input type='text' name='authorNationalities' value= "{{singleBook.authornationalities}}"></li><br>
-    <li>Pages: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li><br>
-    <li>Pages: <input type='text' name='bookLanguage' value="{{singleBook.lang}}"></li><br>
-    <li>Pages: <input type='text' name='bookGenres' value="{{singleBook.genres}}"></li><br>
-    <li>Pages: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}"></li><br>
-    <input type="submit" value="Submit"/>
-  </form>
-</div>
 {{#if singleBook.checkoutstatus}}
     <button id="returnOrBorrow">Return Book</button>
 {{else}}
     <button id="returnOrBorrow">Borrow Book</button>
 {{/if}}
-<button id="updateButton" onclick="showBookUpdateForm()">Update Book</button>
-<button id="updateCloser" onclick="closeBookUpdateForm()">Close Book Form</button>
-
+<form action="/books/edit/{{singleBook.id}}" method="GET">
+  <button id="updateButton">Update Book</button>
+</form>
 <form id="deleteBookForm" method="GET" action="/books/delete/{{singleBook.id}}">
   <button id="deleteButtonBooks" >Delete Book</button>
 </form>
