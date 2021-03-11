@@ -21,6 +21,7 @@ const selectAllBooks = () => {
 }
 
 const selectIndividualBook = (id) => {
+   console.log("WHAT", id);
   return db.query(`
     SELECT
       books.id,
@@ -53,14 +54,49 @@ const selectIndividualBook = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE books.id = $1
     `, [id]).then((book) => {
-      console.log("here is the book: ", book)
+      console.log("Database query", book);
       return book
     }).catch(function (error) {
       console.log("ERROR selecting one book: ", error.message)
     })
 }
 
+
+
+const deleteBook = (id) => {
+   return db.query(
+      `
+
+      BEGIN;
+
+         DELETE
+         FROM
+         genrebooks
+         WHERE bookid = $1;
+
+         DELETE
+         FROM
+         authorsbooks
+         WHERE bookid = $1;
+
+         DELETE
+         FROM
+         books 
+         WHERE id = $1;
+
+      COMMIT;`, [id]).then((result) => {
+      return result
+   }).catch(function (error) {
+      console.log("Error with the deleteBook query", error.message);
+   })
+}
+
+
+
+
+
 module.exports = {
   selectAllBooks,
-  selectIndividualBook
+  selectIndividualBook,
+  deleteBook
 }
