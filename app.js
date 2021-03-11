@@ -8,8 +8,6 @@ const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
-
-
 var bodyParser = require('body-parser');
 
 // start the express app
@@ -55,6 +53,16 @@ app.get('/books', function (req, res){
         console.log("ERROR getting books page: ", error.message)
       })
 });
+
+// filtering book list
+app.post('/books', function (req, res){
+  books.selectBooksByTitle(req.body.Title)
+    .then((books) => {
+      res.render('books.hbs', {books})
+    }).catch(function(error) {
+      console.log("ERROR getting books page: ", error.message)
+    })
+})
 
 app.get('/books/:id', function (req, res) {
 const id = req.params.id;

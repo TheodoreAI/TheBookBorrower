@@ -20,6 +20,27 @@ const selectAllBooks = () => {
     })
 }
 
+const selectBooksByTitle = (title) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      books.title LIKE $1
+    `, ['%' + title + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting all books: ", error.message)
+    })
+}
+
 const selectIndividualBook = (id) => {
   return db.query(`
     SELECT
@@ -97,6 +118,7 @@ const deleteBook = (id) => {
 
 module.exports = {
   selectAllBooks,
+  selectBooksByTitle,
   selectIndividualBook,
   deleteBook
 }

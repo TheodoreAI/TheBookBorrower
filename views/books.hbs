@@ -1,7 +1,7 @@
 <!-- navigation bar with an unordered list -->
 <div>
 <h2>Search the library for books or see the full collection below</h2>
-<form action="/action_page.php">
+<form action="/books" method="POST">
   <div class="form-group">
     <label for="Title">Title:</label>
     <input name="Title" id="TitleSearch" />
@@ -55,7 +55,7 @@
   </thead>
   {{#each books}}
     <tr>
-      <td><a href="/books/{{id}}" class="openBookModal">{{title}}</a></td>
+      <td><a href="/books/{{id}}">{{title}}</a></td>
       <td>{{author}}</td>
       </td>
       {{#if checkoutstatus}}
