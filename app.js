@@ -98,6 +98,20 @@ app.post('/books', function (req, res){
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
+  } else if (req.body.Borrower) {
+    books.selectBooksByBorrower(req.body.Borrower)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.isBorrowed) {
+    books.selectBooksByBorrowedStatus(req.body.isBorrowed)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
   }
 })
 

@@ -39,7 +39,7 @@ const selectBooksByTitle = (title) => {
     `, ['%' + title + '%']).then((books) => {
       return books
     }).catch(function (error) {
-      console.log("ERROR selecting all books: ", error.message)
+      console.log("ERROR selecting books by title: ", error.message)
     })
 }
 
@@ -60,7 +60,7 @@ const selectBooksByAuthor = (author) => {
     `, ['%' + author + '%']).then((books) => {
       return books
     }).catch(function (error) {
-      console.log("ERROR selecting all books: ", error.message)
+      console.log("ERROR selecting books by author: ", error.message)
     })
 }
 
@@ -158,6 +158,48 @@ const selectBooksByPublisher = (publisher) => {
     })
 }
 
+const selectBooksByBorrowedStatus = (borrowedStatus) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      books.checkoutStatus = $1
+    `, [borrowedStatus]).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by borrower: ", error.message)
+    })
+}
+
+const selectBooksByBorrower = (borrower) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      CONCAT(borrowers.firstName, ' ', borrowers.lastName) LIKE $1
+    `, ['%' + borrower + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by borrower: ", error.message)
+    })
+}
+
 const selectIndividualBook = (id) => {
   return db.query(`
     SELECT
@@ -241,6 +283,8 @@ module.exports = {
   selectBooksByLanguage,
   selectBooksByGenre,
   selectBooksByPublisher,
+  selectBooksByBorrowedStatus,
+  selectBooksByBorrower,
   selectIndividualBook,
   deleteBook
 }
