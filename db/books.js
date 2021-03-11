@@ -87,6 +87,56 @@ const selectBooksByAuthorNationality = (authorNationality) => {
     })
 }
 
+
+// Query seems fine in SQL interface but here returns no results???
+const selectBooksByLanguage = (language) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN languages
+       ON languages.id = books.languageID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      languages.lang LIKE $1
+    `, ['%' + language + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by language: ", error.message)
+    })
+}
+
+const selectBooksByGenre = (genre) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN genrebooks
+       ON books.id = genrebooks.bookID
+    LEFT JOIN genres
+       ON genres.id = genrebooks.genreID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      genres.genre = $1
+    `, [genre]).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by genre: ", error.message)
+    })
+}
+
 const selectIndividualBook = (id) => {
   return db.query(`
     SELECT
@@ -167,6 +217,8 @@ module.exports = {
   selectBooksByTitle,
   selectBooksByAuthor,
   selectBooksByAuthorNationality,
+  selectBooksByLanguage,
+  selectBooksByGenre,
   selectIndividualBook,
   deleteBook
 }
