@@ -21,7 +21,6 @@ const selectAllBooks = () => {
 }
 
 const selectIndividualBook = (id) => {
-   console.log("WHAT", id);
   return db.query(`
     SELECT
       books.id,
@@ -34,6 +33,7 @@ const selectIndividualBook = (id) => {
       publishers.publisher,
       books.checkoutStatus,
       books.checkoutDate,
+      borrowers.id AS "borrowerid",
       CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM books
     INNER JOIN authorsbooks
@@ -81,7 +81,7 @@ const deleteBook = (id) => {
 
          DELETE
          FROM
-         books 
+         books
          WHERE id = $1;
 
       COMMIT;`, [id]).then((result) => {
