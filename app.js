@@ -8,8 +8,6 @@ const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
-
-
 var bodyParser = require('body-parser');
 
 // start the express app
@@ -55,6 +53,67 @@ app.get('/books', function (req, res){
         console.log("ERROR getting books page: ", error.message)
       })
 });
+
+// filtering book list by title
+app.post('/books', function (req, res){
+  if (req.body.Title) {
+    books.selectBooksByTitle(req.body.Title)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Author) {
+    books.selectBooksByAuthor(req.body.Author)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.AuthorNationality) {
+    books.selectBooksByAuthorNationality(req.body.AuthorNationality)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Language) {
+    books.selectBooksByLanguage(req.body.Language)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Genre) {
+    books.selectBooksByGenre(req.body.Genre)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Publisher) {
+    books.selectBooksByPublisher(req.body.Publisher)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.Borrower) {
+    books.selectBooksByBorrower(req.body.Borrower)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  } else if (req.body.isBorrowed) {
+    books.selectBooksByBorrowedStatus(req.body.isBorrowed)
+      .then((books) => {
+        res.render('books.hbs', {books})
+      }).catch(function(error) {
+        console.log("ERROR getting books page: ", error.message)
+      })
+  }
+})
 
 app.get('/books/:id', function (req, res) {
 const id = req.params.id;

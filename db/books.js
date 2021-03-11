@@ -11,12 +11,192 @@ const selectAllBooks = () => {
        ON books.id = authorsbooks.bookID
     INNER JOIN authors
        ON authors.id = authorsbooks.authorID
+    INNER JOIN nationalities
+       ON authors.nationID = nationalities.id
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     `).then((books) => {
       return books
     }).catch(function (error) {
       console.log("ERROR selecting all books: ", error.message)
+    })
+}
+
+const selectBooksByTitle = (title) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      books.title LIKE $1
+    `, ['%' + title + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by title: ", error.message)
+    })
+}
+
+const selectBooksByAuthor = (author) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      CONCAT(authors.firstName, ' ', authors.lastName) LIKE $1
+    `, ['%' + author + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by author: ", error.message)
+    })
+}
+
+const selectBooksByAuthorNationality = (authorNationality) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN nationalities
+       ON authors.nationID = nationalities.id
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      nationalities.nationality LIKE $1
+    `, ['%' + authorNationality + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by author's nationality: ", error.message)
+    })
+}
+
+const selectBooksByLanguage = (language) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN languages
+       ON languages.id = books.languageID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      languages.lang LIKE $1
+    `, ['%' + language + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by language: ", error.message)
+    })
+}
+
+const selectBooksByGenre = (genre) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN genrebooks
+       ON books.id = genrebooks.bookID
+    LEFT JOIN genres
+       ON genres.id = genrebooks.genreID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      genres.genre = $1
+    `, [genre]).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by genre: ", error.message)
+    })
+}
+
+const selectBooksByPublisher = (publisher) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    INNER JOIN publishers
+       ON books.publisherID = publishers.id
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      publishers.publisher LIKE $1
+    `, ['%' + publisher + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by publisher: ", error.message)
+    })
+}
+
+const selectBooksByBorrowedStatus = (borrowedStatus) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      books.checkoutStatus = $1
+    `, [borrowedStatus]).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by borrower: ", error.message)
+    })
+}
+
+const selectBooksByBorrower = (borrower) => {
+  return db.query(`
+    SELECT
+      books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
+    FROM
+       books
+    INNER JOIN authorsbooks
+       ON books.id = authorsbooks.bookID
+    INNER JOIN authors
+       ON authors.id = authorsbooks.authorID
+    LEFT JOIN borrowers
+       ON borrowers.id = books.borrowerID
+    WHERE
+      CONCAT(borrowers.firstName, ' ', borrowers.lastName) LIKE $1
+    `, ['%' + borrower + '%']).then((books) => {
+      return books
+    }).catch(function (error) {
+      console.log("ERROR selecting books by borrower: ", error.message)
     })
 }
 
@@ -97,6 +277,14 @@ const deleteBook = (id) => {
 
 module.exports = {
   selectAllBooks,
+  selectBooksByTitle,
+  selectBooksByAuthor,
+  selectBooksByAuthorNationality,
+  selectBooksByLanguage,
+  selectBooksByGenre,
+  selectBooksByPublisher,
+  selectBooksByBorrowedStatus,
+  selectBooksByBorrower,
   selectIndividualBook,
   deleteBook
 }
