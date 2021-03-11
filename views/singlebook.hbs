@@ -18,7 +18,7 @@
 
 
 <div id="singleBookUpdate">
-  <form class="update-form" id="updateForm" method="POST" action="/books/{{id}}">
+  <form class="update-form" id="updateForm" method="POST" action="/books/{{singleBook.id}}">
     <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li><br>
     <li>Author(s): <input type='text' name='bookAuthors' value="{{singleBook.authors}}"></li><br>
     <li>Author Nationality: <input type='text' name='authorNationalities' value= "{{singleBook.authornationalities}}"></li><br>
@@ -36,5 +36,9 @@
 {{/if}}
 <button id="updateButton" onclick="showBookUpdateForm()">Update Book</button>
 <button id="updateCloser" onclick="closeBookUpdateForm()">Close Book Form</button>
-<button id="deleteButton">Delete Book</button>
-<script src="updateforms.js" type="text/javascript"></script>
+
+<form id="deleteBookForm" method="GET" action="/books/delete/{{singleBook.id}}">
+  <button id="deleteButtonBooks" >Delete Book</button>
+</form>
+
+{{!-- <script src="updateforms.js" type="text/javascript"></script> --}}

@@ -58,6 +58,7 @@ app.get('/books', function (req, res){
 
 app.get('/books/:id', function (req, res) {
 const id = req.params.id;
+
   books.selectIndividualBook(id)
     .then((result) => {
       //change result into an array if there is only one result
@@ -66,7 +67,9 @@ const id = req.params.id;
       if (!result.length) {
         result = [result]
       }
+
       singleBook = {
+        id: id,
         title: result[0].title,
         authors: [],
         authornationalities: [],
@@ -78,9 +81,9 @@ const id = req.params.id;
         checkoutdate: result[0].checkoutdate,
         borrower: result[0].borrower
       }
-
+  
       result.forEach(item => {
-        if (result[0].author == result[1].author) {
+        if (result[0].author == result[0].author) {
           singleBook.authors = result[0].author
           singleBook.authornationalities = result[0].nationality
         } else if (result[0].author != result[1].author) {
@@ -88,15 +91,16 @@ const id = req.params.id;
           singleBook.authornationalities.push(" " + item.nationality)
         }
 
-        if (result[0].genre == result[1].genre) {
+        if (result[0].genre == result[0].genre) {
           singleBook.genres = result[0].genre
         } else if (result[0].genre != result[1].genre) {
           singleBook.genres.push(" " + item.genre)
         }
       })
+      
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
-    console.log("ERROR getting individual book: ", error.message)
+    console.log("ERROR getting individual book GET method: ", error.message)
   })
 });
 
@@ -298,6 +302,101 @@ app.post('/borrowers/:id', (req, res)=>{
     console.log("Error on the delete request server side:", error.message);
   })
 })
+
+
+
+
+
+
+app.get('/books/delete/:id', function (req, res) {
+   var identity = parseInt(req.params.id, 10);
+   if (Number.isInteger(identity)) {
+     var identity = identity;
+   } else {
+     res.redirect('/')
+   }
+   console.log("req.params: ", req.params)
+  books.selectIndividualBook(identity)
+    .then((result) => {
+      //change result into an array if there is only one result
+      // so code that is written to handle
+      // possibility of multiple authors or genres still works:
+      if (!result.length) {
+        result = [result]
+      }
+   
+      singleBook = {
+        id: identity,
+        title: result[0].title,
+        authors: [],
+        authornationalities: [],
+        pgcount: result[0].pgcount,
+        lang: result[0].lang,
+        genres: [],
+        publisher: result[0].publisher,
+        checkoutstatus: result[0].checkoutstatus,
+        checkoutdate: result[0].checkoutdate,
+        borrower: result[0].borrower
+      }
+
+      result.forEach(item => {
+        if (result[0].author == result[0].author) {
+          singleBook.authors = result[0].author
+          singleBook.authornationalities = result[0].nationality
+        } else if (result[0].author != result[1].author) {
+          singleBook.authors.push(" " + item.author)
+          singleBook.authornationalities.push(" " + item.nationality)
+        }
+
+        if (result[0].genre == result[0].genre) {
+          singleBook.genres = result[0].genre
+        } else if (result[0].genre != result[1].genre) {
+          singleBook.genres.push(" " + item.genre)
+        }
+      })
+      res.render('deletesinglebook.hbs', {
+        singleBook
+      })
+    }).catch(function (error) {
+      console.log("ERROR getting individual book: ", error.message)
+    })
+});
+
+
+app.post('/books/:id', (req, res) => {
+
+  const id = req.params.id;
+  // const {
+  //   title, 
+  //   authors, 
+  //   authornationalities, 
+  //   pgcount, 
+  //   lang, 
+  //   genres, 
+  //   publisher, 
+  //   checkoutstatus, 
+  //   checkoutdate, 
+  //   borrower, 
+  // }
+  // = req.body;
+
+  console.log("DELETE REQUEST for Book with :", id);
+  // let msg = window.confirm("are you sure you want to delete");
+  // if (msg == true){
+  //   alert("You are going to delete!")
+  // }
+  books.deleteBook(id).then((result) => {
+
+    res.redirect('/books')
+  }).catch(function (error) {
+    console.log("Error on the delete request server side:", error.message);
+  })
+})
+
+
+
+
+
 
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
