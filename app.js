@@ -79,9 +79,10 @@ const id = req.params.id;
         publisher: result[0].publisher,
         checkoutstatus: result[0].checkoutstatus,
         checkoutdate: result[0].checkoutdate,
+        borrowerid: result[0].borrowerid,
         borrower: result[0].borrower
       }
-  
+
       result.forEach(item => {
         if (result[0].author == result[0].author) {
           singleBook.authors = result[0].author
@@ -97,7 +98,7 @@ const id = req.params.id;
           singleBook.genres.push(" " + item.genre)
         }
       })
-      
+
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
     console.log("ERROR getting individual book GET method: ", error.message)
@@ -112,18 +113,6 @@ app.get('/borrowers', function (req, res){
         console.log("ERROR getting borrowers page: ", error.message)
       })
 });
-
-
-// app.get('/maintain', function (req, res) {
-//     maintain.selectAllGenres()
-//         .then((genre) => {
-//             res.render("maintain.hbs", {genre})
-//         }).catch(function (error) {
-//             console.log("Eroor in the GET request for the table genres: ", error.message);
-//         });
-// });
-
-// attempting this with a multiple then:
 
 app.get('/maintain', (req, res) => {
         maintain.selectAllGenres()
@@ -171,7 +160,6 @@ const id = req.params.id;
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
       result = result
-      // console.log("here is your result: ", result)
       singleBorrower = {
         id: id,
         name: result[0].name,
@@ -222,7 +210,6 @@ console.log("req.params: ", id)
       } else {
         singleBorrower.titles = result[0].title
       }
-      console.log("the titles? ", singleBorrower)
       res.render('editsingleborrower.hbs', {singleBorrower})
   }).catch(function(error){
     console.log("ERROR getting individual borrower: ", error.message)
@@ -232,7 +219,6 @@ console.log("req.params: ", id)
 app.post('/borrowers/edit/:id', (req, res) => {
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
-  console.log("is the name now an array? ", req.body.borrowerName)
   splitName = borrowerName.split(" ")
   firstName = splitName[0]
   lastName = splitName[1]
@@ -245,7 +231,7 @@ app.post('/borrowers/edit/:id', (req, res) => {
 })
 
 app.get('/borrowers/delete/:id', function (req, res) {
-  
+
   var identity = parseInt(req.params.id, 10);
   if (Number.isInteger(identity)){
     var identity = identity;
@@ -266,8 +252,8 @@ app.get('/borrowers/delete/:id', function (req, res) {
         phone: result[0].phone,
         email: result[0].email,
         titles: []
-      } 
-      
+      }
+
       if (result[1]) {
         result.forEach(item => {
           console.log("what is result[1]",result[1])
@@ -286,7 +272,7 @@ app.get('/borrowers/delete/:id', function (req, res) {
 
 
 app.post('/borrowers/:id', (req, res)=>{
-  
+
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body;
 
@@ -296,7 +282,7 @@ app.post('/borrowers/:id', (req, res)=>{
   //   alert("You are going to delete!")
   // }
   borrowers.deleteBorrower(id).then((borrower)=>{
-   
+
     res.redirect('/borrowers')
   }).catch(function(error){
     console.log("Error on the delete request server side:", error.message);
@@ -324,7 +310,7 @@ app.get('/books/delete/:id', function (req, res) {
       if (!result.length) {
         result = [result]
       }
-   
+
       singleBook = {
         id: identity,
         title: result[0].title,
@@ -367,16 +353,16 @@ app.post('/books/:id', (req, res) => {
 
   const id = req.params.id;
   // const {
-  //   title, 
-  //   authors, 
-  //   authornationalities, 
-  //   pgcount, 
-  //   lang, 
-  //   genres, 
-  //   publisher, 
-  //   checkoutstatus, 
-  //   checkoutdate, 
-  //   borrower, 
+  //   title,
+  //   authors,
+  //   authornationalities,
+  //   pgcount,
+  //   lang,
+  //   genres,
+  //   publisher,
+  //   checkoutstatus,
+  //   checkoutdate,
+  //   borrower,
   // }
   // = req.body;
 
