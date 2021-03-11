@@ -191,7 +191,7 @@ const id = req.params.id;
         borrowedBook = { }
         borrowedBook.bookid = result[0].bookid
         borrowedBook.title = result[0].title
-        singleBorrower.titles = borrowedBook
+        singleBorrower.titles.push(borrowedBook)
       }
       res.render('singleborrower.hbs', {singleBorrower})
   }).catch(function(error){
