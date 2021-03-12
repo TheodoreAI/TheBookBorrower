@@ -46,9 +46,18 @@ app.get('/', function (req, res) {
 
 // getting the files for the navbar
 app.get('/books', function (req, res){
+    bookIDs = []
+    rowsToDisplay = []
     books.selectAllBooks()
       .then((books) => {
-        res.render('books.hbs', {books})
+        console.log("is this an array? ", books)
+        books.forEach(function(book) {
+          if (!bookIDs.includes(book.id)) {
+            bookIDs.push(book.id)
+            rowsToDisplay.push(book)
+          }
+        })
+        res.render('books.hbs', {rowsToDisplay})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -57,23 +66,47 @@ app.get('/books', function (req, res){
 // filtering book list by title
 app.post('/books', function (req, res){
   if (req.body.Title) {
+    bookIDs = []
+    rowsToDisplay = []
     books.selectBooksByTitle(req.body.Title)
       .then((books) => {
-        res.render('books.hbs', {books})
+        books.forEach(function(book) {
+          if (!bookIDs.includes(book.id)) {
+            bookIDs.push(book.id)
+            rowsToDisplay.push(book)
+          }
+        })
+        res.render('books.hbs', {rowsToDisplay})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Author) {
+    bookIDs = []
+    rowsToDisplay = []
     books.selectBooksByAuthor(req.body.Author)
       .then((books) => {
-        res.render('books.hbs', {books})
+        books.forEach(function(book) {
+          if (!bookIDs.includes(book.id)) {
+            bookIDs.push(book.id)
+            rowsToDisplay.push(book)
+          }
+        })
+        res.render('books.hbs', {rowsToDisplay})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.AuthorNationality) {
+    bookIDs = []
+    rowsToDisplay = []
     books.selectBooksByAuthorNationality(req.body.AuthorNationality)
       .then((books) => {
-        res.render('books.hbs', {books})
+        books.forEach(function(book) {
+          if (!bookIDs.includes(book.id)) {
+            bookIDs.push(book.id)
+            rowsToDisplay.push(book)
+          }
+        })
+        res.render('books.hbs', {rowsToDisplay})
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -117,7 +150,6 @@ app.post('/books', function (req, res){
 
 app.get('/books/:id', function (req, res) {
 const id = req.params.id;
-
   books.selectIndividualBook(id)
     .then((result) => {
       //change result into an array if there is only one result
@@ -126,7 +158,9 @@ const id = req.params.id;
       if (!result.length) {
         result = [result]
       }
-
+      // multiple rows will be returned for books with multiple authors
+      // and/or genres so repeated information will only be pulled from the
+      // first result of the sql query
       singleBook = {
         id: id,
         title: result[0].title,
@@ -141,23 +175,18 @@ const id = req.params.id;
         borrowerid: result[0].borrowerid,
         borrower: result[0].borrower
       }
-
+      // for books with multiple authors and/or genres, make arrays to hold
+      // every value of genre, author and author nationality from each returned result:
       result.forEach(item => {
-        if (result[0].author == result[0].author) {
-          singleBook.authors = result[0].author
-          singleBook.authornationalities = result[0].nationality
-        } else if (result[0].author != result[1].author) {
-          singleBook.authors.push(" " + item.author)
-          singleBook.authornationalities.push(" " + item.nationality)
-        }
-
-        if (result[0].genre == result[0].genre) {
-          singleBook.genres = result[0].genre
-        } else if (result[0].genre != result[1].genre) {
-          singleBook.genres.push(" " + item.genre)
-        }
+        singleBook.genres.push(" " + item.genre)
+        singleBook.authors.push(" " + item.author)
+        singleBook.authornationalities.push(" " + item.nationality)
       })
-
+      // take duplicates out of genre, author, and author nationality arrays:
+      singleBook.genres = [...new Set(singleBook.genres)]
+      singleBook.authors = [...new Set(singleBook.authors)]
+      singleBook.authornationalities = [...new Set(singleBook.authornationalities)]
+      
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
     console.log("ERROR getting individual book GET method: ", error.message)
