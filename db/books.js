@@ -16,6 +16,7 @@ const selectAllBooks = () => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     `).then((books) => {
+      console.log("the books: ", books)
       return books
     }).catch(function (error) {
       console.log("ERROR selecting all books: ", error.message)
@@ -234,7 +235,6 @@ const selectIndividualBook = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE books.id = $1
     `, [id]).then((book) => {
-      console.log("Database query", book);
       return book
     }).catch(function (error) {
       console.log("ERROR selecting one book: ", error.message)
