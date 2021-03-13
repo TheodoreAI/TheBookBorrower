@@ -236,6 +236,7 @@ const id = req.params.id;
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
+        console.log(borrowers)
         res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -601,15 +602,28 @@ app.post('/authors', function (req, res) {
 
 app.post('/booksForm', function (req, res){
 
-    maintain.postBooks(req.body.titleBook, req.body.status, req.body.existingBorrower,
-      req.body.checkoutDate, req.body.pageCount, req.body.existingPublisher, req.body.existingLanguage)
-    .then((books) =>{
+    if(req.body.status == 'No'){
+      maintain.postBooksNo(req.body.titleBook, req.body.status, req.body.pageCount, req.body.existingPublisher, req.body.existingLanguage)
+        .then((books) => {
 
-        res.redirect('/maintain')
+          res.redirect('/maintain')
 
-    }).catch(function(error){
-        console.log("Error posting the books table:", error.message)
-    });
+        }).catch(function (error) {
+          console.log("Error posting the books table:", error.message)
+        });
+    }else if (req.body.status == 'Yes'){
+       maintain.postBooksYes(req.body.titleBook, req.body.status, req.body.existingBorrower,
+           req.body.checkoutDate, req.body.pageCount, req.body.existingPublisher, req.body.existingLanguage)
+         .then((books) => {
+
+           res.redirect('/maintain')
+
+         }).catch(function (error) {
+           console.log("Error posting the books table:", error.message)
+         });
+      
+    }
+    
 });
 
 app.post('/booksAuthorsForm', function (req, res){
@@ -645,6 +659,24 @@ app.post('/genreBooksForm', function (req, res){
   });
 });
 
+
+app.post('/borrowers', function (req, res) {
+  
+  var borrowerName = req.body.borrowerName;
+  
+  var lowerCaseBorrowerName = borrowerName.toLowerCase();
+  console.log("Does it reach this POST", borrowerName);
+  borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
+    console.log(borrowers);
+
+
+    res.render('borrowers.hbs', {borrowers})
+  }).catch(function (error) {
+    console.log("The GET request for the searchborrower isn't working on the server", error.message);
+  })
+
+
+})
 
 
 app.use(function (err, req, res, next) {

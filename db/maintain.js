@@ -139,24 +139,19 @@ const postAuthors = (lastName, firstName, nationText) => {
 
 // This is a promise function that passes the new books to the books table.
 
-const postBooks = (titleBook, 
-                    status, existingBorrower,
-                    checkoutDate, pageCount,
+const postBooksNo = (titleBook, 
+                    status, pageCount,
                     existingPublisher, existingLanguage) => {
                                         
     return db.query(`
         BEGIN;  
-            INSERT INTO books (title, checkoutstatus, pgcount, languageid, publisherid, borrowerid, checkoutdate)
-            VALUES($1, $2, $5,
-            (SELECT id FROM languages WHERE lang = $7),
-            (SELECT id FROM publishers WHERE publisher = $6),
-            (SELECT id FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $3),
-            $4);
-                
+                INSERT INTO books(title, checkoutstatus, pgcount, languageid, publisherid)
+                VALUES($1, $2, $3,
+                    (SELECT id FROM languages WHERE lang = $5),
+                    (SELECT id FROM publishers WHERE publisher = $4));
+ 
         COMMIT;`, 
-
-[titleBook, status, existingBorrower, 
-    checkoutDate, pageCount, existingPublisher,
+[titleBook, status, pageCount, existingPublisher,
     existingLanguage]).then((books) => {
         return books;
         
@@ -165,6 +160,38 @@ const postBooks = (titleBook,
     });
 
   }
+
+
+
+
+const postBooksYes = (titleBook,
+    status, existingBorrower,
+    checkoutDate, pageCount,
+    existingPublisher, existingLanguage) => {
+
+    return db.query(`
+        BEGIN;  
+
+                INSERT INTO books (title, checkoutstatus, pgcount, languageid, publisherid, borrowerid, checkoutdate)
+                VALUES($1, $2, $5,
+                (SELECT id FROM languages WHERE lang = $7),
+                (SELECT id FROM publishers WHERE publisher = $6),
+                (SELECT id FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $3),
+                $4);
+            
+        COMMIT;`,
+        [titleBook, status, existingBorrower,
+            checkoutDate, pageCount, existingPublisher,
+            existingLanguage
+        ]).then((books) => {
+        return books;
+
+    }).catch(function (error) {
+        console.log("Error posting the book into the book table", error.message);
+    });
+
+}
+
 
 
 const postAuthorsBooks = (authors, book) => {
@@ -247,6 +274,7 @@ const postGenreBooks = (genres, book) => {
 
 }
 
+
 module.exports = {
     postBorrower,
     postGenre,
@@ -260,7 +288,8 @@ module.exports = {
     selectAllPublishers, 
     selectAllBorrowers,
     selectAllAuthors,
-    postBooks,
+    postBooksNo,
+    postBooksYes,
     selectAllBooks,
     postAuthorsBooks,
     postGenreBooks
