@@ -41,6 +41,28 @@ const selectIndividualBorrower = (id) => {
 }
 
 
+
+const selectBorrowerByName = (borrowerName) =>{
+  return db.query(`
+
+    SELECT
+    borrowers.id,
+      CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "name", borrowers.phone, borrowers.email,
+      borrowers.id = books.borrowerID AS "borrowingstatus"
+    FROM
+    borrowers
+    LEFT JOIN books
+    ON borrowers.id = books.borrowerID
+      WHERE lower(CONCAT(borrowers.firstName, ' ',borrowers.lastName)) LIKE lower($1);
+
+  `,['%' + borrowerName + '%']).then((borrowers) =>{
+    return borrowers
+  }).catch(function(error){
+    console.log("Error SELECT the borrowers through the DB query.", error.message);
+  });
+}
+
+
 const updateBorrower = (id, firstName, lastName, phone, email) => {
 
   return db.query(`
@@ -92,6 +114,7 @@ module.exports = {
   selectAllBorrowers,
   selectIndividualBorrower,
   updateBorrower,
-  deleteBorrower
+  deleteBorrower,
+  selectBorrowerByName
 
 }
