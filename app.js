@@ -77,7 +77,7 @@ app.post('/books', function (req, res){
     })
     res.render('books.hbs', {rowsToDisplay})
   }
-  
+
   // to display books based on different fields, a different query is run
   // based on what field the user fills in on the search form:
   if (req.body.Title) {
@@ -508,11 +508,6 @@ app.post('/books/:id', (req, res) => {
   })
 })
 
-
-
-
-
-
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
         .then((nationality) => {
@@ -621,9 +616,9 @@ app.post('/booksForm', function (req, res){
          }).catch(function (error) {
            console.log("Error posting the books table:", error.message)
          });
-      
+
     }
-    
+
 });
 
 app.post('/booksAuthorsForm', function (req, res){
@@ -661,9 +656,9 @@ app.post('/genreBooksForm', function (req, res){
 
 
 app.post('/borrowers', function (req, res) {
-  
+
   var borrowerName = req.body.borrowerName;
-  
+
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
   console.log("Does it reach this POST", borrowerName);
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {

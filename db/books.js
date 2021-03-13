@@ -271,10 +271,6 @@ const deleteBook = (id) => {
    })
 }
 
-
-
-
-
 module.exports = {
   selectAllBooks,
   selectBooksByTitle,
