@@ -50,7 +50,6 @@ app.get('/books', function (req, res){
     rowsToDisplay = []
     books.selectAllBooks()
       .then((books) => {
-        console.log("is this an array? ", books)
         books.forEach(function(book) {
           if (!bookIDs.includes(book.id)) {
             bookIDs.push(book.id)
@@ -63,85 +62,77 @@ app.get('/books', function (req, res){
       })
 });
 
-// filtering book list by title
 app.post('/books', function (req, res){
+  // query results may have repeated rows because of many to many relationships
+  // between books/authors and books/genres so these arrays are used to
+  // make sure a book is only going to display once:
+  bookIDs = []
+  rowsToDisplay = []
+  function display(books) {
+    books.forEach(function(book) {
+      if (!bookIDs.includes(book.id)) {
+        bookIDs.push(book.id)
+        rowsToDisplay.push(book)
+      }
+    })
+    res.render('books.hbs', {rowsToDisplay})
+  }
+  
+  // to display books based on different fields, a different query is run
+  // based on what field the user fills in on the search form:
   if (req.body.Title) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByTitle(req.body.Title)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Author) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByAuthor(req.body.Author)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.AuthorNationality) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByAuthorNationality(req.body.AuthorNationality)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Language) {
     books.selectBooksByLanguage(req.body.Language)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Genre) {
     books.selectBooksByGenre(req.body.Genre)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Publisher) {
     books.selectBooksByPublisher(req.body.Publisher)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Borrower) {
     books.selectBooksByBorrower(req.body.Borrower)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.isBorrowed) {
     books.selectBooksByBorrowedStatus(req.body.isBorrowed)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -186,7 +177,7 @@ const id = req.params.id;
       singleBook.genres = [...new Set(singleBook.genres)]
       singleBook.authors = [...new Set(singleBook.authors)]
       singleBook.authornationalities = [...new Set(singleBook.authornationalities)]
-      
+
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
     console.log("ERROR getting individual book GET method: ", error.message)

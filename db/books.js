@@ -36,7 +36,7 @@ const selectBooksByTitle = (title) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      books.title LIKE $1
+      lower(books.title) LIKE lower($1)
     `, ['%' + title + '%']).then((books) => {
       return books
     }).catch(function (error) {
@@ -57,7 +57,7 @@ const selectBooksByAuthor = (author) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      CONCAT(authors.firstName, ' ', authors.lastName) LIKE $1
+      lower(CONCAT(authors.firstName, ' ', authors.lastName)) LIKE lower($1)
     `, ['%' + author + '%']).then((books) => {
       return books
     }).catch(function (error) {
@@ -80,7 +80,7 @@ const selectBooksByAuthorNationality = (authorNationality) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      nationalities.nationality LIKE $1
+      lower(nationalities.nationality) LIKE lower($1)
     `, ['%' + authorNationality + '%']).then((books) => {
       return books
     }).catch(function (error) {
@@ -103,7 +103,7 @@ const selectBooksByLanguage = (language) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      languages.lang LIKE $1
+      lower(languages.lang) LIKE lower($1)
     `, ['%' + language + '%']).then((books) => {
       return books
     }).catch(function (error) {
@@ -128,8 +128,8 @@ const selectBooksByGenre = (genre) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      genres.genre = $1
-    `, [genre]).then((books) => {
+      lower(genres.genre) LIKE lower($1)
+    `, ['%' + genre + '%']).then((books) => {
       return books
     }).catch(function (error) {
       console.log("ERROR selecting books by genre: ", error.message)
@@ -151,7 +151,7 @@ const selectBooksByPublisher = (publisher) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      publishers.publisher LIKE $1
+      lower(publishers.publisher) LIKE lower($1)
     `, ['%' + publisher + '%']).then((books) => {
       return books
     }).catch(function (error) {
@@ -193,7 +193,7 @@ const selectBooksByBorrower = (borrower) => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     WHERE
-      CONCAT(borrowers.firstName, ' ', borrowers.lastName) LIKE $1
+      lower(CONCAT(borrowers.firstName, ' ', borrowers.lastName)) LIKE lower($1)
     `, ['%' + borrower + '%']).then((books) => {
       return books
     }).catch(function (error) {
