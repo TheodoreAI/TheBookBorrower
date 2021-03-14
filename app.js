@@ -198,6 +198,11 @@ app.post('/books/borroworreturn/:id', function (req, res) {
 
 app.get('/books/borrow/:id', function (req, res) {
   const id = req.params.id;
+  // need link to book page
+  // need list of borrowers
+  // need button to change checkoutstatus to true
+  // choose correct borrower ID for book
+  // choose correct date for checkout date
   res.render('bookborrow.hbs')
 })
 
