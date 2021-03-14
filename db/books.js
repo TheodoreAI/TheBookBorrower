@@ -241,6 +241,24 @@ const selectIndividualBook = (id) => {
     })
 }
 
+const returnBook = (id) => {
+  return db.query(
+    `
+    UPDATE
+      books
+    SET
+      checkoutStatus = false,
+      borrowerID = NULL,
+      checkoutDate = NULL
+    WHERE
+      id = $1;
+    `, [id]).then((book) => {
+      return book
+    }).catch(function (error) {
+      console.log("ERROR returning book: ", error.message)
+    })
+}
+
 
 
 const deleteBook = (id) => {
@@ -282,5 +300,6 @@ module.exports = {
   selectBooksByBorrowedStatus,
   selectBooksByBorrower,
   selectIndividualBook,
+  returnBook,
   deleteBook
 }

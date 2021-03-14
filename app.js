@@ -184,6 +184,13 @@ const id = req.params.id;
   })
 });
 
+app.post('/books/return/:id', function (req, res) {
+  const id = req.params.id;
+  books.returnBook(id).then(() => {
+    res.redirect('/books')
+  })
+})
+
 app.get('/books/edit/:id', function (req, res) {
 const id = req.params.id;
 
@@ -417,11 +424,6 @@ app.post('/borrowers/:id', (req, res)=>{
     console.log("Error on the delete request server side:", error.message);
   })
 })
-
-
-
-
-
 
 app.get('/books/delete/:id', function (req, res) {
    var identity = parseInt(req.params.id, 10);
