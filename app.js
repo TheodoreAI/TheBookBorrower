@@ -192,7 +192,13 @@ app.post('/books/borroworreturn/:id', function (req, res) {
     })
   }else if(req.body.hasOwnProperty("borrowButton")) {
    console.log("borrow buton clicked");
+   res.redirect(`/books/borrow/${id}`)
   }
+})
+
+app.get('/books/borrow/:id', function (req, res) {
+  const id = req.params.id;
+  res.render('bookborrow.hbs')
 })
 
 app.get('/books/edit/:id', function (req, res) {
