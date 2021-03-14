@@ -68,11 +68,11 @@
       {{else}}
           <td> </td>
       {{/if}}
-      <form action="/books/return/{{id}}" method="POST">
+      <form action="/books/borroworreturn/{{id}}" method="POST">
         {{#if checkoutstatus}}
-            <td><button type="Submit" id="returnButton">Return</button></td>
+            <td><button type="Submit" name="returnButton" id="returnButton">Return</button></td>
         {{else}}
-            <td><button type="Submit" name="borrowButton">Borrow</button></td>
+            <td><button type="Submit" name="borrowButton" id="borrowButton">Borrow</button></td>
         {{/if}}
       </form>
     </tr>

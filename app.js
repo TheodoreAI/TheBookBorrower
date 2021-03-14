@@ -184,11 +184,15 @@ const id = req.params.id;
   })
 });
 
-app.post('/books/return/:id', function (req, res) {
+app.post('/books/borroworreturn/:id', function (req, res) {
   const id = req.params.id;
-  books.returnBook(id).then(() => {
-    res.redirect('/books')
-  })
+  if(req.body.hasOwnProperty("returnButton")){
+    books.returnBook(id).then(() => {
+      res.redirect('/books')
+    })
+  }else if(req.body.hasOwnProperty("borrowButton")) {
+   console.log("borrow buton clicked");
+  }
 })
 
 app.get('/books/edit/:id', function (req, res) {
