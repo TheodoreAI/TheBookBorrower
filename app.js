@@ -8,6 +8,7 @@ const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
+
 var bodyParser = require('body-parser');
 
 // start the express app
@@ -50,7 +51,6 @@ app.get('/books', function (req, res){
     rowsToDisplay = []
     books.selectAllBooks()
       .then((books) => {
-        console.log("is this an array? ", books)
         books.forEach(function(book) {
           if (!bookIDs.includes(book.id)) {
             bookIDs.push(book.id)
@@ -245,7 +245,7 @@ const id = req.params.id;
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        console.log(borrowers)
+        
         res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -327,7 +327,6 @@ const id = req.params.id;
 
 app.get('/borrowers/edit/:id', function (req, res) {
 const id = req.params.id;
-console.log("req.params: ", id)
   borrowers.selectIndividualBorrower(id)
     .then((result) => {
       //change result into an array if there is only one result
@@ -376,14 +375,13 @@ app.get('/borrowers/delete/:id', function (req, res) {
   } else{
     res.redirect('/')
   }
-  console.log("req.params: ", req.params)
+ 
   borrowers.selectIndividualBorrower(identity)
     .then((result) => {
       //change result into an array if there is only one result
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
       result = result
-      console.log("WHat is this?", identity);
       singleBorrower = {
         id: identity,
         name: result[0].name,
@@ -394,7 +392,6 @@ app.get('/borrowers/delete/:id', function (req, res) {
 
       if (result[1]) {
         result.forEach(item => {
-          console.log("what is result[1]",result[1])
           singleBorrower.titles.push(" " + item.title)
         })
       } else {
@@ -414,7 +411,6 @@ app.post('/borrowers/:id', (req, res)=>{
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body;
 
-  console.log("From DELETE form:", id);
   // let msg = window.confirm("are you sure you want to delete");
   // if (msg == true){
   //   alert("You are going to delete!")
@@ -439,7 +435,6 @@ app.get('/books/delete/:id', function (req, res) {
    } else {
      res.redirect('/')
    }
-   console.log("req.params: ", req.params)
   books.selectIndividualBook(identity)
     .then((result) => {
       //change result into an array if there is only one result
@@ -490,21 +485,6 @@ app.get('/books/delete/:id', function (req, res) {
 app.post('/books/:id', (req, res) => {
 
   const id = req.params.id;
-  // const {
-  //   title,
-  //   authors,
-  //   authornationalities,
-  //   pgcount,
-  //   lang,
-  //   genres,
-  //   publisher,
-  //   checkoutstatus,
-  //   checkoutdate,
-  //   borrower,
-  // }
-  // = req.body;
-
-  console.log("DELETE REQUEST for Book with :", id);
   // let msg = window.confirm("are you sure you want to delete");
   // if (msg == true){
   //   alert("You are going to delete!")
@@ -640,11 +620,7 @@ app.post('/booksAuthorsForm', function (req, res){
     var authors = req.body.existingAuthor;
     var book = req.body.existingBook;
 
-
-  console.log("The single book add", book);
   maintain.postAuthorsBooks(authors, book).then((authorsbooks) => {
-
-
       res.redirect('/maintain')
     }).catch(function (error) {
       console.log("The Authors to the books:", error.message);
@@ -659,7 +635,7 @@ app.post('/genreBooksForm', function (req, res){
   var genres = req.body.existingGenre;
   var book = req.body.existingBook;
 
-  console.log(genres);
+  
   maintain.postGenreBooks(genres, book).then((genreBooks) => {
 
     res.redirect('/maintain')
@@ -674,10 +650,8 @@ app.post('/borrowers', function (req, res) {
   var borrowerName = req.body.borrowerName;
   
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
-  console.log("Does it reach this POST", borrowerName);
+  
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
-    console.log(borrowers);
-
 
     res.render('borrowers.hbs', {borrowers})
   }).catch(function (error) {

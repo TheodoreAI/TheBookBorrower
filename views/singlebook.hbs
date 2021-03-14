@@ -1,32 +1,100 @@
+<div class="searchFormboxBorrowers">
 
-<div class="individual-info-table" id="individualBookInfo">
-  <table><tr><th>Title: </th><td>{{singleBook.title}}</td></tr></table>
-  <table><tr><th>Author(s):</th><td>{{singleBook.authors}}</td></tr></table>
-  <table><tr><th>Author Nationality: </th><td>{{singleBook.authornationalities}}</td></tr></table>
-  <table><tr><th>Pages: </th><td>{{singleBook.pgcount}}</td></tr></table>
-  <table><tr><th>Language: </th><td>{{singleBook.lang}}</td></tr></table>
-  <table><tr><th>Genre(s):</th><td>{{singleBook.genres}}</td></tr></table>
-  <table><tr><th>Publisher: </th><td>{{singleBook.publisher}}</td></tr></table>
+  <div class="individual-info-table" id="individualBookInfo">
+    <table>
+      <tr>
+        <th>Title: </th>
+        <td>{{singleBook.title}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Author(s):</th>
+        <td>{{singleBook.authors}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Author Nationality: </th>
+        <td>{{singleBook.authornationalities}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Pages: </th>
+        <td>{{singleBook.pgcount}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Language: </th>
+        <td>{{singleBook.lang}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Genre(s):</th>
+        <td>{{singleBook.genres}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Publisher: </th>
+        <td>{{singleBook.publisher}}</td>
+      </tr>
+    </table>
+    {{#if singleBook.checkoutstatus}}
+    <table>
+      <tr>
+        <th>Borrowed? </th>
+        <td>Yes</td>
+      </tr>
+    </table>
+    {{else}}
+    <table>
+      <tr>
+        <th>Borrowed? </th>
+        <td>No</td>
+      </tr>
+    </table>
+    {{/if}}
+    <table>
+      <tr>
+        <th>Check Out Date: </th>
+        <td>{{singleBook.checkoutdate}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Borrower: </th>
+        <td><a href="/borrowers/{{singleBook.borrowerid}}">{{singleBook.borrower}}</a></td>
+      </tr>
+    </table>
+  </div>
+  
+  <br>
   {{#if singleBook.checkoutstatus}}
-    <table><tr><th>Borrowed? </th><td>Yes</td></tr></table>
+
+  <button id="returnOrBorrow">Return Book</button><br>
   {{else}}
-    <table><tr><th>Borrowed? </th><td>No</td></tr></table>
+  <button id="returnOrBorrow">Borrow Book</button>
   {{/if}}
-  <table><tr><th>Check Out Date: </th><td>{{singleBook.checkoutdate}}</td></tr></table>
-  <table><tr><th>Borrower: </th><td><a href="/borrowers/{{singleBook.borrowerid}}">{{singleBook.borrower}}</a></td></tr></table>
+
+
+  <br><form action="/books/edit/{{singleBook.id}}" method="GET">
+    <button id="updateButton">Update Book</button>
+  </form>
+
+
+  <form id="deleteBookForm" method="GET" action="/books/delete/{{singleBook.id}}">
+    <button id="deleteButtonBooks">Delete Book</button>
+  </form>
+
+
 </div>
 
 
-{{#if singleBook.checkoutstatus}}
-    <button id="returnOrBorrow">Return Book</button>
-{{else}}
-    <button id="returnOrBorrow">Borrow Book</button>
-{{/if}}
-<form action="/books/edit/{{singleBook.id}}" method="GET">
-  <button id="updateButton">Update Book</button>
-</form>
-<form id="deleteBookForm" method="GET" action="/books/delete/{{singleBook.id}}">
-  <button id="deleteButtonBooks" >Delete Book</button>
-</form>
+
+
 
 {{!-- <script src="updateforms.js" type="text/javascript"></script> --}}

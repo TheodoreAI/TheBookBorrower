@@ -1,24 +1,28 @@
 
 <!-- navigation bar with an unordered list -->
-<h2>Search the library for borrowers or see the full list below</h2>
 
-<div>
+
+<div class="borrowers-header">
+    <div class="searchFormboxBorrowers">
     
-        
+        <h3>Search the library for borrowers or see the full list below</h3>
         <form method="POST" action="/borrowers">
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for borrowers" name="borrowerName">
             <button id="searchBorrowerButton" type="submit">Search</button>
         </form>
     
-    <p>If the borrower isn't on the list, you can add him below:</p>
+        <p>If the borrower isn't on the list, you can add them:</p>
+    
+        <a href="/maintain"><button id="addBorrowerButton">Add A Borrower</button></a>
+    
+    </div>
 
-    <a href="/maintain"><button id="addBorrowerButton">Add A Borrower</button></a>
-
-
-</div><br><br>
+</div>
+<br><br>
 
 <div>
-    <table>
+    <table class="center booksAndBorrowers">
+        <caption>Borrowers in database:</caption>
         <thead>
             <tr>
                 <th>Name</th>
@@ -27,17 +31,22 @@
                 <th>Currently borrowing books?</th>
             </tr>
         </thead>
-          {{#each borrowers}}
-            <tr>
-              <td><a href="/borrowers/{{id}}" class="openBorrowerModal">{{name}}</a></td>
-              <td>{{phone}}</td>
-              <td>{{email}}</td>
-              {{#if borrowingstatus}}
-                  <td>Yes</td>
-              {{else}}
-              <td>No</td>
-              {{/if}}
+          
+          <tbody>
+            {{#each borrowers}}
+            <tr class="borderAround">
+                <td><a href="/borrowers/{{id}}" class="openBorrowerModal">{{name}}</a></td>
+                <td>{{phone}}</td>
+                <td>{{email}}</td>
+                {{#if borrowingstatus}}
+                <td>Yes</td>
+                {{else}}
+                <td>No</td>
+                {{/if}}
             </tr>
-          {{/each}}
+            {{/each}}
+
+          </tbody>
+            
     </table>
 </div>

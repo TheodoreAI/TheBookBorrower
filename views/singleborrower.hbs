@@ -1,23 +1,56 @@
+  
+ <div class="searchFormboxBorrowers">
+
   <h2>Profile: {{singleBorrower.name}}</h2>
   <div class="individual-info-table" id="individualBorrowerInfo">
-    <table><tr><th>Name: </th><td>{{singleBorrower.name}}</td></tr></table>
-    <table><tr><th>Phone: </th><td>{{singleBorrower.phone}}</td></tr></table>
-    <table><tr><th>Email: </th><td>{{singleBorrower.email}}</td></tr></table>
+    <table>
+      <tr>
+        <th>Name: </th>
+        <td>{{singleBorrower.name}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Phone: </th>
+        <td>{{singleBorrower.phone}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <th>Email: </th>
+        <td>{{singleBorrower.email}}</td>
+      </tr>
+    </table>
     {{#if singleBorrower.titles}}
-      <table><tr><th>Current Borrows:
-      {{#each singleBorrower.titles}}
-        </th><td><a href="/books/{{this.bookid}}">{{this.title}}</a></td></tr></table>
-      {{/each}}
+    <table>
+      <tr>
+        <th>Current Borrows:
+          {{#each singleBorrower.titles}}
+        </th>
+        <td><a href="/books/{{this.bookid}}">{{this.title}}</a></td>
+      </tr>
+    </table>
+    {{/each}}
     {{else}}
-      <table><tr><th>Current Borrows: </th><td>None</td></tr></table>
+    <table>
+      <tr>
+        <th>Current Borrows: </th>
+        <td>None</td>
+      </tr>
+    </table>
     {{/if}}
     <form action="/borrowers/edit/{{singleBorrower.id}}" method="GET">
       <button id="updateButton">Update Borrower</button>
     </form>
   </div>
   <form id="deleteBorrowerForm" method="GET" action="/borrowers/delete/{{singleBorrower.id}}">
-     <button id="deleteButton">Delete Borrower</button>
+    <button id="deleteButton">Delete Borrower</button>
   </form>
+
+
+ </div>>
+  
+  
  
 
 <script src="updateforms.js" type="text/javascript"></script> 
