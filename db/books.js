@@ -16,7 +16,7 @@ const selectAllBooks = () => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     `).then((books) => {
-      console.log("the books: ", books)
+     
       return books
     }).catch(function (error) {
       console.log("ERROR selecting all books: ", error.message)
@@ -317,6 +317,39 @@ const deleteBook = (id) => {
    })
 }
 
+
+const borrowBookById = (id) => {
+  return db.query(`
+  
+  SELECT * FROM books WHERE
+  id= $1;
+  `,[id]).then((books) =>{
+    return books
+  }).catch(function(error){
+    console.log("Error querying for the database to borrow a book:", error.message);
+  })
+}
+
+
+const bookBorrowingUpdate = (borrower, bookTitle, bookCheckoutdate) => {
+
+  return db.query(`
+
+  UPDATE
+    books
+  SET
+    checkoutStatus = True,
+    borrowerID =  $1,
+    checkoutDate = $3
+  WHERE title = $2;
+
+  `, [borrower, bookTitle, bookCheckoutdate]).then((resultsOfCheckout) =>{
+    return resultsOfCheckout
+  }).catch(function(error){
+    console.log("Error in the query to update the book to be checkout:", error.message);
+  })
+}
+
 module.exports = {
   selectAllBooks,
   selectBooksByTitle,
@@ -331,5 +364,7 @@ module.exports = {
   returnBook,
   updateBookTitle,
   updatePageCount,
-  deleteBook
+  deleteBook,
+  borrowBookById,
+  bookBorrowingUpdate
 }

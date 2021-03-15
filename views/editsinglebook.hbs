@@ -1,12 +1,4 @@
-<div>
-
-    <div>
-      {{#each allAuthors}}
-
-        {{this}}
-
-      {{/each}}
-    </div>
+<div class="searchFormboxBorrowers"> 
 
     <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
       <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Title"></span></li>
@@ -29,8 +21,11 @@
     <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
       <li>Publisher: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Publisher"></span></li>
     </form>
+
+
+    <form action="/books/{{singleBook.id}}">
+      <button>Close Update Form</button>
+    </form>
 </div>
-<form action="/books/{{singleBook.id}}">
-  <button>Close Update Form</button>
-</form>
-</div>
+
+

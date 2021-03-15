@@ -33,7 +33,7 @@ app.use('/borrowers/', express.static(path.join(__dirname, '/public')));
 app.use('/books/', express.static(path.join(__dirname, '/public')));
 
 
-
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -199,9 +199,50 @@ app.post('/books/borroworreturn/:id', function (req, res) {
 
 app.get('/books/borrow/:id', function (req, res) {
   const id = req.params.id;
-  // borrowing book stuff goes in bookborrow.hbs
-  res.render('bookborrow.hbs')
+  books.borrowBookById(id)
+  .then((resultbook) =>{
+
+    borrowers.selectAllBorrowers()
+    .then((borrowers) => {
+      const bookToBorrow = resultbook[0];
+      // borrowing book stuff goes in bookborrow.hbs
+
+      borrowIDs = []
+      rowsToDisplay = []
+
+
+      borrowers.forEach(function (borrow) {
+        if (!borrowIDs.includes(borrow.id)) {
+          borrowIDs.push(borrow.id)
+          rowsToDisplay.push(borrow)
+        }
+      })
+      
+      res.render('bookborrow.hbs', {bookToBorrow, rowsToDisplay})
+    })
+  }).catch( function(error) {
+    console.log("Error on the server while making the bookBorrow.hbs request: ", error.message);
+  })
+  
 })
+
+
+
+app.post('/books/borrowing/:id', function (req, res){
+  const borrower = req.body.existingBorrower;
+  const bookTitle = req.body.bookBorrowing;
+  const bookCheckoutdate = req.body.bookCheckoutdate;
+  
+  books.bookBorrowingUpdate(borrower, bookTitle, bookCheckoutdate)
+    .then((resultbook) => {
+      res.redirect('/books')
+
+  }).catch(function(error){
+    console.log("Error in the POST request to update the book that is borrowed:", error.message);
+  })
+})
+
+
 
 app.get('/books/edit/:id', function (req, res) {
 const id = req.params.id;
@@ -255,21 +296,21 @@ const id = req.params.id;
         result.forEach(name => {
           allAuthors.push(name.fullName)
         })
-        console.log("getting all authors? ", allAuthors)
+       
 
         maintain.selectAllNationalities().then((result) => {
           allNationalities = []
           result.forEach(nationalityObject => {
             allNationalities.push(nationalityObject.nationality)
           })
-          console.log("getting all nationalities? ", allNationalities)
+          
 
           maintain.selectAllLanguages().then((result) => {
             allLanguages = []
             result.forEach(languageObject => {
               allLanguages.push(languageObject.lang)
             })
-            console.log("getting all languages? ", allLanguages)
+          
 
 
             maintain.selectAllGenres().then((result) => {
@@ -277,7 +318,8 @@ const id = req.params.id;
               result.forEach(genreObject => {
                 allGenres.push(genreObject.genre)
               })
-              console.log("getting all genres? ", allGenres)
+              
+
 
 
               maintain.selectAllPublishers().then((result) => {
@@ -339,14 +381,31 @@ const pgCount = req.body.bookPages
 });
 
 app.get('/borrowers', function (req, res){
+    
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
+        borrowIDs = []
+        rowsToDisplay = []
 
-        res.render('borrowers.hbs', {borrowers})
+        
+        borrowers.forEach(function (borrow) {
+        if (!borrowIDs.includes(borrow.id)) {
+            borrowIDs.push(borrow.id)
+            rowsToDisplay.push(borrow)
+        }
+      })
+
+        res.render('borrowers.hbs', {rowsToDisplay})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
       })
 });
+
+
+
+
+
+
 
 app.get('/maintain', (req, res) => {
         maintain.selectAllGenres()
