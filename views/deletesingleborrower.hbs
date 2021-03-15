@@ -6,6 +6,6 @@
         <li>Phone: {{singleBorrower.phone}}</li><br>
         <li>Email: {{singleBorrower.email}}</li><br>
         {{!-- <button id="deleteButton">DeleteBorrower</button> --}}
-        <button type="submit" onlick="confirm('Are you sure you want to delete'+{{singleBorrower.name}})">Delete</button>
+        <button type="submit" onlick="return confirm('Are you sure you want to delete'+{{singleBorrower.name}})">Delete</button>
     </form>
 </div>
