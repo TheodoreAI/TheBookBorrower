@@ -15,19 +15,21 @@
 
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
-
+<h4>
+    If any of your book's information is not found in the book form's menus,
+    add the information using the proper forms for each field before entering the book. <br> 
+    For example: to add a book you will need Author, genre, and if someone will borrow it the borrower needs to be added as well.
+   
+</h4>
 
 <div class="menuForms">
     <h3> Adding Book(s):</h3>
-    <h3> Adding Author(s):</h3>
-    <h3> Adding Borrower(s):</h3>
+    <h3> Adding Author(s) and Borrower:</h3>
+    <h3> Adding additional information for Books:</h3>
     
     <div class="formbox" style="background-color: lightblue;">
-        <h3>Add a Book:     --------</h3>
-        <p>
-          If any of your book's information is not found in the book form's menus,
-          add the information using the proper forms for each field before entering the book
-        </p>
+        <h3>Add a Book:</h3>
+        
         <button class="open-button" onclick="openForm()">Open Books Form </button><br>
         <div id="bookFormDiv">
             <form id="bookForm" method="POST" action="/booksForm">
@@ -106,28 +108,23 @@
 
 
     <div class="formbox">
-        <h3>Add Borrowers with Contact Info:</h3>
-        <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
-        <div id="borrowFormDiv" style="display: none;">
-            <form id='borrowForm' method="POST" action="/borrowerForm">
-                First Name <input type='text' name='borrowerFirst' required><br>
-                Last Name <input type='text' name='borrowerLast' required><br>
-                Email <input type='email' id="email" name='email' required><br>
-                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                    required><br>
+        <h3>Add a Genre:</h3>
+        <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
+        <div id="genreFormDiv">
+            <form id="genreForm" method="POST" action="/genres"><br>
+                Genre: <input type='text' name='genre' required>
                 <br>
-                <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
-                    Add Borrower
+                <button type='submit' onclick="return confirm('Are you sure you want to add this genre?');">
+                    Add Genre
                 </button>
-                <button class="close-button" onclick="closeBorrowForm()">Close Borrower Form</button>
+                <button class="close-button" onclick="closeGenreForm()">Close Genre Form</button>
             </form>
-    
         </div>
     </div>
     
     <div class="formbox" style="background-color: lightblue;">
     
-        <h3>Add Author to Book: --------</h3>
+        <h3>Add Author to Book:</h3>
         <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
         <div id="bookAuthorFormDiv">
             <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
@@ -201,7 +198,7 @@
 
     <div class="formbox" style="background-color: lightblue;">
     
-        <h3>Add Genre to Book: --------></h3>
+        <h3>Add Genre to Book:</h3>
         <button class="open-button" onclick="openGenreBookForm()">Open Genres Form </button><br>
         <div id="genreBookFormDiv">
             <form id="genreForm" method="POST" action="/genreBooksForm">
@@ -235,18 +232,25 @@
             </form>
         </div>
     </div>
+   
+
     <div class="formbox">
-        <h3>Add a Genre:</h3>
-        <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
-        <div id="genreFormDiv">
-            <form id="genreForm" method="POST" action="/genres"><br>
-                    Genre: <input type='text' name='genre' required>
-                    <br>
-                <button type='submit' onclick="return confirm('Are you sure you want to add this genre?');">
-                    Add Genre
+        <h3>Add Borrowers with Contact Info:</h3>
+        <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
+        <div id="borrowFormDiv" style="display: none;">
+            <form id='borrowForm' method="POST" action="/borrowerForm">
+                First Name <input type='text' name='borrowerFirst' required><br>
+                Last Name <input type='text' name='borrowerLast' required><br>
+                Email <input type='email' id="email" name='email' required><br>
+                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    required><br>
+                <br>
+                <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
+                    Add Borrower
                 </button>
-                <button class="close-button" onclick="closeGenreForm()">Close Genre Form</button>
+                <button class="close-button" onclick="closeBorrowForm()">Close Borrower Form</button>
             </form>
+    
         </div>
     </div>
 
