@@ -1,4 +1,4 @@
-<div>
+<div class="searchFormboxBorrowers"> 
     <h2>To correct data for <a href='/books/{{singleBook.id}}'>{{singleBook.title}}</a> , choose one of the fields below:</h2>
     <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
       <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li>
@@ -68,8 +68,11 @@
           Update Publisher
       </button>
     </form>
+
+
+    <form action="/books/{{singleBook.id}}">
+      <button>Close Update Form</button>
+    </form>
 </div>
-<form action="/books/{{singleBook.id}}">
-  <button>Close Update Form</button>
-</form>
-</div>
+
+
