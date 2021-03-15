@@ -271,7 +271,6 @@ const id = req.params.id;
             })
             console.log("getting all languages? ", allLanguages)
 
-
             maintain.selectAllGenres().then((result) => {
               allGenres = []
               result.forEach(genreObject => {
@@ -279,30 +278,16 @@ const id = req.params.id;
               })
               console.log("getting all genres? ", allGenres)
 
-
               maintain.selectAllPublishers().then((result) => {
                 allPublishers = []
                 result.forEach(publisherObject => {
                   allPublishers.push(publisherObject.publisher)
                 })
-
-
-
                 res.render('editsinglebook.hbs', {
-                  singleBook, allAuthors
+                  singleBook, allAuthors, allNationalities, allLanguages, allGenres, allPublishers
                 })
-
-
-
               })
-
-
-
-
             })
-
-
-
           })
 
         })
