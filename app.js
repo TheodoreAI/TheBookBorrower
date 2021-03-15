@@ -197,6 +197,12 @@ app.post('/books/borroworreturn/:id', function (req, res) {
   }
 })
 
+app.get('/books/borrow/:id', function (req, res) {
+  const id = req.params.id;
+  // borrowing book stuff goes in bookborrow.hbs
+  res.render('bookborrow.hbs')
+})
+
 app.get('/books/edit/:id', function (req, res) {
 const id = req.params.id;
 
@@ -335,7 +341,7 @@ const pgCount = req.body.bookPages
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        
+
         res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -467,7 +473,7 @@ app.get('/borrowers/delete/:id', function (req, res) {
   } else{
     res.redirect('/')
   }
- 
+
   borrowers.selectIndividualBorrower(identity)
     .then((result) => {
       //change result into an array if there is only one result
@@ -711,7 +717,7 @@ app.post('/genreBooksForm', function (req, res){
   var genres = req.body.existingGenre;
   var book = req.body.existingBook;
 
-  
+
   maintain.postGenreBooks(genres, book).then((genreBooks) => {
 
     res.redirect('/maintain')
@@ -725,7 +731,7 @@ app.post('/borrowers', function (req, res) {
   var borrowerName = req.body.borrowerName;
 
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
-  
+
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
 
     res.render('borrowers.hbs', {borrowers})
