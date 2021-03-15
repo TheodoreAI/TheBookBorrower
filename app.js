@@ -8,6 +8,7 @@ const books = require('./db/books.js');
 const borrowers = require('./db/borrowers.js');
 const maintain = require('./db/maintain.js');
 
+
 var bodyParser = require('body-parser');
 
 // start the express app
@@ -196,16 +197,6 @@ app.post('/books/borroworreturn/:id', function (req, res) {
   }
 })
 
-app.get('/books/borrow/:id', function (req, res) {
-  const id = req.params.id;
-  // need link to book page
-  // need list of borrowers
-  // need button to change checkoutstatus to true
-  // choose correct borrower ID for book
-  // choose correct date for checkout date
-  res.render('bookborrow.hbs')
-})
-
 app.get('/books/edit/:id', function (req, res) {
 const id = req.params.id;
 
@@ -249,16 +240,102 @@ const id = req.params.id;
         }
       })
 
-      res.render('editsinglebook.hbs', {singleBook})
+      // get lists of authors, nationalities, languages, genres, publishers:
+      // sending single book information and lists of authors, nationalities,
+      // languages, genres, and publishers to book edit page so existing
+      // values from tables can be chosen for updates:
+      maintain.selectAllAuthors().then((result) => {
+        allAuthors = []
+        result.forEach(name => {
+          allAuthors.push(name.fullName)
+        })
+        console.log("getting all authors? ", allAuthors)
+
+        maintain.selectAllNationalities().then((result) => {
+          allNationalities = []
+          result.forEach(nationalityObject => {
+            allNationalities.push(nationalityObject.nationality)
+          })
+          console.log("getting all nationalities? ", allNationalities)
+
+          maintain.selectAllLanguages().then((result) => {
+            allLanguages = []
+            result.forEach(languageObject => {
+              allLanguages.push(languageObject.lang)
+            })
+            console.log("getting all languages? ", allLanguages)
+
+
+            maintain.selectAllGenres().then((result) => {
+              allGenres = []
+              result.forEach(genreObject => {
+                allGenres.push(genreObject.genre)
+              })
+              console.log("getting all genres? ", allGenres)
+
+
+              maintain.selectAllPublishers().then((result) => {
+                allPublishers = []
+                result.forEach(publisherObject => {
+                  allPublishers.push(publisherObject.publisher)
+                })
+
+
+
+                res.render('editsinglebook.hbs', {
+                  singleBook, allAuthors
+                })
+
+
+
+              })
+
+
+
+
+            })
+
+
+
+          })
+
+        })
+
+      })
+}).catch(function(error){
+  console.log("ERROR getting individual book GET method: ", error.message)
+        })
+});
+
+
+// update individual book title:
+app.post('/books/edit/title/:id', function (req, res) {
+const id = req.params.id;
+const title = req.body.bookTitle
+  books.updateBookTitle(id, title)
+    .then(() => {
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
-    console.log("ERROR getting individual book GET method: ", error.message)
+    console.log("ERROR updating book ", id)
+  })
+});
+
+// update individual book page count:
+app.post('/books/edit/pagecount/:id', function (req, res) {
+const id = req.params.id;
+const pgCount = req.body.bookPages
+  books.updatePageCount(id, pgCount)
+    .then(() => {
+      res.redirect(`/books/edit/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
   })
 });
 
 app.get('/borrowers', function (req, res){
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
-        console.log(borrowers)
+        
         res.render('borrowers.hbs', {borrowers})
       }).catch(function(error) {
         console.log("ERROR getting borrowers page: ", error.message)
@@ -338,9 +415,9 @@ const id = req.params.id;
   })
 });
 
+// go to the page to edit an individual borrower's information:
 app.get('/borrowers/edit/:id', function (req, res) {
 const id = req.params.id;
-console.log("req.params: ", id)
   borrowers.selectIndividualBorrower(id)
     .then((result) => {
       //change result into an array if there is only one result
@@ -367,6 +444,7 @@ console.log("req.params: ", id)
   })
 });
 
+// update individual borrower's information based on user's choices:
 app.post('/borrowers/edit/:id', (req, res) => {
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
@@ -389,14 +467,13 @@ app.get('/borrowers/delete/:id', function (req, res) {
   } else{
     res.redirect('/')
   }
-  console.log("req.params: ", req.params)
+ 
   borrowers.selectIndividualBorrower(identity)
     .then((result) => {
       //change result into an array if there is only one result
       // so code that is written to handle
       // possibility of borrower having multiple books still works:
       result = result
-      console.log("WHat is this?", identity);
       singleBorrower = {
         id: identity,
         name: result[0].name,
@@ -407,7 +484,6 @@ app.get('/borrowers/delete/:id', function (req, res) {
 
       if (result[1]) {
         result.forEach(item => {
-          console.log("what is result[1]",result[1])
           singleBorrower.titles.push(" " + item.title)
         })
       } else {
@@ -427,7 +503,6 @@ app.post('/borrowers/:id', (req, res)=>{
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body;
 
-  console.log("From DELETE form:", id);
   // let msg = window.confirm("are you sure you want to delete");
   // if (msg == true){
   //   alert("You are going to delete!")
@@ -447,7 +522,6 @@ app.get('/books/delete/:id', function (req, res) {
    } else {
      res.redirect('/')
    }
-   console.log("req.params: ", req.params)
   books.selectIndividualBook(identity)
     .then((result) => {
       //change result into an array if there is only one result
@@ -498,21 +572,6 @@ app.get('/books/delete/:id', function (req, res) {
 app.post('/books/:id', (req, res) => {
 
   const id = req.params.id;
-  // const {
-  //   title,
-  //   authors,
-  //   authornationalities,
-  //   pgcount,
-  //   lang,
-  //   genres,
-  //   publisher,
-  //   checkoutstatus,
-  //   checkoutdate,
-  //   borrower,
-  // }
-  // = req.body;
-
-  console.log("DELETE REQUEST for Book with :", id);
   // let msg = window.confirm("are you sure you want to delete");
   // if (msg == true){
   //   alert("You are going to delete!")
@@ -541,8 +600,6 @@ app.get('/maintain', function (req, res) {
 
 });
 
-
-
 app.post('/borrowerForm', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
     .then((maintain) => {
@@ -552,7 +609,6 @@ app.post('/borrowerForm', function (req, res) {
         console.log("Error posting to the borrowers table:", error.message)
     });
 });
-
 
 app.post('/genres', function (req, res) {
     const {genre} = req.body;
@@ -566,7 +622,6 @@ app.post('/genres', function (req, res) {
     });
 });
 
-
 app.post('/languages', function (req, res) {
     maintain.postLanguage(req.body.lang)
     .then((maintain) => {
@@ -576,7 +631,6 @@ app.post('/languages', function (req, res) {
         console.log("Error posting to the languages table:", error.message)
     });
 });
-
 
 app.post('/publishers', function (req, res) {
     maintain.postPublisher(req.body.publisher)
@@ -643,11 +697,7 @@ app.post('/booksAuthorsForm', function (req, res){
     var authors = req.body.existingAuthor;
     var book = req.body.existingBook;
 
-
-  console.log("The single book add", book);
   maintain.postAuthorsBooks(authors, book).then((authorsbooks) => {
-
-
       res.redirect('/maintain')
     }).catch(function (error) {
       console.log("The Authors to the books:", error.message);
@@ -656,13 +706,12 @@ app.post('/booksAuthorsForm', function (req, res){
 
 });
 
-
 app.post('/genreBooksForm', function (req, res){
 
   var genres = req.body.existingGenre;
   var book = req.body.existingBook;
 
-  console.log(genres);
+  
   maintain.postGenreBooks(genres, book).then((genreBooks) => {
 
     res.redirect('/maintain')
@@ -671,16 +720,13 @@ app.post('/genreBooksForm', function (req, res){
   });
 });
 
-
 app.post('/borrowers', function (req, res) {
 
   var borrowerName = req.body.borrowerName;
 
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
-  console.log("Does it reach this POST", borrowerName);
+  
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
-    console.log(borrowers);
-
 
     res.render('borrowers.hbs', {borrowers})
   }).catch(function (error) {
