@@ -310,6 +310,7 @@ const title = req.body.bookTitle
 });
 
 // update individual book author(s):
+// need to fix
 app.post('/books/edit/authors/:id', function (req, res) {
 const id = req.params.id;
 const authors = req.body.newAuthors;
@@ -347,6 +348,7 @@ const language = req.body.newLanguage
 });
 
 // update individual book genre(s):
+// need to fix
 app.post('/books/edit/genres/:id', function (req, res) {
 const id = req.params.id;
 const genres = req.body.newGenres

@@ -274,15 +274,12 @@ const updateBookTitle = (id, title) => {
  })
 }
 
-const updateBookAuthors = (id, title) => {
+// need to fix
+const updateBookAuthors = (id, author) => {
   return db.query(
     `
-    UPDATE
-      authorsbooks
-    SET
-      title = $2
-    WHERE
-      id = $1;`, [id, title]).then((book) => {
+    query to set correct authors to correct title
+    `, [id, author]).then((book) => {
       return book
   }).catch(function (error) {
      console.log("ERROR updating book authors: ", error.message);
@@ -319,15 +316,12 @@ const updateBookLanguage = (id, language) => {
  })
 }
 
-const updateBookGenres = (id, title) => {
+// need to fix
+const updateBookGenres = (id, genre) => {
   return db.query(
     `
-    UPDATE
-      books
-    SET
-      title = $2
-    WHERE
-      id = $1;`, [id, title]).then((book) => {
+    query to set correct genres to correct title
+    `, [id, genre]).then((book) => {
       return book
   }).catch(function (error) {
      console.log("ERROR updating book genres: ", error.message);
