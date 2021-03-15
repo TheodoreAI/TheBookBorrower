@@ -4,17 +4,17 @@
 
 <div class="borrowers-header">
     <div class="searchFormboxBorrowers">
-    
+
         <h3>Search the library for borrowers or see the full list below</h3>
         <form method="POST" action="/borrowers">
             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for borrowers" name="borrowerName">
             <button id="searchBorrowerButton" type="submit">Search</button>
         </form>
-    
+
         <p>If the borrower isn't on the list, you can add them:</p>
-    
+
         <a href="/maintain"><button id="addBorrowerButton">Add A Borrower</button></a>
-    
+
     </div>
 
 </div>
@@ -31,7 +31,7 @@
                 <th>Currently borrowing books?</th>
             </tr>
         </thead>
-          
+
           <tbody>
             {{#each rowsToDisplay}}
             <tr class="borderAround">
@@ -47,6 +47,6 @@
             {{/each}}
 
           </tbody>
-            
+
     </table>
 </div>

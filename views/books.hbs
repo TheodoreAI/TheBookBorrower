@@ -1,7 +1,6 @@
 <!-- navigation bar with an unordered list -->
 
 <div class="books-header">
-
   <div class="searchFormbox">
     <h2>Search the library for books or see the full collection below</h2>
     <form action="/books" method="POST">
@@ -41,14 +40,12 @@
         <input name="Borrower" id="BorrowerSearch" />
       </div>
       <input type="submit" value="Submit">
-      <a href="/maintain"><button id="addBorrowerButton">Add A Book</button></a>
     </form>
+    <p>If the book isn't on the list, you can add it:</p>
+
+    <a href="/maintain"><button id="addBookButton">Add A Book</button></a>
   </div>
-
-
 </div>
-
-
 
 <table class="center booksAndBorrowers">
   <caption>Books in the Database:</caption>
@@ -91,4 +88,3 @@
   </tbody>
 
 </table>
-<script src="updateforms.js" type="text/javascript"></script>

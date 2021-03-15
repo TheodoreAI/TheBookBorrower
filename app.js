@@ -823,19 +823,14 @@ app.post('/genreBooksForm', function (req, res){
 });
 
 app.post('/borrowers', function (req, res) {
-
   var borrowerName = req.body.borrowerName;
-
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
-
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
 
     res.render('borrowers.hbs', {borrowers})
   }).catch(function (error) {
     console.log("The GET request for the searchborrower isn't working on the server", error.message);
   })
-
-
 })
 
 
