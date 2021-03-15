@@ -268,20 +268,14 @@ const id = req.params.id;
       }
 
       result.forEach(item => {
-        if (result[0].author == result[0].author) {
-          singleBook.authors = result[0].author
-          singleBook.authornationalities = result[0].nationality
-        } else if (result[0].author != result[1].author) {
-          singleBook.authors.push(" " + item.author)
-          singleBook.authornationalities.push(" " + item.nationality)
-        }
-
-        if (result[0].genre == result[0].genre) {
-          singleBook.genres = result[0].genre
-        } else if (result[0].genre != result[1].genre) {
-          singleBook.genres.push(" " + item.genre)
-        }
+        singleBook.genres.push(" " + item.genre)
+        singleBook.authors.push(" " + item.author)
+        singleBook.authornationalities.push(" " + item.nationality)
       })
+      // take duplicates out of genre, author, and author nationality arrays:
+      singleBook.genres = [...new Set(singleBook.genres)]
+      singleBook.authors = [...new Set(singleBook.authors)]
+      singleBook.authornationalities = [...new Set(singleBook.authornationalities)]
 
       // get lists of authors, nationalities, languages, genres, publishers:
       // sending single book information and lists of authors, nationalities,
@@ -321,8 +315,10 @@ const id = req.params.id;
                 result.forEach(publisherObject => {
                   allPublishers.push(publisherObject.publisher)
                 })
+                thisBooksAuthors = singleBook.authors
+                thisBooksGenres = singleBook.genres
                 res.render('editsinglebook.hbs', {
-                  singleBook, allAuthors, allNationalities, allLanguages, allGenres, allPublishers
+                  singleBook, thisBooksAuthors, thisBooksGenres, allAuthors, allNationalities, allLanguages, allGenres, allPublishers
                 })
               })
             })
@@ -349,18 +345,32 @@ const title = req.body.bookTitle
   })
 });
 
-// update individual book author(s):
-// need to fix
-app.post('/books/edit/authors/:id', function (req, res) {
+// adding additional authors on individual book page:
+app.post('/books/edit/addauthors/:id', function (req, res) {
 const id = req.params.id;
 const authors = req.body.newAuthors;
-  console.log("the chosen author: ", authors)
-  // books.updateBookTitle(id, title)
-  //   .then(() => {
-  //     res.redirect(`/books/edit/${id}`)
+books.selectIndividualBook(id).then((book) => {
+  maintain.postAuthorsBooks(authors, book[0].title)
+  .then(() => {
+      res.redirect(`/books/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
+  })
+})
+});
+
+// deleting authors on individual book page:
+app.post('/books/edit/deleteauthors/:id', function (req, res) {
+const id = req.params.id;
+const authors = req.body.existingAuthors;
+books.selectIndividualBook(id).then((book) => {
+  // maintain.postAuthorsBooks(authors, book[0].title)
+  // .then(() => {
+  //     res.redirect(`/books/${id}`)
   // }).catch(function(error){
   //   console.log("ERROR updating book ", id)
   // })
+})
 });
 
 // update individual book page count:
@@ -387,19 +397,32 @@ const language = req.body.newLanguage
     })
 });
 
-// update individual book genre(s):
-// need to fix
-app.post('/books/edit/genres/:id', function (req, res) {
+// adding additional genres on individual book page:
+app.post('/books/edit/addgenres/:id', function (req, res) {
 const id = req.params.id;
-const genres = req.body.newGenres
-console.log("the chosen genres: ", genres)
+const genres = req.body.newGenres;
+books.selectIndividualBook(id).then((book) => {
+  maintain.postGenreBooks(genres, book[0].title)
+  .then(() => {
+      res.redirect(`/books/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
+  })
+})
+});
 
-  // books.updatePageCount(id, pgCount)
-  //   .then(() => {
-  //     res.redirect(`/books/edit/${id}`)
+// deleting genres on individual book page:
+app.post('/books/edit/deletegenres/:id', function (req, res) {
+const id = req.params.id;
+const genres = req.body.existingGenres;
+books.selectIndividualBook(id).then((book) => {
+  // maintain.postAuthorsBooks(authors, book[0].title)
+  // .then(() => {
+  //     res.redirect(`/books/${id}`)
   // }).catch(function(error){
   //   console.log("ERROR updating book ", id)
   // })
+})
 });
 
 // update individual book publisher:
