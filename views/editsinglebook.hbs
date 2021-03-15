@@ -1,4 +1,13 @@
 <div>
+
+    <div>
+      {{#each allAuthors}}
+
+        {{this}}
+
+      {{/each}}
+    </div>
+
     <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
       <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Title"></span></li>
     </form>

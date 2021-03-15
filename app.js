@@ -230,59 +230,70 @@ const id = req.params.id;
       })
 
       // get lists of authors, nationalities, languages, genres, publishers:
-
-      maintain.selectAllPublishers().then((result) => {
-        console.log("getting all publishers? ", result)
-      })
-
       // sending single book information and lists of authors, nationalities,
       // languages, genres, and publishers to book edit page so existing
       // values from tables can be chosen for updates:
-  }).then(() => {
-    maintain.selectAllAuthors().then((result) => {
-      allAuthors = []
-      result.forEach(name => {
-        allAuthors.push(name.fullName)
+      maintain.selectAllAuthors().then((result) => {
+        allAuthors = []
+        result.forEach(name => {
+          allAuthors.push(name.fullName)
+        })
+        console.log("getting all authors? ", allAuthors)
+
+        maintain.selectAllNationalities().then((result) => {
+          allNationalities = []
+          result.forEach(nationalityObject => {
+            allNationalities.push(nationalityObject.nationality)
+          })
+          console.log("getting all nationalities? ", allNationalities)
+
+          maintain.selectAllLanguages().then((result) => {
+            allLanguages = []
+            result.forEach(languageObject => {
+              allLanguages.push(languageObject.lang)
+            })
+            console.log("getting all languages? ", allLanguages)
+
+
+            maintain.selectAllGenres().then((result) => {
+              allGenres = []
+              result.forEach(genreObject => {
+                allGenres.push(genreObject.genre)
+              })
+              console.log("getting all genres? ", allGenres)
+
+
+              maintain.selectAllPublishers().then((result) => {
+                allPublishers = []
+                result.forEach(publisherObject => {
+                  allPublishers.push(publisherObject.publisher)
+                })
+
+
+
+                res.render('editsinglebook.hbs', {
+                  singleBook, allAuthors
+                })
+
+
+
+              })
+
+
+
+
+            })
+
+
+
+          })
+
+        })
+
       })
-      console.log("getting all authors? ", allAuthors)
-    })
-  }).then(() => {
-    maintain.selectAllNationalities().then((result) => {
-      allNationalities = []
-      result.forEach(nationalityObject => {
-        allNationalities.push(nationalityObject.nationality)
-      })
-      console.log("getting all nationalities? ", allNationalities)
-    })
-  }).then(() => {
-    maintain.selectAllLanguages().then((result) => {
-      allLanguages = []
-      result.forEach(languageObject => {
-        allLanguages.push(languageObject.lang)
-      })
-      console.log("getting all languages? ", allLanguages)
-    })
-  }).then(() => {
-    maintain.selectAllGenres().then((result) => {
-      allGenres = []
-      result.forEach(genreObject => {
-        allGenres.push(genreObject.genre)
-      })
-      console.log("getting all genres? ", allGenres)
-    })
-  }).then(() => {
-    maintain.selectAllPublishers().then((result) => {
-    allPublishers = []
-    result.forEach(publisherObject => {
-      allPublishers.push(publisherObject.publisher)
-    })
-    console.log("getting all publishers? ", allPublishers)
-  })
 }).catch(function(error){
   console.log("ERROR getting individual book GET method: ", error.message)
-})
-  res.render('editsinglebook.hbs', {singleBook})
-
+        })
 });
 
 
