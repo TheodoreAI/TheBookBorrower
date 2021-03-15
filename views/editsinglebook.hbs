@@ -1,8 +1,8 @@
-<div class="searchFormboxBorrowers"> 
+<div class="searchFormboxBorrowers">
     <h2>To correct data for <a href='/books/{{singleBook.id}}'>{{singleBook.title}}</a> , choose one of the fields below:</h2>
     <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
       <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li>
-      <button type='submit' id="updateTitleButton" onclick="return confirm('Are you sure you want to change this book\'s title?');">
+      <button type='submit' id="updateTitleButton" onclick="return confirm('Are you sure you want to change the title of {{singleBook.title}}?');">
           Update Title
       </button>
     </form>
@@ -16,13 +16,13 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updateAuthorsButton" onclick="return confirm('Are you sure you want to change this book\'s author(s)?');">
+      <button type='submit' id="updateAuthorsButton" onclick="return confirm('Are you sure you want to change the author(s) for {{singleBook.title}}?');">
           Update Author(s)
       </button>
     </form>
     <form class="update-form" method="POST" action="/books/edit/pagecount/{{singleBook.id}}">
       <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li>
-      <button type='submit' id="updatePageCount" onclick="return confirm('Are you sure you want to change this book\'s page count?');">
+      <button type='submit' id="updatePageCount" onclick="return confirm('Are you sure you want to change the page count for {{singleBook.title}}');">
           Update Page Count
       </button>
     </form>
@@ -36,7 +36,7 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updateLanguageButton" onclick="return confirm('Are you sure you want to change this book\'s language?');">
+      <button type='submit' id="updateLanguageButton" onclick="return confirm('Are you sure you want to change the language for {{singleBook.title}}?');">
           Update Language
       </button>
     </form>
@@ -50,7 +50,7 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updateGenresButton" onclick="return confirm('Are you sure you want to change this book\'s genre(s)?');">
+      <button type='submit' id="updateGenresButton" onclick="return confirm('Are you sure you want to change the genre(s) for {{singleBook.title}}?');">
           Update Genre(s)
       </button>
     </form>
@@ -64,7 +64,7 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updatePublisher" onclick="return confirm('Are you sure you want to change this book\'s publisher?');">
+      <button type='submit' id="updatePublisher" onclick="return confirm('Are you sure you want to change the publisher for {{singleBook.title}}?');">
           Update Publisher
       </button>
     </form>
@@ -74,5 +74,3 @@
       <button>Close Update Form</button>
     </form>
 </div>
-
-

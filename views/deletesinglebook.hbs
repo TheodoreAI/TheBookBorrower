@@ -9,7 +9,7 @@
           <li>Language: {{singleBook.lang}}</li><br>
           <li>Genre: {{singleBook.genres}}</li><br>
           <li>Publisher: {{singleBook.publisher}}</li><br>
-          <button id="deleteButtonBooks" type="submit" onclick="return confirm('Clicking OK will permanently delete this book')">Delete Book</button>
+          <button id="deleteButtonBooks" type="submit" onclick="return confirm('Clicking OK will permanently delete {{singleBook.title}}')">Delete Book</button>
       </form>
   </div>
 </div>

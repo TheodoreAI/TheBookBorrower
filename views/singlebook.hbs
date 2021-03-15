@@ -75,7 +75,7 @@
 
   <form action="/books/borroworreturn/{{singleBook.id}}" method="POST">
     {{#if singleBook.checkoutstatus}}
-        <td><button type="Submit" name="returnButton" id="returnButton" onclick="return confirm('Are you sure you want to return this book?')">Return</button></td>
+        <td><button type="Submit" name="returnButton" id="returnButton" onclick="return confirm('Are you sure you want to return {{singleBook.title}}?')">Return</button></td>
     {{else}}
         <td><button type="Submit" name="borrowButton" id="borrowButton">Borrow</button></td>
     {{/if}}
