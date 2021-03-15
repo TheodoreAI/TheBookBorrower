@@ -241,6 +241,35 @@ const selectIndividualBook = (id) => {
     })
 }
 
+const updateBookTitle = (id, title) => {
+  return db.query(
+    `
+    UPDATE
+      books
+    SET
+      title = $2
+    WHERE
+      id = $1;`, [id, title]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating book title: ", error.message);
+ })
+}
+
+const updatePageCount = (id, pgCount) => {
+  return db.query(
+    `
+    UPDATE
+      books
+    SET
+      pgCount = $2
+    WHERE
+      id = $1;`, [id, pgCount]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating page count: ", error.message);
+ })
+}
 
 
 const deleteBook = (id) => {
@@ -282,5 +311,7 @@ module.exports = {
   selectBooksByBorrowedStatus,
   selectBooksByBorrower,
   selectIndividualBook,
+  updateBookTitle,
+  updatePageCount,
   deleteBook
 }
