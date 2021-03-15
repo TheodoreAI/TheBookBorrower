@@ -32,7 +32,6 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 app.use('/borrowers/', express.static(path.join(__dirname, '/public')));
 app.use('/books/', express.static(path.join(__dirname, '/public')));
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -312,7 +311,6 @@ const id = req.params.id;
             })
           
 
-
             maintain.selectAllGenres().then((result) => {
               allGenres = []
               result.forEach(genreObject => {
@@ -321,30 +319,16 @@ const id = req.params.id;
               
 
 
-
               maintain.selectAllPublishers().then((result) => {
                 allPublishers = []
                 result.forEach(publisherObject => {
                   allPublishers.push(publisherObject.publisher)
                 })
-
-
-
                 res.render('editsinglebook.hbs', {
-                  singleBook, allAuthors
+                  singleBook, allAuthors, allNationalities, allLanguages, allGenres, allPublishers
                 })
-
-
-
               })
-
-
-
-
             })
-
-
-
           })
 
         })
@@ -362,10 +346,24 @@ const id = req.params.id;
 const title = req.body.bookTitle
   books.updateBookTitle(id, title)
     .then(() => {
-      res.redirect(`/books/edit/${id}`)
+      res.redirect(`/books/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
+});
+
+// update individual book author(s):
+// need to fix
+app.post('/books/edit/authors/:id', function (req, res) {
+const id = req.params.id;
+const authors = req.body.newAuthors;
+  console.log("the chosen author: ", authors)
+  // books.updateBookTitle(id, title)
+  //   .then(() => {
+  //     res.redirect(`/books/edit/${id}`)
+  // }).catch(function(error){
+  //   console.log("ERROR updating book ", id)
+  // })
 });
 
 // update individual book page count:
@@ -374,10 +372,49 @@ const id = req.params.id;
 const pgCount = req.body.bookPages
   books.updatePageCount(id, pgCount)
     .then(() => {
-      res.redirect(`/books/edit/${id}`)
+      res.redirect(`/books/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
+});
+
+// update individual book language:
+app.post('/books/edit/language/:id', function (req, res) {
+const id = req.params.id;
+const language = req.body.newLanguage
+  books.updateBookLanguage(id, language)
+    .then(() => {
+      res.redirect(`/books/${id}`)
+    }).catch(function(error) {
+      console.log("ERROR at language update route for book ", id)
+    })
+});
+
+// update individual book genre(s):
+// need to fix
+app.post('/books/edit/genres/:id', function (req, res) {
+const id = req.params.id;
+const genres = req.body.newGenres
+console.log("the chosen genres: ", genres)
+
+  // books.updatePageCount(id, pgCount)
+  //   .then(() => {
+  //     res.redirect(`/books/edit/${id}`)
+  // }).catch(function(error){
+  //   console.log("ERROR updating book ", id)
+  // })
+});
+
+// update individual book publisher:
+app.post('/books/edit/publisher/:id', function (req, res) {
+const id = req.params.id;
+const publisher = req.body.newPublisher
+  books.updateBookPublisher(id, publisher)
+    .then(() => {
+      res.redirect(`/books/${id}`)
+    }).catch(function(error) {
+      console.log("ERROR at publisher update route for book ", id)
+    })
 });
 
 app.get('/borrowers', function (req, res){

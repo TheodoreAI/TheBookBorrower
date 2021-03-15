@@ -274,6 +274,18 @@ const updateBookTitle = (id, title) => {
  })
 }
 
+// need to fix
+const updateBookAuthors = (id, author) => {
+  return db.query(
+    `
+    query to set correct authors to correct title
+    `, [id, author]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating book authors: ", error.message);
+ })
+}
+
 const updatePageCount = (id, pgCount) => {
   return db.query(
     `
@@ -287,6 +299,48 @@ const updatePageCount = (id, pgCount) => {
   }).catch(function (error) {
      console.log("ERROR updating page count: ", error.message);
  })
+}
+
+const updateBookLanguage = (id, language) => {
+  return db.query(
+    `
+    UPDATE
+      books
+    SET
+      languageID = (SELECT id FROM languages WHERE lang =$2)
+    WHERE
+      id = $1;`, [id, language]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating book language: ", error.message);
+ })
+}
+
+// need to fix
+const updateBookGenres = (id, genre) => {
+  return db.query(
+    `
+    query to set correct genres to correct title
+    `, [id, genre]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating book genres: ", error.message);
+ })
+}
+
+const updateBookPublisher = (id, publisher) => {
+  return db.query(
+    `
+    UPDATE
+      books
+    SET
+      publisherID = (SELECT id FROM publishers WHERE publisher =$2)
+    WHERE
+      id = $1;`, [id, publisher]).then((book) => {
+      return book
+  }).catch(function (error) {
+     console.log("ERROR updating book publisher: ", error.message);
+  })
 }
 
 const deleteBook = (id) => {
@@ -363,7 +417,11 @@ module.exports = {
   selectIndividualBook,
   returnBook,
   updateBookTitle,
+  updateBookAuthors,
   updatePageCount,
+  updateBookLanguage,
+  updateBookGenres,
+  updateBookPublisher,
   deleteBook,
   borrowBookById,
   bookBorrowingUpdate

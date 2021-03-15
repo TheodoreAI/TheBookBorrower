@@ -1,25 +1,72 @@
 <div class="searchFormboxBorrowers"> 
-
+    <h2>To correct data for <a href='/books/{{singleBook.id}}'>{{singleBook.title}}</a> , choose one of the fields below:</h2>
     <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
-      <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Title"></span></li>
+      <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li>
+      <button type='submit' id="updateTitleButton" onclick="return confirm('Are you sure you want to change this book\'s title?');">
+          Update Title
+      </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
-      <li>Authors: <input type='text' name='bookAuthors' value="{{singleBook.authors}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Authors"></span></li>
-    </form>
-    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
-      <li>Author Nationalities: <input type='text' name='authorNationalities' value="{{singleBook.authornationalities}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Author Nationalities"></span></li>
+    <form class="update-form" method="POST" action="/books/edit/authors/{{singleBook.id}}">
+      <li>
+        Author(s):
+      </li>
+      <select multiple name="newAuthors">
+          {{#each allAuthors}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+      <button type='submit' id="updateAuthorsButton" onclick="return confirm('Are you sure you want to change this book\'s author(s)?');">
+          Update Author(s)
+      </button>
     </form>
     <form class="update-form" method="POST" action="/books/edit/pagecount/{{singleBook.id}}">
-      <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Page Count"></span></li>
+      <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li>
+      <button type='submit' id="updatePageCount" onclick="return confirm('Are you sure you want to change this book\'s page count?');">
+          Update Page Count
+      </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
-      <li>Language: <input type='text' name='bookLanguage' value="{{singleBook.lang}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Language"></span></li>
+    <form class="update-form" method="POST" action="/books/edit/language/{{singleBook.id}}">
+      <li>
+        Language:
+      </li>
+      <select name="newLanguage">
+          {{#each allLanguages}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+      <button type='submit' id="updateLanguageButton" onclick="return confirm('Are you sure you want to change this book\'s language?');">
+          Update Language
+      </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
-      <li>Genres: <input type='text' name='bookLanguage' value="{{singleBook.genres}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Genres"></span></li>
+    <form class="update-form" method="POST" action="/books/edit/genres/{{singleBook.id}}">
+      <li>
+        Genre(s):
+      </li>
+      <select multiple name="newGenres">
+          {{#each allGenres}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+      <button type='submit' id="updateGenresButton" onclick="return confirm('Are you sure you want to change this book\'s genre(s)?');">
+          Update Genre(s)
+      </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
-      <li>Publisher: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Publisher"></span></li>
+    <form class="update-form" method="POST" action="/books/edit/publisher/{{singleBook.id}}">
+      <li>
+        Publisher:
+      </li>
+      <select name="newPublisher">
+          {{#each allPublishers}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+      <button type='submit' id="updatePublisher" onclick="return confirm('Are you sure you want to change this book\'s publisher?');">
+          Update Publisher
+      </button>
     </form>
 
 
