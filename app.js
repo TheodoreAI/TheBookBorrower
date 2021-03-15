@@ -349,18 +349,18 @@ const title = req.body.bookTitle
   })
 });
 
-// update individual book author(s):
-// need to fix
-app.post('/books/edit/authors/:id', function (req, res) {
+// adding additional authors on individual book page:
+app.post('/books/edit/addauthors/:id', function (req, res) {
 const id = req.params.id;
 const authors = req.body.newAuthors;
-  console.log("the chosen author: ", authors)
-  // books.updateBookTitle(id, title)
-  //   .then(() => {
-  //     res.redirect(`/books/edit/${id}`)
-  // }).catch(function(error){
-  //   console.log("ERROR updating book ", id)
-  // })
+books.selectIndividualBook(id).then((book) => {
+  maintain.postAuthorsBooks(authors, book[0].title)
+  .then(() => {
+      res.redirect(`/books/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
+  })
+})
 });
 
 // update individual book page count:
@@ -387,19 +387,18 @@ const language = req.body.newLanguage
     })
 });
 
-// update individual book genre(s):
-// need to fix
-app.post('/books/edit/genres/:id', function (req, res) {
+// adding additional authors on individual book page:
+app.post('/books/edit/addgenres/:id', function (req, res) {
 const id = req.params.id;
-const genres = req.body.newGenres
-console.log("the chosen genres: ", genres)
-
-  // books.updatePageCount(id, pgCount)
-  //   .then(() => {
-  //     res.redirect(`/books/edit/${id}`)
-  // }).catch(function(error){
-  //   console.log("ERROR updating book ", id)
-  // })
+const genres = req.body.newGenres;
+books.selectIndividualBook(id).then((book) => {
+  maintain.postGenreBooks(genres, book[0].title)
+  .then(() => {
+      res.redirect(`/books/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
+  })
+})
 });
 
 // update individual book publisher:

@@ -6,9 +6,11 @@
           Update Title
       </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/authors/{{singleBook.id}}">
+
+
+    <form class="update-form" method="POST" action="/books/edit/addauthors/{{singleBook.id}}">
       <li>
-        Author(s):
+        Add Additional Author(s) to Book:
       </li>
       <select multiple name="newAuthors">
           {{#each allAuthors}}
@@ -16,10 +18,12 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updateAuthorsButton" onclick="return confirm('Are you sure you want to change the author(s) for {{singleBook.title}}?');">
-          Update Author(s)
+
+      <button type='submit' id="updateAuthorsButton" onclick="return confirm('Are you sure you want to add author(s) for {{singleBook.title}}?');">
+          Add Author(s)
       </button>
     </form>
+
     <form class="update-form" method="POST" action="/books/edit/pagecount/{{singleBook.id}}">
       <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li>
       <button type='submit' id="updatePageCount" onclick="return confirm('Are you sure you want to change the page count for {{singleBook.title}}');">
@@ -40,9 +44,9 @@
           Update Language
       </button>
     </form>
-    <form class="update-form" method="POST" action="/books/edit/genres/{{singleBook.id}}">
+    <form class="update-form" method="POST" action="/books/edit/addgenres/{{singleBook.id}}">
       <li>
-        Genre(s):
+        Add Additional Genre(s) to Book:
       </li>
       <select multiple name="newGenres">
           {{#each allGenres}}
@@ -50,8 +54,8 @@
           {{/each}}
       </select>
       <br/>
-      <button type='submit' id="updateGenresButton" onclick="return confirm('Are you sure you want to change the genre(s) for {{singleBook.title}}?');">
-          Update Genre(s)
+      <button type='submit' id="updateGenresButton" onclick="return confirm('Are you sure you want to add genre(s) for {{singleBook.title}}?');">
+          Add Genre(s)
       </button>
     </form>
     <form class="update-form" method="POST" action="/books/edit/publisher/{{singleBook.id}}">
