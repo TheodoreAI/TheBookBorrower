@@ -16,7 +16,7 @@
             Confirm you would like to borrow the following book:</br>
         </h3>
 
-        <input type="radio" value="{{bookToBorrow.title}}" id="bookID" name="bookBorrowing"><a href="/books/{{bookToBorrow.id}}">{{bookToBorrow.title}}</a></input>
+        <input style="display:none" type="radio" checked="checked" value="{{bookToBorrow.title}}" id="bookID" name="bookBorrowing"><a href="/books/{{bookToBorrow.id}}">{{bookToBorrow.title}}</a></input>
         <input type="date"value="{{bookToBorrow.checkoutdate}}" name="bookCheckoutdate">{{bookToBorrow.checkoutDate}}</input>
 
         <br>

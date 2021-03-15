@@ -191,7 +191,6 @@ app.post('/books/borroworreturn/:id', function (req, res) {
       res.redirect(`/books/${id}`)
     })
   }else if(req.body.hasOwnProperty("borrowButton")) {
-   console.log("borrow buton clicked");
    res.redirect(`/books/borrow/${id}`)
   }
 })
@@ -204,11 +203,9 @@ app.get('/books/borrow/:id', function (req, res) {
     borrowers.selectAllBorrowers()
     .then((borrowers) => {
       const bookToBorrow = resultbook[0];
-      // borrowing book stuff goes in bookborrow.hbs
 
       borrowIDs = []
       rowsToDisplay = []
-
 
       borrowers.forEach(function (borrow) {
         if (!borrowIDs.includes(borrow.id)) {
