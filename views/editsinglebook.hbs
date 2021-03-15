@@ -1,4 +1,4 @@
-<div>
+<div class="searchFormboxBorrowers">
   <form class="update-form" id="updateForm" method="POST" action="/books/edit/{{singleBook.id}}">
     <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li><br>
     <li>Author(s): <input type='text' name='bookAuthors' value="{{singleBook.authors}}"></li><br>
@@ -9,7 +9,8 @@
     <li>Pages: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}"></li><br>
     <input type="submit" value="Submit"/>
   </form>
-</div>
+
 <form action="/books/{{singleBook.id}}">
   <button>Close Update Form</button>
 </form>
+</div>

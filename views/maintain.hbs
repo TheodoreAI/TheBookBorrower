@@ -2,26 +2,26 @@
 <link href='/script.css'>
 {{!-- <script type="text/javascript" src='../../public/forms.js'>
 </script> --}}
-<h1>
-    The Book Borrower
+<h1 style="text-align: center;">
+    Database
 </h1>
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
 
-<div class="menuForms">
-<h2>
+
+<h2 style="text-align: center;">
     What would you like to add today?
 </h2>
-</div>
 
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
-<div>
 
-
-</div>
 
 <div class="menuForms">
+    <h3> Adding Book(s):</h3>
+    <h3> Adding Author(s):</h3>
+    <h3> Adding Borrower(s):</h3>
+    
     <div class="formbox" style="background-color: lightblue;">
         <h3>Add a Book:     --------</h3>
         <p>
@@ -66,81 +66,6 @@
         </div>
     </div>
 
-    <div class="formbox" style="background-color: lightblue;">
-
-        <h3>Add Author to Book:     --------</h3>
-        <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
-        <div id="bookAuthorFormDiv">
-            <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
-
-                <p>
-                    Select Book(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingBook" name="existingBook" required>
-                    {{#each books}}
-                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
-                    {{/each}}
-                </select><br>
-                <p>
-                    Select Author(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingAuthor" name="existingAuthor" multiple required>
-                    {{#each author}}
-                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
-                    {{/each}}
-                </select><br>
-                <button type='submit' id="submitBookAuthor"
-                    onclick="return confirm('Are you sure you want to add this this author to this Book?');">
-                    Add Author(s) to Book(s)
-                </button>
-                <button class="close-button" onclick="closeBookAuthorForm()">Close Author Form</button>
-            </form>
-        </div>
-    </div>
-
-
-    <div class="formbox" style="background-color: lightblue;">
-
-        <h3>Add Genre to Book:      --------></h3>
-        <button class="open-button" onclick="openGenreBookForm()">Open Genres Form </button><br>
-        <div id="genreBookFormDiv">
-            <form id="genreForm" method="POST" action="/genreBooksForm">
-                <p>
-                    Select Book(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingBook" name="existingBook" required>
-                    {{#each books}}
-                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
-                    {{/each}}
-                </select><br>
-                <br>
-                <p>
-                    Select Genre(s)</br>
-                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
-                </p>
-                <select id="existingGenres" name="existingGenre" multiple required>
-                    {{#each genre}}
-                    <option value="{{this.genre}}" id="Autobiography">{{this.genre}}</option>
-                    {{/each}}
-                </select><br>
-                <br>
-
-
-                <button type='submit' id="submitAuthor"
-                    onclick="return confirm('Are you sure you want to add this author?');">
-                    Add Genre(s) to Book(s)
-                </button>
-                <button class="close-button" onclick="closeGenreBookForm()">Close Genre Form</button>
-            </form>
-        </div>
-    </div>
-
-
-
-
     <div class="formbox">
 
         <h3>Add an Author:</h3>
@@ -179,6 +104,63 @@
         </div>
     </div>
 
+
+    <div class="formbox">
+        <h3>Add Borrowers with Contact Info:</h3>
+        <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
+        <div id="borrowFormDiv" style="display: none;">
+            <form id='borrowForm' method="POST" action="/borrowerForm">
+                First Name <input type='text' name='borrowerFirst' required><br>
+                Last Name <input type='text' name='borrowerLast' required><br>
+                Email <input type='email' id="email" name='email' required><br>
+                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                    required><br>
+                <br>
+                <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
+                    Add Borrower
+                </button>
+                <button class="close-button" onclick="closeBorrowForm()">Close Borrower Form</button>
+            </form>
+    
+        </div>
+    </div>
+    
+    <div class="formbox" style="background-color: lightblue;">
+    
+        <h3>Add Author to Book: --------</h3>
+        <button class="open-button" onclick="openBookAuthorForm()">Open Authors Form </button><br>
+        <div id="bookAuthorFormDiv">
+            <form id="bookAuthorForm" method="POST" action="/booksAuthorsForm">
+    
+                <p>
+                    Select Book(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingBook" name="existingBook" required>
+                    {{#each books}}
+                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <p>
+                    Select Author(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingAuthor" name="existingAuthor" multiple required>
+                    {{#each author}}
+                    <option value="{{this.fullName}}" id="authorID">{{this.fullName}}</option>
+                    {{/each}}
+                </select><br>
+                <button type='submit' id="submitBookAuthor"
+                    onclick="return confirm('Are you sure you want to add this this author to this Book?');">
+                    Add Author(s) to Book(s)
+                </button>
+                <button class="close-button" onclick="closeBookAuthorForm()">Close Author Form</button>
+            </form>
+        </div>
+    </div>
+
+
+
     <div class="formbox">
         <h3>Add an Author Nationality:</h3>
         <button class="open-button" onclick="openNationalityForm()">Open Nationality Form </button><br>
@@ -187,33 +169,17 @@
                 <ol style="list-style: none">
                     <li>Nationality: <input type='text' name='nationality' required></li><br>
                     <li>
-                    <br />
+                        <br />
                 </ol>
-                <button type='submit' id="submitNationality" onclick="return confirm('Are you sure you want to add this nationality?');">
+                <button type='submit' id="submitNationality"
+                    onclick="return confirm('Are you sure you want to add this nationality?');">
                     Add Nationality
                 </button>
                 <button class="close-button" onclick="closeNationalityForm()">Close Nationality Form</button>
             </form>
         </div>
     </div>
-
-    <div class="formbox">
-        <h3>Add a Publisher:</h3>
-        <button class="open-button" onclick="openPublisherForm()">Open Publishers Form </button><br>
-        <div id="publisherFormDiv">
-            <form id="publisherForm" method="POST" action="/publishers">
-                <ol style="list-style: none">
-                    <li>Publisher Name: <input type='text' name='publisher' required></li><br>
-                    <li>
-                    <br />
-                </ol>
-                <button type='submit' id="submitPublisher" onclick="return confirm('Are you sure you want to add this publisher?');">
-                    Add Publisher
-                </button>
-                <button class="close-button" onclick="closePublisherForm()">Close Publisher Form</button>
-            </form>
-        </div>
-    </div>
+    
 
     <div class="formbox">
         <h3>Add a Language:</h3>
@@ -233,6 +199,42 @@
         </div>
     </div>
 
+    <div class="formbox" style="background-color: lightblue;">
+    
+        <h3>Add Genre to Book: --------></h3>
+        <button class="open-button" onclick="openGenreBookForm()">Open Genres Form </button><br>
+        <div id="genreBookFormDiv">
+            <form id="genreForm" method="POST" action="/genreBooksForm">
+                <p>
+                    Select Book(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingBook" name="existingBook" required>
+                    {{#each books}}
+                    <option value="{{this.title}}" id="bookID">{{this.title}}</option>
+                    {{/each}}
+                </select><br>
+                <br>
+                <p>
+                    Select Genre(s)</br>
+                    Ctrl+click (Windows) or Command+Click (Mac) to select more than one
+                </p>
+                <select id="existingGenres" name="existingGenre" multiple required>
+                    {{#each genre}}
+                    <option value="{{this.genre}}" id="Autobiography">{{this.genre}}</option>
+                    {{/each}}
+                </select><br>
+                <br>
+    
+    
+                <button type='submit' id="submitAuthor"
+                    onclick="return confirm('Are you sure you want to add this author?');">
+                    Add Genre(s) to Book(s)
+                </button>
+                <button class="close-button" onclick="closeGenreBookForm()">Close Genre Form</button>
+            </form>
+        </div>
+    </div>
     <div class="formbox">
         <h3>Add a Genre:</h3>
         <button class="open-button" onclick="openGenreForm()">Open Genre Form </button><br>
@@ -247,24 +249,27 @@
             </form>
         </div>
     </div>
-    <div class="formbox">
-        <h3>Add Borrowers with Contact Info:</h3>
-        <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
-        <div id="borrowFormDiv" style="display: none;">
-            <form id='borrowForm' method="POST" action="/borrowerForm">
-                First Name <input type='text' name='borrowerFirst' required><br>
-                Last Name <input type='text' name='borrowerLast' required><br>
-                Email <input type='email' id="email" name='email' required><br>
-                Phone: (Format: 000-000-0000)<input type='tel' id="phone" name='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
-                <br>
-                <button type='submit' onclick="return confirm('Are you sure you want to add this Borrower?');">
-                    Add Borrower
-                </button>
-                <button class="close-button" onclick="closeBorrowForm()">Close Borrower Form</button>
-            </form>
 
+    <div class="formbox">
+        <h3>Add a Publisher:</h3>
+        <button class="open-button" onclick="openPublisherForm()">Open Publishers Form </button><br>
+        <div id="publisherFormDiv">
+            <form id="publisherForm" method="POST" action="/publishers">
+                <ol style="list-style: none">
+                    <li>Publisher Name: <input type='text' name='publisher' required></li><br>
+                    <li>
+                        <br />
+                </ol>
+                <button type='submit' id="submitPublisher"
+                    onclick="return confirm('Are you sure you want to add this publisher?');">
+                    Add Publisher
+                </button>
+                <button class="close-button" onclick="closePublisherForm()">Close Publisher Form</button>
+            </form>
         </div>
     </div>
+    
+    
 
 
 

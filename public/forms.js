@@ -1,7 +1,7 @@
 // This is where the dynamic elements of the forms will be located.
 var formAdd = document.getElementById("bookForm");
-var formButton = document.getElementById("submitBook")
-
+var formButton = document.getElementById("submitBook");
+var bookAuthorForm = document.getElementById("bookAuthorForm");
 var borrowBook = document.getElementById("status");
 if (borrowBook){
     if (borrowBook.nodeValue == "Yes"){
@@ -11,7 +11,6 @@ if (borrowBook){
 
 formButton.setAttribute('onclick', "return confirm('Are you sure you want to add this book?');");
 // this will change the form to add the author and the genre of the book:
-
 
 
 
@@ -115,8 +114,22 @@ function closeGenreForm(){
     document.getElementById("genreFormDiv").style.display = "none";
 }
 
-appearBtn.setAttribute("onclick", "closeForm()")
-formAdd.appendChild(appearBtn);
+
+// getting the submit buttons for the forms that work with the book:
+var submitBookAuthor = document.getElementById("submitBookAuthor");
+
+function nextForm1() {
+    confirm('Are you sure you want to add this book?');
+   
+    openBookAuthorForm();
+    
+}
+
+function nextForm2() {
+    confirm('Are you sure you want to add this author to this book?')
+    openGenreBookForm();
+}
+
 
 
 // Event handlers for submitting the forms:
