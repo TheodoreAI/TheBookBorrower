@@ -7,7 +7,6 @@
       </button>
     </form>
 
-
     <form class="update-form" method="POST" action="/books/edit/addauthors/{{singleBook.id}}">
       <li>
         Add Additional Author(s) to Book:
@@ -23,6 +22,23 @@
           Add Author(s)
       </button>
     </form>
+
+    <form class="update-form" method="POST" action="/books/edit/deleteauthors/{{singleBook.id}}">
+      <li>
+        Delete Author(s) from Book:
+      </li>
+      <select multiple name="existingAuthors">
+          {{#each thisBooksAuthors}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+
+      <button type='submit' id="deleteAuthorsButton" onclick="return confirm('Are you sure you want to delete author(s) for {{singleBook.title}}?');">
+          Delete Author(s)
+      </button>
+    </form>
+
 
     <form class="update-form" method="POST" action="/books/edit/pagecount/{{singleBook.id}}">
       <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li>
@@ -49,7 +65,7 @@
         Add Additional Genre(s) to Book:
       </li>
       <select multiple name="newGenres">
-          {{#each allGenres}}
+          {{#each thisBooksGenres}}
           <option>{{this}}</option>
           {{/each}}
       </select>
@@ -58,6 +74,29 @@
           Add Genre(s)
       </button>
     </form>
+
+    <form class="update-form" method="POST" action="/books/edit/deletegenres/{{singleBook.id}}">
+      <li>
+        Delete Genre(s) from Book:
+      </li>
+      <select multiple name="existingGenres">
+          {{#each thisBooksGenres}}
+          <option>{{this}}</option>
+          {{/each}}
+      </select>
+      <br/>
+
+      <button type='submit' id="deleteGenresButton" onclick="return confirm('Are you sure you want to delete genre(s) for {{singleBook.title}}?');">
+          Delete Genre(s)
+      </button>
+    </form>
+
+
+
+
+
+
+
     <form class="update-form" method="POST" action="/books/edit/publisher/{{singleBook.id}}">
       <li>
         Publisher:
