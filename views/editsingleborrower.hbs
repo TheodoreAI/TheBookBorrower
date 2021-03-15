@@ -3,7 +3,7 @@
   <li>Name: <input type='text' name='borrowerName' value="{{singleBorrower.name}}"></li><br>
   <li>Phone: <input type='text' name='borrowerPhone' value="{{singleBorrower.phone}}"></li><br>
   <li>Email: <input type='text' name='borrowerEmail' value="{{singleBorrower.email}}"></li><br>
-  <input type="submit" value="Submit"/>
+  <input  onclick="return confirm('Are you sure you want to update information for {{singleBorrower.name}}?');"type="submit" value="Submit"/>
 
 </form>
 <form action="/borrowers/{{singleBorrower.id}}">
