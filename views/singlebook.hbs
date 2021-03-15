@@ -71,30 +71,21 @@
       </tr>
     </table>
   </div>
-  
   <br>
-  {{#if singleBook.checkoutstatus}}
 
-  <a href="/books"> <button id="returnOrBorrow">Return Book</button><br></a>
-  {{else}}
-  <a href="/books"> <button id="returnOrBorrow">Borrow Book</button></a>
-  {{/if}}
-
-
-  <br><form action="/books/edit/{{singleBook.id}}" method="GET">
-    <button id="updateButton">Update Book</button>
+  <form action="/books/borroworreturn/{{singleBook.id}}" method="POST">
+    {{#if singleBook.checkoutstatus}}
+        <td><button type="Submit" name="returnButton" id="returnButton">Return</button></td>
+    {{else}}
+        <td><button type="Submit" name="borrowButton" id="borrowButton">Borrow</button></td>
+    {{/if}}
   </form>
 
-
+  <br>
+  <form action="/books/edit/{{singleBook.id}}" method="GET">
+    <button id="updateButton">Update Book</button>
+  </form>
   <form id="deleteBookForm" method="GET" action="/books/delete/{{singleBook.id}}">
     <button id="deleteButtonBooks">Delete Book</button>
   </form>
-
-
 </div>
-
-
-
-
-
-{{!-- <script src="updateforms.js" type="text/javascript"></script> --}}

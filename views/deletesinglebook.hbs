@@ -1,24 +1,15 @@
-
- 
 <div class="searchFormboxBorrowers">
-
-
-    
-
-<h3>Are you sure you want to delete this book: <i>{{singleBook.title}}</i>?</h3>
-
-<div >
-    <form  id="deleteBookForm" method="POST" action="/books/{{singleBook.id}}?_method=DELETE">
-        <li>Title: {{singleBook.title}}</li><br>
-        <li>Author(s): {{singleBook.authors}}</li><br>
-        <li>Author Nationality: {{singleBook.authornationalities}}</li><br>
-        <li>Number of Pages: {{singleBook.pgcount}}</li><br>
-        <li>Language: {{singleBook.lang}}</li><br>
-        <li>Genre: {{singleBook.genres}}</li><br>
-        <li>Publisher: {{singleBook.publisher}}</li><br>
-        <button id="deleteButtonBooks" type="submit">Delete Book</button>
-    </form>
-</div>
-
-
+  <h3>Are you sure you want to delete this book: <i>{{singleBook.title}}</i>?</h3>
+  <div>
+      <form  id="deleteBookForm" method="POST" action="/books/{{singleBook.id}}?_method=DELETE">
+          <li>Title: {{singleBook.title}}</li><br>
+          <li>Author(s): {{singleBook.authors}}</li><br>
+          <li>Author Nationality: {{singleBook.authornationalities}}</li><br>
+          <li>Number of Pages: {{singleBook.pgcount}}</li><br>
+          <li>Language: {{singleBook.lang}}</li><br>
+          <li>Genre: {{singleBook.genres}}</li><br>
+          <li>Publisher: {{singleBook.publisher}}</li><br>
+          <button id="deleteButtonBooks" type="submit" onclick="return confirm('Clicking OK will permanently delete this book')">Delete Book</button>
+      </form>
+  </div>
 </div>
