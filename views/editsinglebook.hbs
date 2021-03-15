@@ -1,15 +1,26 @@
-<div class="searchFormboxBorrowers">
-  <form class="update-form" id="updateForm" method="POST" action="/books/edit/{{singleBook.id}}">
-    <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}"></li><br>
-    <li>Author(s): <input type='text' name='bookAuthors' value="{{singleBook.authors}}"></li><br>
-    <li>Author Nationality: <input type='text' name='authorNationalities' value= "{{singleBook.authornationalities}}"></li><br>
-    <li>Pages: <input type='text' name='bookPages' value="{{singleBook.pgcount}}"></li><br>
-    <li>Pages: <input type='text' name='bookLanguage' value="{{singleBook.lang}}"></li><br>
-    <li>Pages: <input type='text' name='bookGenres' value="{{singleBook.genres}}"></li><br>
-    <li>Pages: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}"></li><br>
-    <input type="submit" value="Submit"/>
-  </form>
-
+<div>
+    <form class="update-form" method="POST" action="/books/edit/title/{{singleBook.id}}">
+      <li>Title: <input type='text' name='bookTitle' value="{{singleBook.title}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Title"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
+      <li>Authors: <input type='text' name='bookAuthors' value="{{singleBook.authors}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Authors"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
+      <li>Author Nationalities: <input type='text' name='authorNationalities' value="{{singleBook.authornationalities}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Author Nationalities"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/pagecount/{{singleBook.id}}">
+      <li>Page Count: <input type='text' name='bookPages' value="{{singleBook.pgcount}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Page Count"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
+      <li>Language: <input type='text' name='bookLanguage' value="{{singleBook.lang}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Language"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
+      <li>Genres: <input type='text' name='bookLanguage' value="{{singleBook.genres}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Genres"></span></li>
+    </form>
+    <form class="update-form" method="POST" action="/books/edit/{{singleBook.id}}">
+      <li>Publisher: <input type='text' name='bookPublisher' value="{{singleBook.publisher}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><input type="submit" value="Update Publisher"></span></li>
+    </form>
+</div>
 <form action="/books/{{singleBook.id}}">
   <button>Close Update Form</button>
 </form>

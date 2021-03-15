@@ -63,85 +63,77 @@ app.get('/books', function (req, res){
       })
 });
 
-// filtering book list by title
 app.post('/books', function (req, res){
+  // query results may have repeated rows because of many to many relationships
+  // between books/authors and books/genres so these arrays are used to
+  // make sure a book is only going to display once:
+  bookIDs = []
+  rowsToDisplay = []
+  function display(books) {
+    books.forEach(function(book) {
+      if (!bookIDs.includes(book.id)) {
+        bookIDs.push(book.id)
+        rowsToDisplay.push(book)
+      }
+    })
+    res.render('books.hbs', {rowsToDisplay})
+  }
+
+  // to display books based on different fields, a different query is run
+  // based on what field the user fills in on the search form:
   if (req.body.Title) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByTitle(req.body.Title)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Author) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByAuthor(req.body.Author)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.AuthorNationality) {
-    bookIDs = []
-    rowsToDisplay = []
     books.selectBooksByAuthorNationality(req.body.AuthorNationality)
       .then((books) => {
-        books.forEach(function(book) {
-          if (!bookIDs.includes(book.id)) {
-            bookIDs.push(book.id)
-            rowsToDisplay.push(book)
-          }
-        })
-        res.render('books.hbs', {rowsToDisplay})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Language) {
     books.selectBooksByLanguage(req.body.Language)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Genre) {
     books.selectBooksByGenre(req.body.Genre)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Publisher) {
     books.selectBooksByPublisher(req.body.Publisher)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.Borrower) {
     books.selectBooksByBorrower(req.body.Borrower)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
   } else if (req.body.isBorrowed) {
     books.selectBooksByBorrowedStatus(req.body.isBorrowed)
       .then((books) => {
-        res.render('books.hbs', {books})
+        display(books)
       }).catch(function(error) {
         console.log("ERROR getting books page: ", error.message)
       })
@@ -186,13 +178,14 @@ const id = req.params.id;
       singleBook.genres = [...new Set(singleBook.genres)]
       singleBook.authors = [...new Set(singleBook.authors)]
       singleBook.authornationalities = [...new Set(singleBook.authornationalities)]
-      
+
       res.render('singlebook.hbs', {singleBook})
   }).catch(function(error){
     console.log("ERROR getting individual book GET method: ", error.message)
   })
 });
 
+// go to page to update an indivdual book's information
 app.get('/books/edit/:id', function (req, res) {
 const id = req.params.id;
 
@@ -236,9 +229,84 @@ const id = req.params.id;
         }
       })
 
-      res.render('editsinglebook.hbs', {singleBook})
+      // get lists of authors, nationalities, languages, genres, publishers:
+
+      maintain.selectAllPublishers().then((result) => {
+        console.log("getting all publishers? ", result)
+      })
+
+      // sending single book information and lists of authors, nationalities,
+      // languages, genres, and publishers to book edit page so existing
+      // values from tables can be chosen for updates:
+  }).then(() => {
+    maintain.selectAllAuthors().then((result) => {
+      allAuthors = []
+      result.forEach(name => {
+        allAuthors.push(name.fullName)
+      })
+      console.log("getting all authors? ", allAuthors)
+    })
+  }).then(() => {
+    maintain.selectAllNationalities().then((result) => {
+      allNationalities = []
+      result.forEach(nationalityObject => {
+        allNationalities.push(nationalityObject.nationality)
+      })
+      console.log("getting all nationalities? ", allNationalities)
+    })
+  }).then(() => {
+    maintain.selectAllLanguages().then((result) => {
+      allLanguages = []
+      result.forEach(languageObject => {
+        allLanguages.push(languageObject.lang)
+      })
+      console.log("getting all languages? ", allLanguages)
+    })
+  }).then(() => {
+    maintain.selectAllGenres().then((result) => {
+      allGenres = []
+      result.forEach(genreObject => {
+        allGenres.push(genreObject.genre)
+      })
+      console.log("getting all genres? ", allGenres)
+    })
+  }).then(() => {
+    maintain.selectAllPublishers().then((result) => {
+    allPublishers = []
+    result.forEach(publisherObject => {
+      allPublishers.push(publisherObject.publisher)
+    })
+    console.log("getting all publishers? ", allPublishers)
+  })
+}).catch(function(error){
+  console.log("ERROR getting individual book GET method: ", error.message)
+})
+  res.render('editsinglebook.hbs', {singleBook})
+
+});
+
+
+// update individual book title:
+app.post('/books/edit/title/:id', function (req, res) {
+const id = req.params.id;
+const title = req.body.bookTitle
+  books.updateBookTitle(id, title)
+    .then(() => {
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
-    console.log("ERROR getting individual book GET method: ", error.message)
+    console.log("ERROR updating book ", id)
+  })
+});
+
+// update individual book page count:
+app.post('/books/edit/pagecount/:id', function (req, res) {
+const id = req.params.id;
+const pgCount = req.body.bookPages
+  books.updatePageCount(id, pgCount)
+    .then(() => {
+      res.redirect(`/books/edit/${id}`)
+  }).catch(function(error){
+    console.log("ERROR updating book ", id)
   })
 });
 
@@ -325,6 +393,7 @@ const id = req.params.id;
   })
 });
 
+// go to the page to edit an individual borrower's information:
 app.get('/borrowers/edit/:id', function (req, res) {
 const id = req.params.id;
   borrowers.selectIndividualBorrower(id)
@@ -353,6 +422,7 @@ const id = req.params.id;
   })
 });
 
+// update individual borrower's information based on user's choices:
 app.post('/borrowers/edit/:id', (req, res) => {
   const id = req.params.id;
   const {borrowerName, borrowerPhone, borrowerEmail} = req.body
@@ -423,11 +493,6 @@ app.post('/borrowers/:id', (req, res)=>{
   })
 })
 
-
-
-
-
-
 app.get('/books/delete/:id', function (req, res) {
    var identity = parseInt(req.params.id, 10);
    if (Number.isInteger(identity)) {
@@ -497,11 +562,6 @@ app.post('/books/:id', (req, res) => {
   })
 })
 
-
-
-
-
-
 app.get('/maintain', function (req, res) {
     maintain.selectAllNationalities()
         .then((nationality) => {
@@ -518,8 +578,6 @@ app.get('/maintain', function (req, res) {
 
 });
 
-
-
 app.post('/borrowerForm', function (req, res) {
     maintain.postBorrower(req.body.borrowerFirst, req.body.borrowerLast, req.body.email, req.body.phone)
     .then((maintain) => {
@@ -529,7 +587,6 @@ app.post('/borrowerForm', function (req, res) {
         console.log("Error posting to the borrowers table:", error.message)
     });
 });
-
 
 app.post('/genres', function (req, res) {
     const {genre} = req.body;
@@ -543,7 +600,6 @@ app.post('/genres', function (req, res) {
     });
 });
 
-
 app.post('/languages', function (req, res) {
     maintain.postLanguage(req.body.lang)
     .then((maintain) => {
@@ -553,7 +609,6 @@ app.post('/languages', function (req, res) {
         console.log("Error posting to the languages table:", error.message)
     });
 });
-
 
 app.post('/publishers', function (req, res) {
     maintain.postPublisher(req.body.publisher)
@@ -610,9 +665,9 @@ app.post('/booksForm', function (req, res){
          }).catch(function (error) {
            console.log("Error posting the books table:", error.message)
          });
-      
+
     }
-    
+
 });
 
 app.post('/booksAuthorsForm', function (req, res){
@@ -629,7 +684,6 @@ app.post('/booksAuthorsForm', function (req, res){
 
 });
 
-
 app.post('/genreBooksForm', function (req, res){
 
   var genres = req.body.existingGenre;
@@ -644,11 +698,10 @@ app.post('/genreBooksForm', function (req, res){
   });
 });
 
-
 app.post('/borrowers', function (req, res) {
-  
+
   var borrowerName = req.body.borrowerName;
-  
+
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
   
   borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
