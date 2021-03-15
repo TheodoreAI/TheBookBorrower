@@ -404,6 +404,94 @@ const bookBorrowingUpdate = (borrower, bookTitle, bookCheckoutdate) => {
   })
 }
 
+//  do $$
+
+//  DECLARE
+//  author varchar;
+//  BEGIN
+//  FOREACH author IN ARRAY $1
+//  LOOP
+
+//  INSERT INTO authorsbooks(bookid, authorid)
+//  VALUES((SELECT id FROM books WHERE title = $2),
+//    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
+//  END LOOP;
+//  END;
+//  $$ LANGUAGE plpgsql;
+
+const deleteAuthorsFromSingleBook = (id, existingAuthors) =>{
+
+  if(typeof existingAuthors =='string'){
+    var authorArr =[];
+    authorArr.push(existingAuthors);
+    var inserts = [id, authorArr];
+
+  }else{
+    var inserts = [id, existingAuthors];
+  }
+
+
+  return db.query(`
+    do $$
+
+    DECLARE
+      author varchar;
+    BEGIN
+      FOREACH author IN ARRAY $2
+        LOOP
+          DELETE
+          FROM authorsbooks
+          WHERE bookid = $1 
+          AND authorid in (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author);
+        END LOOP;
+        END;
+    $$ LANGUAGE plpgsql;
+  `, inserts).then((resultFromDelete)=>{
+
+    return resultFromDelete
+  }).catch(function(error){
+    console.log("Error in the deleteAuthorsFromSingleBook query", error.message);
+  })
+}
+
+
+const deleteGenresFromSingleBook = (id, existingGenres) => {
+
+  if (typeof existingGenres == 'string') {
+    var genreArr = [];
+    genreArr.push(existingGenres);
+    var inserts = [id, genreArr];
+
+  } else {
+    var inserts = [id, existingGenres];
+  }
+
+  return db.query(`
+    do $$
+
+    DECLARE
+      g varchar;
+    BEGIN
+      FOREACH g IN ARRAY $2
+        LOOP
+          DELETE
+          FROM genrebooks
+          WHERE bookid = $1 
+          AND genreid in (SELECT id FROM genres WHERE genre = g);
+        END LOOP;
+        END;
+    $$ LANGUAGE plpgsql;
+  `, inserts).then((resultFromDelete) => {
+
+    return resultFromDelete
+  }).catch(function (error) {
+    console.log("Error in the deleteAuthorsFromSingleBook query", error.message);
+  })
+}
+
+
+
+
 module.exports = {
   selectAllBooks,
   selectBooksByTitle,
@@ -424,5 +512,7 @@ module.exports = {
   updateBookPublisher,
   deleteBook,
   borrowBookById,
-  bookBorrowingUpdate
+  bookBorrowingUpdate,
+  deleteAuthorsFromSingleBook,
+  deleteGenresFromSingleBook
 }

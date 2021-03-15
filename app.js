@@ -339,7 +339,7 @@ const id = req.params.id;
 const title = req.body.bookTitle
   books.updateBookTitle(id, title)
     .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
@@ -352,7 +352,7 @@ const authors = req.body.newAuthors;
 books.selectIndividualBook(id).then((book) => {
   maintain.postAuthorsBooks(authors, book[0].title)
   .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
@@ -363,13 +363,14 @@ books.selectIndividualBook(id).then((book) => {
 app.post('/books/edit/deleteauthors/:id', function (req, res) {
 const id = req.params.id;
 const authors = req.body.existingAuthors;
-books.selectIndividualBook(id).then((book) => {
-  // maintain.postAuthorsBooks(authors, book[0].title)
-  // .then(() => {
-  //     res.redirect(`/books/${id}`)
-  // }).catch(function(error){
-  //   console.log("ERROR updating book ", id)
-  // })
+
+console.log(id, authors);
+books.deleteAuthorsFromSingleBook(id, authors).then((resultFromDelete) => {
+
+  res.redirect(`/books/edit/${id}`);
+ 
+}).catch(function(error){
+  console.log("Error in the server while making the deleteauthors request:", error.message);
 })
 });
 
@@ -379,7 +380,7 @@ const id = req.params.id;
 const pgCount = req.body.bookPages
   books.updatePageCount(id, pgCount)
     .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
@@ -391,7 +392,7 @@ const id = req.params.id;
 const language = req.body.newLanguage
   books.updateBookLanguage(id, language)
     .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
     }).catch(function(error) {
       console.log("ERROR at language update route for book ", id)
     })
@@ -404,7 +405,7 @@ const genres = req.body.newGenres;
 books.selectIndividualBook(id).then((book) => {
   maintain.postGenreBooks(genres, book[0].title)
   .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
   }).catch(function(error){
     console.log("ERROR updating book ", id)
   })
@@ -415,13 +416,11 @@ books.selectIndividualBook(id).then((book) => {
 app.post('/books/edit/deletegenres/:id', function (req, res) {
 const id = req.params.id;
 const genres = req.body.existingGenres;
-books.selectIndividualBook(id).then((book) => {
-  // maintain.postAuthorsBooks(authors, book[0].title)
-  // .then(() => {
-  //     res.redirect(`/books/${id}`)
-  // }).catch(function(error){
-  //   console.log("ERROR updating book ", id)
-  // })
+books.deleteGenresFromSingleBook(id, genres).then((resultFromDelete) => {
+  res.redirect(`/books/edit/${id}`)
+}).catch(function(error){
+
+    console.log("Error in the server to make the deletegenres", error.message);
 })
 });
 
@@ -431,7 +430,7 @@ const id = req.params.id;
 const publisher = req.body.newPublisher
   books.updateBookPublisher(id, publisher)
     .then(() => {
-      res.redirect(`/books/${id}`)
+      res.redirect(`/books/edit/${id}`)
     }).catch(function(error) {
       console.log("ERROR at publisher update route for book ", id)
     })

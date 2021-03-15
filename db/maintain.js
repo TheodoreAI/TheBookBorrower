@@ -221,7 +221,7 @@ const postAuthorsBooks = (authors, book) => {
                         LOOP
 
                             INSERT INTO authorsbooks (bookid, authorid)
-                            VALUES( (SELECT id FROM books WHERE title=$2),
+                            VALUES((SELECT id FROM books WHERE title=$2),
                                     (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
                         END LOOP;   
             END; $$ LANGUAGE plpgsql;`, inserts

@@ -29,7 +29,7 @@
       </li>
       <select multiple name="existingAuthors">
           {{#each thisBooksAuthors}}
-          <option>{{this}}</option>
+          <option name="{{thisBooksAuthors.id}}">{{this}}</option>
           {{/each}}
       </select>
       <br/>
@@ -65,7 +65,7 @@
         Add Additional Genre(s) to Book:
       </li>
       <select multiple name="newGenres">
-          {{#each thisBooksGenres}}
+          {{#each allGenres}}
           <option>{{this}}</option>
           {{/each}}
       </select>
