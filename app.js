@@ -188,7 +188,7 @@ app.post('/books/borroworreturn/:id', function (req, res) {
   const id = req.params.id;
   if(req.body.hasOwnProperty("returnButton")){
     books.returnBook(id).then(() => {
-      res.redirect('/books')
+      res.redirect(`/books/${id}`)
     })
   }else if(req.body.hasOwnProperty("borrowButton")) {
    console.log("borrow buton clicked");
@@ -216,26 +216,26 @@ app.get('/books/borrow/:id', function (req, res) {
           rowsToDisplay.push(borrow)
         }
       })
-      
+
       res.render('bookborrow.hbs', {bookToBorrow, rowsToDisplay})
     })
   }).catch( function(error) {
     console.log("Error on the server while making the bookBorrow.hbs request: ", error.message);
   })
-  
+
 })
 
 
 
 app.post('/books/borrowing/:id', function (req, res){
+  const bookId = req.params.id
   const borrower = req.body.existingBorrower;
   const bookTitle = req.body.bookBorrowing;
   const bookCheckoutdate = req.body.bookCheckoutdate;
-  
+
   books.bookBorrowingUpdate(borrower, bookTitle, bookCheckoutdate)
     .then((resultbook) => {
-      res.redirect('/books')
-
+      res.redirect(`/books/${bookId}`)
   }).catch(function(error){
     console.log("Error in the POST request to update the book that is borrowed:", error.message);
   })
@@ -295,28 +295,28 @@ const id = req.params.id;
         result.forEach(name => {
           allAuthors.push(name.fullName)
         })
-       
+
 
         maintain.selectAllNationalities().then((result) => {
           allNationalities = []
           result.forEach(nationalityObject => {
             allNationalities.push(nationalityObject.nationality)
           })
-          
+
 
           maintain.selectAllLanguages().then((result) => {
             allLanguages = []
             result.forEach(languageObject => {
               allLanguages.push(languageObject.lang)
             })
-          
+
 
             maintain.selectAllGenres().then((result) => {
               allGenres = []
               result.forEach(genreObject => {
                 allGenres.push(genreObject.genre)
               })
-              
+
 
 
               maintain.selectAllPublishers().then((result) => {
@@ -418,13 +418,13 @@ const publisher = req.body.newPublisher
 });
 
 app.get('/borrowers', function (req, res){
-    
+
     borrowers.selectAllBorrowers()
       .then((borrowers) => {
         borrowIDs = []
         rowsToDisplay = []
 
-        
+
         borrowers.forEach(function (borrow) {
         if (!borrowIDs.includes(borrow.id)) {
             borrowIDs.push(borrow.id)
