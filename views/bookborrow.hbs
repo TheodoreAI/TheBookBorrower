@@ -1,1 +1,32 @@
-<h2>Hello World!</h2>
+
+<div class="searchFormboxBorrowers">
+    
+
+    <h2>Borrowing a book:</h2>
+  
+    <form id="borrowingForm" method="POST" action="/books/borrowing/{{bookToBorrow.id}}">
+        <select id="existingBorrower" name="existingBorrower">
+            <option selected hidden style="display:none" required>Select Borrower</option>
+            {{#each rowsToDisplay}}
+            {{this.id}}
+            <option value="{{this.id}}" id="borrowerID">{{this.name}}</option>
+            {{/each}}
+        </select><br>
+        <h3>
+            Confirm you would like to borrow the following book:</br>
+        </h3>
+       
+        <input type="radio" value="{{bookToBorrow.title}}" id="bookID" name="bookBorrowing">{{bookToBorrow.title}}</input>
+        <input type="date"value="{{bookToBorrow.checkoutdate}}" name="bookCheckoutdate">{{bookToBorrow.checkoutDate}}</input>
+       
+        <br>
+        <br>
+        <button type="submit">Borrow</button>
+        
+    </form>
+ 
+
+
+
+</div>
+
