@@ -107,7 +107,7 @@ INSERT INTO authors (lastName, firstName, nationID)
   ('Carroll', 'Jim', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Parks', 'Gordon', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Luiselli', 'Valeria', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'Mexican')),
-  ('Huge', 'Victor', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'French')),
+  ('Hugo', 'Victor', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'French')),
   ('King', 'Stephen', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('King', 'Owen', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American'));
 
@@ -128,7 +128,7 @@ INSERT INTO books (title, checkoutStatus, pgCount, languageID, publisherID, borr
 ('The Basketball Diaries', FALSE, 224, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Penguin Books'), NULL, NULL),
 ('A Choice of Weapons', FALSE, 192, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Minnesota Historical Society Press'), NULL, NULL),
 ('Papeles falsos', FALSE, 79, (SELECT id FROM languages WHERE lang='Spanish'),(SELECT id FROM publishers WHERE publisher = 'Sexto Piso'), NULL, NULL),
-('Les Miserables: (complete)', FALSE, 814, (SELECT id FROM languages WHERE lang='French'), (SELECT id FROM publishers WHERE publisher = 'Independently published'), NULL, NULL),
+('Les Miserables', FALSE, 814, (SELECT id FROM languages WHERE lang='French'), (SELECT id FROM publishers WHERE publisher = 'Independently published'), NULL, NULL),
 ('Sleeping Beauties', TRUE, 721, (SELECT id FROM languages WHERE lang='English'), (SELECT id FROM publishers WHERE publisher='Hodder & Stoughton'), (SELECT id FROM borrowers WHERE firstName='Mateo' AND lastName='Estrada'), '2021/03/03');
 
 -- Inserting into the joining tables:
@@ -195,7 +195,7 @@ INSERT INTO genrebooks (genreID, bookID)
  INSERT INTO genrebooks (genreID, bookID)
  VALUES(
     (SELECT id from genres WHERE genre='Fiction'),
-    (SELECT id from books WHERE title= 'Les Miserables: (complete)')
+    (SELECT id from books WHERE title= 'Les Miserables')
  );
 
  INSERT INTO genrebooks (genreID, bookID)
@@ -241,7 +241,7 @@ INSERT INTO authorsbooks (bookID, authorID)
 
   INSERT INTO authorsbooks (bookID, authorID)
    VALUES(
-       (SELECT id FROM books WHERE title='Les Miserables: (complete)'),
+       (SELECT id FROM books WHERE title='Les Miserables'),
        (SELECT id FROM authors WHERE firstName='Victor' AND lastName='Hugo')
    );
 
