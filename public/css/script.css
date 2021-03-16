@@ -1,5 +1,5 @@
 .page-header{
-    background: no-repeat left/cover url(https://i.pinimg.com/originals/fd/21/72/fd21724a0e46fec014190f1e12a29e44.jpg);
+    background: no-repeat left/cover url('./universityofwashington_pinimg.jp2');
     display: flex;
     align-items: center;
     border: 3px solid black;
@@ -7,7 +7,7 @@
     background-size: cover;
     padding-top: 10.5rem;
     padding-bottom: 6rem;
-    
+
     width: 100%;
 }
 
@@ -51,12 +51,12 @@
     top: auto;
     height: auto;
     background-color: white;
-  
+
 }
 
 
 .books-header{
-    background: no-repeat left/cover url(https://blog.mustdotravels.com/wp-content/uploads/2018/07/The-Last-Bookstore-Portal.jpg);
+    background: no-repeat left/cover url('./The-Last-Bookstore-Portal_mustdotravels.jp2');
     display: flex;
     align-items: center;
     border: 3px solid black;
@@ -72,7 +72,7 @@
 
 .borrowers-header{
 
-    background: no-repeat left/cover url(https://blog.mustdotravels.com/wp-content/uploads/2018/07/The-Last-Bookstore-Portal.jpg);
+    background: no-repeat left/cover url('./The-Last-Bookstore-Portal_mustdotravels.jp2');
     display: flex;
     align-items: center;
     border: 3px solid black;
@@ -104,7 +104,7 @@ ol {
     border-radius: 5px;
     width: auto;
     background: linear-gradient(rgb(195, 228, 240), white);
-    
+
 }
 
 caption {
@@ -134,14 +134,14 @@ table.center {
 tr.borderAround td{
 
     font-family: "Comic Sans MS", cursive, "Comic Sans";
-    
+
 
 }
 
 
 th, td {
     padding: 10px;
- 
+
 }
 
 tbody tr:nth-child(odd) {
@@ -220,8 +220,8 @@ nav.flexbox a {
      font-size: large;
      font-weight: bold;
      margin: auto;
-   
-    
+
+
 }
 nav.flexbox a:hover {
     color: black;
@@ -311,13 +311,13 @@ body{
 }
 
 .fixed-footer{
-   
+
     bottom: 0;
     text-align: center;
     font-family: arial;
     position: relative;
     width: 100%;
-   
+
     margin-top: 10px;
     height: 75px;
     border-radius: 10px;
