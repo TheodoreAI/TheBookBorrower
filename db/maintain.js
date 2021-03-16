@@ -1,10 +1,9 @@
 const db = require('../dbcon.js');
 
-
 const postBorrower = (firstName, lastName, email, phone) =>{
 
     return db.query(`INSERT INTO borrowers
-                            (firstName, lastName, email, phone) 
+                            (firstName, lastName, email, phone)
                             VALUES($1, $2, $3, $4);`
                             ,[firstName, lastName, email, phone]
                             ).then((post) => {
@@ -12,8 +11,6 @@ const postBorrower = (firstName, lastName, email, phone) =>{
         return post[0]
     })
 };
-
-
 
 const postGenre = (genre) => {
 
@@ -25,7 +22,6 @@ const postGenre = (genre) => {
         })
 };
 
-
 const postLanguage = (lang) => {
 
     return db.query(`INSERT INTO languages (lang)
@@ -35,8 +31,6 @@ const postLanguage = (lang) => {
             return post
         })
 };
-
-
 
 const postPublisher = (publisher) => {
     return db.query(`INSERT INTO publishers (publisher)
@@ -56,8 +50,6 @@ const postNationality = (nationality) => {
             return post
         })
 };
-
-
 
 const selectAllNationalities = () => {
     return db.query(`SELECT * FROM nationalities`
@@ -95,7 +87,6 @@ const selectAllPublishers = () => {
     });
 }
 
-
 const selectAllBorrowers = () => {
     return db.query(`SELECT CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "fullName" FROM borrowers;`
     ).then((borrower) =>{
@@ -104,7 +95,6 @@ const selectAllBorrowers = () => {
         console.log("Error selecting all the borrowers for the books page:", error.message);
     });
 }
-
 
 const selectAllAuthors = () => {
     return db.query(`SELECT CONCAT(authors.firstname, ' ', authors.lastname) AS "fullName" FROM authors;`
@@ -123,10 +113,9 @@ const selectAllBooks = () => {
     });
 }
 
-
 const postAuthors = (lastName, firstName, nationText) => {
     console.log("what is happening?", firstName, lastName, nationText);
-    return db.query(`INSERT INTO authors (lastname, firstname, nationid)             
+    return db.query(`INSERT INTO authors (lastname, firstname, nationid)
                             VALUES($1, $2, (SELECT id FROM nationalities WHERE nationality = $3));`,
                     [lastName, firstName, nationText]).then((authors) => {
                         return authors;
@@ -136,41 +125,37 @@ const postAuthors = (lastName, firstName, nationText) => {
 
 };
 
-
-// This is a promise function that passes the new books to the books table.
-
-const postBooksNo = (titleBook, 
+// Insert books that are not checked out into books table:
+const postBooksNo = (titleBook,
                     status, pageCount,
                     existingPublisher, existingLanguage) => {
-                                        
+
     return db.query(`
-        BEGIN;  
+        BEGIN;
                 INSERT INTO books(title, checkoutstatus, pgcount, languageid, publisherid)
                 VALUES($1, $2, $3,
                     (SELECT id FROM languages WHERE lang = $5),
                     (SELECT id FROM publishers WHERE publisher = $4));
- 
-        COMMIT;`, 
+
+        COMMIT;`,
 [titleBook, status, pageCount, existingPublisher,
     existingLanguage]).then((books) => {
         return books;
-        
+
     }).catch(function (error) {
         console.log("Error posting the book into the book table", error.message);
     });
 
   }
 
-
-
-
+// insert books that are checked out into books table:
 const postBooksYes = (titleBook,
     status, existingBorrower,
     checkoutDate, pageCount,
     existingPublisher, existingLanguage) => {
 
     return db.query(`
-        BEGIN;  
+        BEGIN;
 
                 INSERT INTO books (title, checkoutstatus, pgcount, languageid, publisherid, borrowerid, checkoutdate)
                 VALUES($1, $2, $5,
@@ -178,7 +163,7 @@ const postBooksYes = (titleBook,
                 (SELECT id FROM publishers WHERE publisher = $6),
                 (SELECT id FROM borrowers WHERE CONCAT(borrowers.firstName, ' ', borrowers.lastName) = $3),
                 $4);
-            
+
         COMMIT;`,
         [titleBook, status, existingBorrower,
             checkoutDate, pageCount, existingPublisher,
@@ -189,17 +174,10 @@ const postBooksYes = (titleBook,
     }).catch(function (error) {
         console.log("Error posting the book into the book table", error.message);
     });
-
 }
 
-
-
+// insert into the authorsbooks table
 const postAuthorsBooks = (authors, book) => {
-          
-        // authors is an array []
-        // books is an array []
-
-
         if (typeof authors == 'string'){
             var authorArr = [];
 
@@ -209,39 +187,36 @@ const postAuthorsBooks = (authors, book) => {
         }else {
             var inserts = [authors, book];
         }
-            // console.log("Are they still arrays of strings?", inserts);
             return db.query(`
 
-            do $$ 
+            do $$
 
-            DECLARE 
+            DECLARE
                 author varchar;
-            BEGIN 
-                        FOREACH author IN ARRAY $1 
+            BEGIN
+                        FOREACH author IN ARRAY $1
                         LOOP
 
                             INSERT INTO authorsbooks (bookid, authorid)
                             VALUES((SELECT id FROM books WHERE title=$2),
                                     (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
-                        END LOOP;   
+                        END LOOP;
             END; $$ LANGUAGE plpgsql;`, inserts
-                
+
         ).then((authorsBooks) => {
             return authorsBooks;
-        
+
         }).catch(function (error) {
             console.log("Error posting the authors and books to the authorsbooks table:", error.message);
         });
 }
 
-
+// insert into the genrebooks table:
 const postGenreBooks = (genres, book) => {
-
-    // array of genres 
+    // array of genres
     // string for books
     // The following for loop comes from: https://www.postgresql.org/docs/11/plpgsql-control-structures.html#PLPGSQL-FOREACH-ARRAY.
-    
-    
+
     if (typeof genres == 'string'){
         console.log(genres);
         var genreArr = []
@@ -256,9 +231,9 @@ const postGenreBooks = (genres, book) => {
     return db.query(`
         do $$
 
-        DECLARE 
+        DECLARE
             g varchar;
-        BEGIN 
+        BEGIN
                     FOREACH g IN ARRAY $1
                     LOOP
                         INSERT INTO genrebooks (genreid, bookid)
@@ -285,7 +260,7 @@ module.exports = {
     postAuthors,
     selectAllGenres,
     selectAllLanguages,
-    selectAllPublishers, 
+    selectAllPublishers,
     selectAllBorrowers,
     selectAllAuthors,
     postBooksNo,

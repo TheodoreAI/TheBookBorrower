@@ -1,9 +1,8 @@
 const db = require('../dbcon.js')
-const deleteBorrowerModule = require('../public/deleteforms.js');
-
 
 const selectAllBorrowers = () => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       borrowers.id,
       CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "name", borrowers.phone, borrowers.email,
@@ -20,7 +19,8 @@ const selectAllBorrowers = () => {
 }
 
 const selectIndividualBorrower = (id) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "name",
       borrowers.phone,
@@ -32,19 +32,15 @@ const selectIndividualBorrower = (id) => {
        ON borrowers.id = books.borrowerID
     WHERE borrowers.id = $1
     `, [id]).then((borrower) => {
-     
-      
       return borrower
     }).catch(function (error) {
       console.log("ERROR selecting one borrower: ", error.message)
     })
 }
 
-
-
 const selectBorrowerByName = (borrowerName) =>{
-  return db.query(`
-
+  return db.query(
+    `
     SELECT
     borrowers.id,
       CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "name", borrowers.phone, borrowers.email,
@@ -64,8 +60,8 @@ const selectBorrowerByName = (borrowerName) =>{
 
 
 const updateBorrower = (id, firstName, lastName, phone, email) => {
-
-  return db.query(`
+  return db.query(
+    `
     UPDATE
       borrowers
     SET
@@ -74,7 +70,8 @@ const updateBorrower = (id, firstName, lastName, phone, email) => {
       email = $4,
       phone = $5
     WHERE
-      id = $1;`, [id, lastName, firstName, email, phone]).then((borrower) => {
+      id = $1;
+    `, [id, lastName, firstName, email, phone]).then((borrower) => {
       return borrower
     }).catch(function (error) {
       console.log("ERROR updating borrower's phone number: ", error.message)
@@ -84,12 +81,11 @@ const updateBorrower = (id, firstName, lastName, phone, email) => {
 
 
 const deleteBorrower = (id) => {
-  
   return db.query(
     `
     BEGIN;
         UPDATE
-          books 
+          books
         SET
           checkoutStatus = FALSE,
           checkoutDate = NULL
@@ -97,18 +93,16 @@ const deleteBorrower = (id) => {
 
         DELETE
         FROM
-          borrowers 
+          borrowers
         WHERE id = $1;
-
-      
-    COMMIT;`,[id]).then((borrower) =>{
+    COMMIT;
+    `,[id]).then((borrower) =>{
       return borrower
     }).catch(function(error){
       console.log("Error deleting borrower by their id", error.message);
     });
-  
-}
 
+}
 
 module.exports = {
   selectAllBorrowers,
@@ -116,5 +110,4 @@ module.exports = {
   updateBorrower,
   deleteBorrower,
   selectBorrowerByName
-
 }
