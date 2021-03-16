@@ -105,7 +105,11 @@ INSERT INTO authors (lastName, firstName, nationID)
   ('Rogak', 'Lisa', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Bourke-White', 'Margaret', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Carroll', 'Jim', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
-  ('Parks', 'Gordon', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American'));
+  ('Parks', 'Gordon', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
+  ('Luiselli', 'Valeria', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'Mexican')),
+  ('Huge', 'Victor', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'French')),
+  ('King', 'Stephen', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
+  ('King', 'Owen', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American'));
 
 
 
@@ -113,14 +117,19 @@ INSERT INTO authors (lastName, firstName, nationID)
 INSERT INTO  genres (genre)
   VALUES ('Biography'),
   ('Nonfiction'),
-  ('Autobiography');
+  ('Autobiography'),
+  ('Fiction'),
+  ('Thriller');
 
 INSERT INTO books (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
  VALUES ('The Answer Is... Reflections on My Life', TRUE, 297, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Simon & Schuster'), (SELECT id from borrowers WHERE firstName='Rhonda' AND lastName='Smith'), '2020/01/30'),
 ('Who is Alex Trebek?: A Biography', TRUE, 256, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Thomas Dunne Books'), (SELECT id from borrowers WHERE firstName='Mateo' AND lastName='Estrada'), '2020/01/30'),
 ('Portrait of Myself', FALSE, 388, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Palala Press'), NULL, NULL),
 ('The Basketball Diaries', FALSE, 224, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Penguin Books'), NULL, NULL),
-('A Choice of Weapons', FALSE, 192, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Minnesota Historical Society Press'), NULL, NULL);
+('A Choice of Weapons', FALSE, 192, (SELECT id from languages WHERE lang='English'), (SELECT id from publishers WHERE publisher='Minnesota Historical Society Press'), NULL, NULL),
+('Papeles falsos', FALSE, 79, (SELECT id FROM languages WHERE lang='Spanish'),(SELECT id FROM publishers WHERE publisher = 'Sexto Piso'), NULL, NULL),
+('Les Miserables: (complete)', FALSE, 814, (SELECT id FROM languages WHERE lang='French'), (SELECT id FROM publishers WHERE publisher = 'Independently published'), NULL, NULL),
+('Sleeping Beauties', TRUE, 721, (SELECT id FROM languages WHERE lang='English'), (SELECT id FROM publishers WHERE publisher='Hodder & Stoughton'), (SELECT id FROM borrowers WHERE firstName='Mateo' AND lastName='Estrada'), '2021/03/03');
 
 -- Inserting into the joining tables:
 INSERT INTO genrebooks (genreID, bookID)
@@ -181,6 +190,27 @@ INSERT INTO genrebooks (genreID, bookID)
     (SELECT id from books WHERE title='A Choice of Weapons')
  );
 
+
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre='Fiction'),
+    (SELECT id from books WHERE title= 'Les Miserables: (complete)')
+ );
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre='Fiction'),
+    (SELECT id from books WHERE title= 'Sleeping Beauties')
+ );
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre='Thriller'),
+    (SELECT id from books WHERE title= 'Sleeping Beauties')
+ );
+
+
 INSERT INTO authorsbooks (bookID, authorID)
  VALUES(
      (SELECT id FROM books WHERE title='The Answer Is... Reflections on My Life'),
@@ -202,3 +232,27 @@ INSERT INTO authorsbooks (bookID, authorID)
      (SELECT id FROM books WHERE title='A Choice of Weapons'),
      (SELECT id FROM authors WHERE firstName='Gordon' AND lastName='Parks')
  );
+
+INSERT INTO authorsbooks (bookID, authorID)
+  VALUES(
+      (SELECT id FROM books WHERE title='Papeles falsos'),
+      (SELECT id FROM authors WHERE firstName='Valeria' AND lastName='Luiselli')
+  );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+       (SELECT id FROM books WHERE title='Les Miserables: (complete)'),
+       (SELECT id FROM authors WHERE firstName='Victor' AND lastName='Hugo')
+   );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+      (SELECT id FROM books WHERE title='Sleeping Beauties'),
+      (SELECT id FROM authors WHERE firstName='Stephen' AND lastName='King')
+  );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+      (SELECT id FROM books WHERE title='Sleeping Beauties'),
+      (SELECT id FROM authors WHERE firstName='Owen' AND lastName='King')
+  );
