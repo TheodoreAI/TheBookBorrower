@@ -160,8 +160,8 @@ INSERT INTO  `genres` (genre)
 VALUES
 ("Biography"),
 ("Non-Fiction"),
-("Autobiography");
-("Fiction");
+("Autobiography"),
+("Fiction"),
 ("Thriller");
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
