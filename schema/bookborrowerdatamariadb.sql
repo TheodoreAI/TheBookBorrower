@@ -91,6 +91,9 @@ VALUES
 ("Palala Press"),
 ("Penguin Books"),
 ("Minnesota Historical Society Press");
+("Sexto Piso");
+("Independently published");
+("Hodder & Stoughton");
 
 
 INSERT INTO 'borrowers' (lastName, firstName, phone, email)
@@ -104,21 +107,19 @@ INSERT INTO `nationalities`(nationality)
 VALUES
 ("Canadian"),
 ("American"),
-("Mexican");
+("Mexican"),
+("French");
 
 
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Trebek", "Alex", nationalities.id
 FROM nationalities
-WHERE nationalities.nationality = "Canadian"; -- "Canadian"
+WHERE nationalities.nationality = "Canadian";
 
-
--- Lisa Rogak, Margaret Bourke-White, Jim Carroll, Gordon Parks
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Rogak", "Lisa", nationalities.id
 FROM nationalities
-WHERE nationalities.nationality = "American"; -- "American"
-
+WHERE nationalities.nationality = "American";
 
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Bourke-White", "Margaret", nationalities.id
@@ -133,13 +134,35 @@ WHERE nationalities.nationality = "American";
 INSERT INTO `authors` (lastName, firstName, nationID)
 SELECT "Parks", "Gordon", nationalities.id
 FROM nationalities
-WHERE nationalities.nationality = "American"; -- "Canadian"
+WHERE nationalities.nationality = "American";
+
+INSERT INTO `authors` (lastName, firstName, nationID)
+SELECT "Luiselli", "Valeria", nationalities.id
+FROM nationalities
+WHERE nationalities.nationality = "Mexican";
+
+INSERT INTO `authors` (lastName, firstName, nationID)
+SELECT "Hugo", "Victor", nationalities.id
+FROM nationalities
+WHERE nationalities.nationality = "French";
+
+INSERT INTO `authors` (lastName, firstName, nationID)
+SELECT "King", "Stephen", nationalities.id
+FROM nationalities
+WHERE nationalities.nationality = "American";
+
+INSERT INTO `authors` (lastName, firstName, nationID)
+SELECT "King", "Owen", nationalities.id
+FROM nationalities
+WHERE nationalities.nationality = "American";
 
 INSERT INTO  `genres` (genre)
 VALUES
 ("Biography"),
 ("Non-Fiction"),
 ("Autobiography");
+("Fiction");
+("Thriller");
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
 VALUES
@@ -157,7 +180,6 @@ VALUES
 (SELECT id from borrowers WHERE firstName="Mateo" AND lastName="Estrada"),
  '2020/01/30');
 
-
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
 ("Portrait of Myself", FALSE, 388,
@@ -172,12 +194,31 @@ VALUES
 (SELECT id from publishers WHERE publisher="Penguin Books"));
 
 
- INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
+INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
 ("A Choice of Weapons", FALSE, 192,
 (SELECT id from languages WHERE lang="English"),
 (SELECT id from publishers WHERE publisher="Minnesota Historical Society Press"));
 
+INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
+VALUES
+("Papeles falsos", FALSE, 79,
+(SELECT id from languages WHERE lang="Spanish"),
+(SELECT id from publishers WHERE publisher="Sexto Piso"));
+
+INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
+VALUES
+("Les Miserables: (complete)", FALSE, 814,
+(SELECT id from languages WHERE lang="French"),
+(SELECT id from publishers WHERE publisher="Independently published"));
+
+INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID, borrowerID, checkoutDate)
+VALUES
+("Sleeping Beauties", TRUE, 721,
+(SELECT id from languages WHERE lang="English"),
+(SELECT id from publishers WHERE publisher="Hodder & Stoughton"),
+(SELECT id from borrowers WHERE firstName="Mateo" AND lastName="Estrada"),
+ '2020/03/03');
 
  -- Inserting into the joining tables:
 
@@ -266,6 +307,31 @@ INSERT INTO genrebooks (genreID, bookID)
     (SELECT id from books WHERE title="A Choice of Weapons")
  );
 
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre="Fiction"),
+    (SELECT id from books WHERE title="Papeles falsos")
+ );
+
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre="Fiction"),
+    (SELECT id from books WHERE title= "Les Miserables: (complete)")
+ );
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre="Fiction"),
+    (SELECT id from books WHERE title= "Sleeping Beauties")
+ );
+
+ INSERT INTO genrebooks (genreID, bookID)
+ VALUES(
+    (SELECT id from genres WHERE genre="Thriller"),
+    (SELECT id from books WHERE title= "Sleeping Beauties")
+ );
+
 
  -- Inserting into the authorbooks table:
 
@@ -299,3 +365,27 @@ INSERT INTO authorsbooks (bookID, authorID)
      (SELECT id FROM books WHERE title="A Choice of Weapons"),
      (SELECT id FROM authors WHERE firstName="Gordon" AND lastName="Parks")
  );
+
+ INSERT INTO authorsbooks (bookID, authorID)
+  VALUES(
+      (SELECT id FROM books WHERE title="Papeles falsos"),
+      (SELECT id FROM authors WHERE firstName="Valeria" AND lastName="Luiselli")
+  );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+       (SELECT id FROM books WHERE title="Les Miserables: (complete)"),
+       (SELECT id FROM authors WHERE firstName="Victor" AND lastName="Hugo")
+   );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+      (SELECT id FROM books WHERE title="Sleeping Beauties"),
+      (SELECT id FROM authors WHERE firstName="Stephen" AND lastName="King")
+  );
+
+  INSERT INTO authorsbooks (bookID, authorID)
+   VALUES(
+      (SELECT id FROM books WHERE title="Sleeping Beauties"),
+      (SELECT id FROM authors WHERE firstName="Owen" AND lastName="King")
+  );
