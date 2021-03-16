@@ -2,20 +2,12 @@
 var formAdd = document.getElementById("bookForm");
 var formButton = document.getElementById("submitBook");
 var bookAuthorForm = document.getElementById("bookAuthorForm");
-var borrowBook = document.getElementById("status");
-if (borrowBook){
-    if (borrowBook.nodeValue == "Yes"){
-        console.log("Who is renting it?")
-    }
-}
 
 formButton.setAttribute('onclick', "return confirm('Are you sure you want to add this book?');");
-// this will change the form to add the author and the genre of the book:
 
 
-
-// making the form appear/disappear
-
+// making the forms appear/disappear with button clicks from maintain.hbs:
+// initially not visible:
 document.getElementById("bookFormDiv").setAttribute('style', 'display: None');
 
 document.getElementById("bookAuthorFormDiv").setAttribute('Style', 'display: None');
@@ -33,8 +25,7 @@ document.getElementById("languageFormDiv").setAttribute('style', 'display: None'
 document.getElementById("genreFormDiv").setAttribute('style', 'display: None');
 
 
-
-
+// functions appear and close on button click:
 function openForm() {
     document.getElementById("bookFormDiv").style.display = "block";
 }
@@ -60,8 +51,6 @@ function openGenreBookForm() {
 function closeGenreBookForm() {
     document.getElementById("genreBookFormDiv").style.display = "none";
 }
-
-
 
 
 function openAuthorForm(){
@@ -113,37 +102,3 @@ function openGenreForm(){
 function closeGenreForm(){
     document.getElementById("genreFormDiv").style.display = "none";
 }
-
-
-// getting the submit buttons for the forms that work with the book:
-var submitBookAuthor = document.getElementById("submitBookAuthor");
-
-function nextForm1() {
-    confirm('Are you sure you want to add this book?');
-   
-    openBookAuthorForm();
-    
-}
-
-function nextForm2() {
-    confirm('Are you sure you want to add this author to this book?')
-    openGenreBookForm();
-}
-
-
-
-// Event handlers for submitting the forms:
-
-// function displaySuccessMsg(event){
-//     window.alert("The Author was successfully Added!");
-//     location.reload();
-// }
-// const form = document.getElementById('authorForm');
-// form.addEventListener('submit', displaySuccessMsg);
-
-
-// function changeForm() {
-//     formAdd.setAttribute('style', 'display: None');
-// }
-
-// formAdd.addEventListener("submit", changeForm);

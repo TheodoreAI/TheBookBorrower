@@ -1,8 +1,8 @@
 const db = require('../dbcon.js')
 
-
 const selectAllBooks = () => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -16,7 +16,6 @@ const selectAllBooks = () => {
     LEFT JOIN borrowers
        ON borrowers.id = books.borrowerID
     `).then((books) => {
-     
       return books
     }).catch(function (error) {
       console.log("ERROR selecting all books: ", error.message)
@@ -24,7 +23,8 @@ const selectAllBooks = () => {
 }
 
 const selectBooksByTitle = (title) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -45,7 +45,8 @@ const selectBooksByTitle = (title) => {
 }
 
 const selectBooksByAuthor = (author) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -66,7 +67,8 @@ const selectBooksByAuthor = (author) => {
 }
 
 const selectBooksByAuthorNationality = (authorNationality) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -89,7 +91,8 @@ const selectBooksByAuthorNationality = (authorNationality) => {
 }
 
 const selectBooksByLanguage = (language) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -112,7 +115,8 @@ const selectBooksByLanguage = (language) => {
 }
 
 const selectBooksByGenre = (genre) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -137,7 +141,8 @@ const selectBooksByGenre = (genre) => {
 }
 
 const selectBooksByPublisher = (publisher) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -160,7 +165,8 @@ const selectBooksByPublisher = (publisher) => {
 }
 
 const selectBooksByBorrowedStatus = (borrowedStatus) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -181,7 +187,8 @@ const selectBooksByBorrowedStatus = (borrowedStatus) => {
 }
 
 const selectBooksByBorrower = (borrower) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id, books.title, CONCAT(authors.firstName, ' ', authors.lastName) AS "author", books.checkoutStatus, books.borrowerID, CONCAT(borrowers.firstName, ' ', borrowers.lastName) AS "borrower"
     FROM
@@ -202,7 +209,8 @@ const selectBooksByBorrower = (borrower) => {
 }
 
 const selectIndividualBook = (id) => {
-  return db.query(`
+  return db.query(
+    `
     SELECT
       books.id,
       books.title,
@@ -267,14 +275,14 @@ const updateBookTitle = (id, title) => {
     SET
       title = $2
     WHERE
-      id = $1;`, [id, title]).then((book) => {
+      id = $1;
+      `, [id, title]).then((book) => {
       return book
   }).catch(function (error) {
      console.log("ERROR updating book title: ", error.message);
  })
 }
 
-// need to fix
 const updateBookAuthors = (id, author) => {
   return db.query(
     `
@@ -309,7 +317,8 @@ const updateBookLanguage = (id, language) => {
     SET
       languageID = (SELECT id FROM languages WHERE lang =$2)
     WHERE
-      id = $1;`, [id, language]).then((book) => {
+      id = $1;
+    `, [id, language]).then((book) => {
       return book
   }).catch(function (error) {
      console.log("ERROR updating book language: ", error.message);
@@ -336,7 +345,8 @@ const updateBookPublisher = (id, publisher) => {
     SET
       publisherID = (SELECT id FROM publishers WHERE publisher =$2)
     WHERE
-      id = $1;`, [id, publisher]).then((book) => {
+      id = $1;
+    `, [id, publisher]).then((book) => {
       return book
   }).catch(function (error) {
      console.log("ERROR updating book publisher: ", error.message);
@@ -345,8 +355,7 @@ const updateBookPublisher = (id, publisher) => {
 
 const deleteBook = (id) => {
    return db.query(
-      `
-
+     `
       BEGIN;
 
          DELETE
@@ -364,7 +373,8 @@ const deleteBook = (id) => {
          books
          WHERE id = $1;
 
-      COMMIT;`, [id]).then((result) => {
+      COMMIT;
+    `, [id]).then((result) => {
       return result
    }).catch(function (error) {
       console.log("Error with the deleteBook query", error.message);
@@ -374,7 +384,6 @@ const deleteBook = (id) => {
 
 const borrowBookById = (id) => {
   return db.query(`
-  
   SELECT * FROM books WHERE
   id= $1;
   `,[id]).then((books) =>{
@@ -386,9 +395,7 @@ const borrowBookById = (id) => {
 
 
 const bookBorrowingUpdate = (borrower, bookTitle, bookCheckoutdate) => {
-
   return db.query(`
-
   UPDATE
     books
   SET
@@ -396,28 +403,12 @@ const bookBorrowingUpdate = (borrower, bookTitle, bookCheckoutdate) => {
     borrowerID =  $1,
     checkoutDate = $3
   WHERE title = $2;
-
   `, [borrower, bookTitle, bookCheckoutdate]).then((resultsOfCheckout) =>{
     return resultsOfCheckout
   }).catch(function(error){
     console.log("Error in the query to update the book to be checkout:", error.message);
   })
 }
-
-//  do $$
-
-//  DECLARE
-//  author varchar;
-//  BEGIN
-//  FOREACH author IN ARRAY $1
-//  LOOP
-
-//  INSERT INTO authorsbooks(bookid, authorid)
-//  VALUES((SELECT id FROM books WHERE title = $2),
-//    (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author));
-//  END LOOP;
-//  END;
-//  $$ LANGUAGE plpgsql;
 
 const deleteAuthorsFromSingleBook = (id, existingAuthors) =>{
 
@@ -429,9 +420,8 @@ const deleteAuthorsFromSingleBook = (id, existingAuthors) =>{
   }else{
     var inserts = [id, existingAuthors];
   }
-
-
-  return db.query(`
+  return db.query(
+    `
     do $$
 
     DECLARE
@@ -441,32 +431,28 @@ const deleteAuthorsFromSingleBook = (id, existingAuthors) =>{
         LOOP
           DELETE
           FROM authorsbooks
-          WHERE bookid = $1 
+          WHERE bookid = $1
           AND authorid in (SELECT id FROM authors WHERE CONCAT(authors.firstName, ' ', authors.lastName) = author);
         END LOOP;
         END;
     $$ LANGUAGE plpgsql;
   `, inserts).then((resultFromDelete)=>{
-
     return resultFromDelete
   }).catch(function(error){
     console.log("Error in the deleteAuthorsFromSingleBook query", error.message);
   })
 }
 
-
 const deleteGenresFromSingleBook = (id, existingGenres) => {
-
   if (typeof existingGenres == 'string') {
     var genreArr = [];
     genreArr.push(existingGenres);
     var inserts = [id, genreArr];
-
   } else {
     var inserts = [id, existingGenres];
   }
-
-  return db.query(`
+  return db.query(
+    `
     do $$
 
     DECLARE
@@ -476,7 +462,7 @@ const deleteGenresFromSingleBook = (id, existingGenres) => {
         LOOP
           DELETE
           FROM genrebooks
-          WHERE bookid = $1 
+          WHERE bookid = $1
           AND genreid in (SELECT id FROM genres WHERE genre = g);
         END LOOP;
         END;
@@ -485,12 +471,9 @@ const deleteGenresFromSingleBook = (id, existingGenres) => {
 
     return resultFromDelete
   }).catch(function (error) {
-    console.log("Error in the deleteAuthorsFromSingleBook query", error.message);
+    console.log("Error in the deleteGenresFromSingleBook query", error.message);
   })
 }
-
-
-
 
 module.exports = {
   selectAllBooks,
