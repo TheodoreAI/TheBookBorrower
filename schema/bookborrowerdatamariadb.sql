@@ -208,7 +208,7 @@ VALUES
 
 INSERT INTO `books` (title, checkoutStatus, pgCount, languageID, publisherID)
 VALUES
-("Les Miserables: (complete)", FALSE, 814,
+("Les Miserables", FALSE, 814,
 (SELECT id from languages WHERE lang="French"),
 (SELECT id from publishers WHERE publisher="Independently published"));
 
@@ -317,7 +317,7 @@ INSERT INTO genrebooks (genreID, bookID)
  INSERT INTO genrebooks (genreID, bookID)
  VALUES(
     (SELECT id from genres WHERE genre="Fiction"),
-    (SELECT id from books WHERE title= "Les Miserables: (complete)")
+    (SELECT id from books WHERE title= "Les Miserables")
  );
 
  INSERT INTO genrebooks (genreID, bookID)
@@ -374,7 +374,7 @@ INSERT INTO authorsbooks (bookID, authorID)
 
   INSERT INTO authorsbooks (bookID, authorID)
    VALUES(
-       (SELECT id FROM books WHERE title="Les Miserables: (complete)"),
+       (SELECT id FROM books WHERE title="Les Miserables"),
        (SELECT id FROM authors WHERE firstName="Victor" AND lastName="Hugo")
    );
 
