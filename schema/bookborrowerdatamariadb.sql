@@ -90,13 +90,13 @@ VALUES
 ("Thomas Dunne Books"),
 ("Palala Press"),
 ("Penguin Books"),
-("Minnesota Historical Society Press");
-("Sexto Piso");
-("Independently published");
+("Minnesota Historical Society Press"),
+("Sexto Piso"),
+("Independently published"),
 ("Hodder & Stoughton");
 
 
-INSERT INTO 'borrowers' (lastName, firstName, phone, email)
+INSERT INTO `borrowers` (lastName, firstName, phone, email)
 VALUES('Smith', 'Rhonda', '123-456-7891', 'rhonda@thebookborrower.com'),
 ('Estrada', 'Mateo', '987-654-3210', 'mateo@thebookborrower.com'),
 ('Rascal', 'Oscar', '123-456-7891', 'rascal@thebookborrower.com'),

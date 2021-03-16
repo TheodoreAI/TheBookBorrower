@@ -80,7 +80,10 @@ INSERT INTO publishers(publisher)
   ('Thomas Dunne Books'),
   ('Palala Press'),
   ('Penguin Books'),
-  ('Minnesota Historical Society Press');
+  ('Minnesota Historical Society Press'),
+  ('Sexto Piso'),
+  ('Independently published'),
+  ('Hodder & Stoughton');
 
 
 INSERT INTO borrowers (lastName, firstName, phone, email)
@@ -93,7 +96,8 @@ INSERT INTO borrowers (lastName, firstName, phone, email)
 INSERT INTO nationalities (nationality)
   VALUES ('Canadian'),
   ('American'),
-  ('Mexican');
+  ('Mexican'),
+  ('French');
 
 
 INSERT INTO authors (lastName, firstName, nationID)
@@ -102,6 +106,9 @@ INSERT INTO authors (lastName, firstName, nationID)
   ('Bourke-White', 'Margaret', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Carroll', 'Jim', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American')),
   ('Parks', 'Gordon', (SELECT nationalities.id FROM nationalities WHERE nationalities.nationality = 'American'));
+
+
+
 
 INSERT INTO  genres (genre)
   VALUES ('Biography'),
