@@ -30,17 +30,6 @@ CREATE TABLE borrowers (
     phone varchar(150) NOT NULL,
     email varchar(255) NOT NULL);
 
-
---in postGres
-
--- CREATE TABLE borrowers (
---     id SERIAL PRIMARY KEY,
---     lastName varchar NOT NULL,
---     firstName varchar NOT NULL,
---     phone varchar NOT NULL,
---     email varchar NOT NULL
--- );
-
 CREATE TABLE nationalities (
     id int(11) PRIMARY KEY AUTO_INCREMENT,
     nationality varchar(255)
