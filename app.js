@@ -442,8 +442,6 @@ app.get('/borrowers', function (req, res){
       .then((borrowers) => {
         borrowIDs = []
         rowsToDisplay = []
-
-
         borrowers.forEach(function (borrow) {
         if (!borrowIDs.includes(borrow.id)) {
             borrowIDs.push(borrow.id)
@@ -844,9 +842,9 @@ app.post('/genreBooksForm', function (req, res){
 app.post('/borrowers', function (req, res) {
   var borrowerName = req.body.borrowerName;
   var lowerCaseBorrowerName = borrowerName.toLowerCase();
-  borrowers.selectBorrowerByName(borrowerName).then((borrowers) => {
+  borrowers.selectBorrowerByName(borrowerName).then((rowsToDisplay) => {
 
-    res.render('borrowers.hbs', {borrowers})
+    res.render('borrowers.hbs', {rowsToDisplay})
   }).catch(function (error) {
     console.log("The GET request for the searchborrower isn't working on the server", error.message);
   })
