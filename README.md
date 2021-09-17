@@ -1,6 +1,6 @@
 # TheBookBorrower
 
-1. This is for the Portfolio Project that Rhonda Smith and Mateo Estrada are working for CS340 at Oregon State University.
+1. This is for the Portfolio Project that Rhonda Smith and Mateo Estrada worked on for CS340 at Oregon State University.
 
 2. *To run this project you will need the dependencies listed in the package.json file.*
 
@@ -25,16 +25,16 @@
     -Then you can run:
     
     npm start
-    
+*To install pg-promise and to run it make sure to do the following:*
+
+    - npm install pg-promise, pg
+
+
 *Or you can do:
 
-    - npm install to install all dependencies required to run this app from the package.json file.
+    - npm install // to install all dependencies required to run this app from the package.json file.
 
-*This project works with mariaDB and postgreSQL and can be hosted on Heroku using the required environment variables.
-
-
-    heroku local:run npm start 
-
+*This project works with MariaDB and PostgreSQL and can be hosted on Heroku using the correct config variables. For more information use: https://devcenter.heroku.com/articles/heroku-postgresql
 
     
 
