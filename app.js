@@ -8,8 +8,6 @@ const maintain = require('./db/maintain.js');
 
 
 var bodyParser = require('body-parser');
-
-// start the express app
 var app = express();
 
 
@@ -20,7 +18,7 @@ var hbs = require('express-handlebars').create({
 
 // set the engine and the file extension name and the files that will be used
 app.engine('hbs', hbs.engine);
-
+// setting the middleware
 app.set("view engine", "hbs");
 app.use('/static', express.static('public'));
 app.use('/', express.static('public'));
