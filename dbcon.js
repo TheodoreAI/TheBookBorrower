@@ -6,6 +6,7 @@
 // 2/22/2021
 
 var pgp = require('pg-promise')()
+require('dotenv').config();
 
 const cn = {
   connectionString: process.env.DATABASE_URL,
@@ -22,7 +23,7 @@ db.connect()
   obj.done()
 })
 .catch(function (error){
-  console.log("ERROR connecting to db: ", error.message);
+  console.log("ERROR connecting to db: ", error);
 });
 
 module.exports = db;
