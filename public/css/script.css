@@ -120,9 +120,9 @@ table.booksAndBorrowers {
     text-align: center;
     width: 100%;
     border: 3px solid black;
-
-
+    overflow: auto;
 }
+
 
 table.center {
     margin-left:auto;
@@ -164,6 +164,38 @@ button {
     color: white;
     border-radius: 10px;
     text-align: center;
+}
+
+#borrowButton{
+    font-weight: bold;
+    height: 40px;
+    width: auto;
+    background-color: rgb(86, 240, 91);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+#returnButton {
+    font-weight: bold;
+    height: 40px;
+    width: auto;
+    background-color: rgb(86, 227, 240);
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#addBookButton{
+    font-weight: bold;
+    height: 40px;
+    width: auto;
+    background-color: rgb(8, 145, 8);
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    text-align: center;
+
 }
 
 /* .menuForms {
@@ -249,7 +281,6 @@ nav.flexbox a:hover {
     /* Add a grey border */
     margin-bottom: 12px;
     /* Add some space below the input */
-    width: 25%;
 }
 
 #myUL {

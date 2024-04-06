@@ -1,25 +1,25 @@
 
 <link href='/script.css'>
 
-<h1 style="text-align: center;">
-    Database
+<h1 class="text-center">
+    Database Management
 </h1>
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
 
 
-<h2 style="text-align: center;">
+<p class="fs-5 fw-bold mx-2">
     What would you like to add today?
-</h2>
+</p>
 
 {{!-- forms to create update and delete --}}
 {{!-- we want to have it on a link so that it pops up and then we can make the changes. --}}
-<h4>
+<p class="mx-2">
     If any of your book's information is not found in the book form's menus,
-    add the information using the proper forms for each field before entering the book. <br> 
+    add the information using the proper forms for each field before entering the book. </br> 
     For example: to add a book you will need Author, genre, and if someone will borrow it the borrower needs to be added as well.
-   
-</h4>
+</p>
+
 
 <div class="menuForms">
     <h3> Adding Book(s):</h3>
@@ -68,7 +68,6 @@
     </div>
 
     <div class="formbox">
-
         <h3>Add an Author:</h3>
         <button class="open-button" onclick="openAuthorForm()">Open Authors Form </button><br>
         <div id="authorFormDiv">
@@ -104,7 +103,6 @@
             </form>
         </div>
     </div>
-
 
     <div class="formbox" style="background-color: lightblue;">
         <h3>Add a Genre:</h3>
@@ -155,8 +153,6 @@
         </div>
     </div>
 
-
-
     <div class="formbox">
         <h3>Add an Author Nationality:</h3>
         <button class="open-button" onclick="openNationalityForm()">Open Nationality Form </button><br>
@@ -176,7 +172,6 @@
         </div>
     </div>
     
-
     <div class="formbox" style="background-color: lightblue;">
         <h3>Add a Language:</h3>
         <button class="open-button" onclick="openLanguageForm()">Open Languages Form </button><br>
@@ -232,7 +227,6 @@
         </div>
     </div>
    
-
     <div class="formbox">
         <h3>Add Borrowers with Contact Info:</h3>
         <button class="open-button" onclick="openBorrowForm()">Open Borrower Form</button>
@@ -271,11 +265,5 @@
             </form>
         </div>
     </div>
-    
-    
-
-
-
-
 </div>
 <script src="forms.js" type="text/javascript"></script>
